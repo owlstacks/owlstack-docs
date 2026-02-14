@@ -19,6 +19,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'getting-started/installation',
         'getting-started/quick-start',
+        'getting-started/connect-platforms',
         'getting-started/quick-start-laravel',
         'getting-started/quick-start-wordpress',
       ],
@@ -29,7 +30,6 @@ const sidebars: SidebarsConfig = {
       items: [
         'core-concepts/posts-and-content',
         'core-concepts/media-handling',
-        'core-concepts/platform-config',
         'core-concepts/publishing',
         'core-concepts/delivery-status',
         'core-concepts/error-handling',
@@ -67,8 +67,8 @@ const sidebars: SidebarsConfig = {
       label: 'Authentication',
       items: [
         'authentication/oauth-flow',
-        'authentication/access-tokens',
-        'authentication/token-storage',
+        'authentication/api-keys',
+        'authentication/platform-credentials',
       ],
     },
     {
@@ -77,7 +77,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'events/event-system',
         'events/post-published-failed',
-        'events/custom-dispatchers',
+        'events/webhooks',
       ],
     },
     {
@@ -104,26 +104,49 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Plans & Pricing',
+      items: [
+        'plans/overview',
+        'plans/starter',
+        'plans/pro',
+        'plans/pro-ai',
+        'plans/enterprise',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Pro Features',
       items: [
-        'pro/overview',
         'pro/batch-publishing',
         'pro/scheduling',
-        'pro/queue-system',
         'pro/delivery-logging',
         'pro/templates',
-        'pro/automation',
-        'pro/ai-integration',
         'pro/analytics',
       ],
     },
     {
       type: 'category',
-      label: 'Extending',
+      label: 'AI Features',
       items: [
-        'extending/custom-platforms',
-        'extending/custom-formatters',
-        'extending/custom-http-client',
+        'ai/content-generation',
+        'ai/post-optimization',
+        'ai/auto-hashtags',
+        'ai/content-calendar',
+        'ai/ab-testing',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'API Reference',
+      items: [
+        'api/overview',
+        'api/authentication',
+        'api/publishing',
+        'api/scheduling',
+        'api/ai',
+        'api/analytics',
+        'api/webhooks',
+        'api/rate-limits',
       ],
     },
   ],
