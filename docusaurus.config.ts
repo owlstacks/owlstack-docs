@@ -120,8 +120,8 @@ const config: Config = {
       title: 'OwlStack',
       logo: {
         alt: 'OwlStack Logo',
-        src: 'img/logo-light-transparent.png',
-        srcDark: 'img/logo-dark-transparent.png',
+        src: 'img/logo-dark-transparent.png',
+        srcDark: 'img/logo-light-transparent.png',
       },
       items: [
         {
