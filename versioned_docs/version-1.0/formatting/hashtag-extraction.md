@@ -1,43 +1,40 @@
 ---
 sidebar_position: 3
 title: Hashtag Extraction
-description: Converting tags to platform-appropriate hashtags.
+description: How OwlStack handles hashtags from your tags.
 ---
 
 # Hashtag Extraction
 
-## HashtagExtractor
+When you set tags on a `Post`, OwlStack automatically converts them to platform-appropriate hashtags.
 
-Converts tags to hashtag strings, sanitizing special characters and respecting character budgets.
+## How it works
 
 ```php
-use Owlstack\Core\Formatting\HashtagExtractor;
+$post = Post::create('Check out our new release!')
+    ->withHashtags(['php', 'laravel', 'social-media']);
 
-$extractor = new HashtagExtractor();
-$hashtags = $extractor->extract(['PHP', 'social media'], maxCount: 5);
-// '#PHP #socialmedia'
+// OwlStack appends: #php #laravel #socialmedia
+$client->publish($post, [Platform::Twitter]);
 ```
 
-The extractor:
+The hashtag engine:
 
 - **Prefixes** each tag with `#`
 - **Removes** special characters (spaces, punctuation)
-- **Limits** the number of hashtags via `$maxCount`
-- **Appends** to the formatted content within the character budget
+- **Limits** the number of hashtags based on the character budget
+- **Appends** hashtags to the formatted content only if there's room
 
-## Usage with Posts
+## Character-budget-aware
 
-When you set `tags` on a `Post`, the platform formatter uses `HashtagExtractor` automatically:
+Hashtags are only included if there's enough room within the platform's character limit. On Twitter (280 chars), if your content is 270 characters, hashtags won't be appended. On Telegram (4,096 chars), they almost always fit.
 
-```php
-$post = new Post(
-    title: 'My Article',
-    body: 'Content here...',
-    tags: ['php', 'laravel', 'social-media'],
-);
+## Platform-specific behavior
 
-// The formatter will append: #php #laravel #socialmedia
-$result = $publisher->publish($post, 'telegram');
-```
-
-Hashtags are only appended if there's room within the platform's character limit.
+| Platform | Hashtag Behavior |
+|:---------|:----------------|
+| Twitter/X | Appended at end, budget-aware |
+| Instagram | Appended at end, up to 30 |
+| LinkedIn | Appended at end |
+| Facebook | Inline or appended |
+| Others | Appended at end |

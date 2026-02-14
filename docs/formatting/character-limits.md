@@ -1,27 +1,12 @@
 ---
 sidebar_position: 2
-title: Character Limits & Truncation
-description: Word-boundary-aware text truncation with CharacterTruncator.
+title: Character Limits
+description: Platform character limits and how OwlStack handles truncation.
 ---
 
-# Character Limits & Truncation
+# Character Limits
 
-## CharacterTruncator
-
-Word-boundary-aware text truncation that keeps your content readable.
-
-```php
-use Owlstack\Core\Formatting\CharacterTruncator;
-
-$truncator = new CharacterTruncator(ellipsis: '…');
-$truncator->truncate('Hello World', maxLength: 8); // 'Hello…'
-```
-
-The truncator:
-
-- Breaks at **word boundaries** — never cuts a word in half
-- Appends an **ellipsis** to indicate truncation
-- Accounts for the ellipsis length in the character budget
+OwlStack handles character truncation automatically on the server. Your content is trimmed at word boundaries with an ellipsis when it exceeds a platform's limit.
 
 ## Platform character limits
 
@@ -39,4 +24,11 @@ The truncator:
 | Slack | 40,000 |
 | Facebook | 63,206 |
 
-Formatters use these limits automatically — you don't need to truncate manually unless you want custom behavior.
+## How truncation works
+
+- Breaks at **word boundaries** -- never cuts a word in half
+- Appends an **ellipsis** to indicate truncation
+- Accounts for hashtags and URLs in the character budget
+- For Twitter, accounts for `t.co` URL wrapping (23 characters per URL)
+
+You don't need to truncate manually. Just write your content and OwlStack formats it for each platform.

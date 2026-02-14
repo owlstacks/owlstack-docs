@@ -6,37 +6,34 @@ description: How OwlStack formats content for each platform.
 
 # Platform Formatters
 
-Each platform has a dedicated formatter that implements `FormatterInterface`. Formatters handle character limits, markup syntax, hashtag injection, and URL formatting automatically.
+OwlStack automatically formats your content for each target platform on the server side. You don't need to worry about character limits, markup syntax, or hashtag placement.
 
 ## How it works
 
-```mermaid
-flowchart LR
-    POST[Post] --> FMT[Platform Formatter]
-    FMT --> TRUNC[CharacterTruncator]
-    FMT --> HASH[HashtagExtractor]
-    FMT --> CLINK[CanonicalLink]
-    TRUNC --> OUT[Formatted Text]
-    HASH --> OUT
-    CLINK --> OUT
-```
+When you publish a post, OwlStack's cloud:
 
-When you call `$publisher->publish($post, 'telegram')`, the Telegram formatter:
-
-1. Takes the post body
-2. Converts markup to HTML (Telegram's format)
-3. Injects hashtags from `$post->tags` within the character budget
+1. Takes your post body
+2. Converts markup to the platform's format (HTML for Telegram, Markdown for Discord, etc.)
+3. Injects hashtags from your tags within the character budget
 4. Appends the canonical URL if there's room
-5. Truncates to 4,096 characters at a word boundary
-
-## FormatterInterface
+5. Truncates at a word boundary to respect character limits
 
 ```php
-use Owlstack\Core\Formatting\Contracts\FormatterInterface;
+// You write this:
+$post = Post::create('Check out our new blog post about PHP 8.3!')
+    ->withUrl('https://example.com/php-83')
+    ->withHashtags(['php', 'programming']);
 
-$formatter->format($post, $options);  // Formatted string
-$formatter->platform();               // 'telegram'
-$formatter->maxLength();              // 4096
+// For Telegram (HTML, 4096 chars), OwlStack sends:
+// Check out our new blog post about PHP 8.3!
+// 
+// Read more: https://example.com/php-83
+// #php #programming
+
+// For Twitter (plain text, 280 chars), OwlStack sends:
+// Check out our new blog post about PHP 8.3!
+// 
+// https://example.com/php-83 #php #programming
 ```
 
 ## Markup by platform
