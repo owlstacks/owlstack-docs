@@ -1,0 +1,28 @@
+---
+sidebar_position: 5
+title: Delivery Logging
+description: Full delivery records with attempt history and retry strategies.
+---
+
+# Delivery Logging
+
+import ProBadge from '@site/src/components/ProBadge';
+
+<ProBadge />
+
+Track every publishing attempt with full delivery records, including attempt history and retry strategies.
+
+## Features
+
+- **Delivery records** — One record per platform per publish
+- **Attempt history** — Log each retry attempt with timestamps and errors
+- **Retry strategies** — Configurable retry logic (exponential backoff, fixed delay)
+- **Status tracking** — Pending → Publishing → Published / Failed
+
+## Laravel
+
+Delivery logs are stored in Eloquent models with database migrations provided:
+
+```bash
+php artisan migrate
+```

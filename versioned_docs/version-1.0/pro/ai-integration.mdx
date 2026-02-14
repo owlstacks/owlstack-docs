@@ -1,0 +1,33 @@
+---
+sidebar_position: 8
+title: AI Integration
+description: AI-powered caption generation, summarization, and hashtag suggestions.
+---
+
+# AI Integration
+
+import ProBadge from '@site/src/components/ProBadge';
+
+<ProBadge />
+
+Leverage AI for content enhancement before publishing.
+
+## Features
+
+- **Caption generation** — Generate platform-appropriate captions from your content
+- **Content summarization** — Summarize long articles for short-form platforms
+- **Hashtag suggestions** — AI-suggested hashtags based on content analysis
+- **Multi-language** — Generate content in different languages
+
+## Laravel
+
+AI jobs are dispatched to Laravel's queue system for async processing:
+
+```php
+use Owlstack\Pro\Laravel\Jobs\AiGenerateJob;
+
+AiGenerateJob::dispatch($post, 'generate_caption', [
+    'platform' => 'twitter',
+    'tone' => 'professional',
+]);
+```

@@ -1,0 +1,29 @@
+---
+sidebar_position: 3
+title: Scheduling
+description: Schedule content for future publication.
+---
+
+# Scheduling
+
+import ProBadge from '@site/src/components/ProBadge';
+
+<ProBadge />
+
+Schedule content for future publication with time windows and cron expressions.
+
+## Features
+
+- **Scheduled times** — Publish at a specific datetime
+- **Time windows** — Publish within a range (e.g., business hours)
+- **Cron expressions** — Recurring schedules
+- **Timezone support** — Schedule in any timezone
+
+## Laravel
+
+```bash
+# List scheduled publications
+php artisan owlstack:schedule:list
+```
+
+Scheduled items are stored in the database and processed by Laravel's scheduler.

@@ -1,0 +1,70 @@
+---
+sidebar_position: 1
+title: Platform Overview
+description: All 11 supported platforms with their capabilities and constraints.
+---
+
+import PlatformTable from '@site/src/components/PlatformTable';
+
+# Platform Overview
+
+OwlStack supports **11 social media platforms** through a unified API. Each platform has its own formatter, constraints, and features — but your code stays the same.
+
+## Comparison table
+
+<PlatformTable />
+
+## How platforms work
+
+Every platform implements `PlatformInterface`:
+
+```php
+interface PlatformInterface
+{
+    public function name(): string;
+    public function publish(Post $post, array $options = []): PlatformResponseInterface;
+    public function delete(string $externalId): bool;
+    public function validateCredentials(): bool;
+    public function constraints(): array;
+}
+```
+
+## Platform setup pattern
+
+All platforms follow the same setup pattern:
+
+```php
+use Owlstack\Core\Config\PlatformCredentials;
+use Owlstack\Core\Http\HttpClient;
+
+// 1. Create credentials
+$credentials = new PlatformCredentials('platform-name', [
+    'key' => 'value',
+    // ... platform-specific credentials
+]);
+
+// 2. Create platform with HTTP client and formatter
+$platform = new PlatformClass($credentials, new HttpClient(), new PlatformFormatter());
+
+// 3. Register with the platform registry
+$registry->register($platform);
+
+// 4. Publish through the publisher
+$result = $publisher->publish($post, 'platform-name', $options);
+```
+
+## Platform-specific docs
+
+Each platform has a dedicated page with setup instructions, credential requirements, code examples, and platform-specific options:
+
+- [Telegram](./telegram.md) — Bot API, media groups, inline keyboards
+- [Twitter/X](./twitter.md) — OAuth 1.0a, polls, quote tweets
+- [Facebook](./facebook.md) — Graph API, scheduled publishing
+- [LinkedIn](./linkedin.md) — Personal profiles & company pages
+- [Discord](./discord.md) — Bot & webhook modes, rich embeds
+- [Instagram](./instagram.md) — Carousels, Reels, Stories
+- [Pinterest](./pinterest.md) — Board & section targeting
+- [Reddit](./reddit.md) — Self & link posts, flair support
+- [Slack](./slack.md) — Block Kit, bot & webhook modes
+- [Tumblr](./tumblr.md) — NPF content blocks
+- [WhatsApp](./whatsapp.md) — Template messages, documents
