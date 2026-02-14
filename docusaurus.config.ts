@@ -11,8 +11,8 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://owlstack.dev',
-  baseUrl: '/docs/',
+  url: 'https://docs.owlstack.dev',
+  baseUrl: '/',
 
   organizationName: 'owlstacks',
   projectName: 'owlstack-docs',
