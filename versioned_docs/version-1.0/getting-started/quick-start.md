@@ -1,144 +1,89 @@
 ---
 sidebar_position: 2
 title: Quick Start (Standalone PHP)
-description: Publish your first post with OwlStack Core in minutes.
+description: Publish your first post with OwlStack in minutes.
 ---
 
-# Quick Start — Standalone PHP
+# Quick Start -- Standalone PHP
 
-This guide gets you publishing to a social media platform in under 5 minutes using `owlstack-core` directly.
+This guide gets you publishing to social media in under 5 minutes.
 
 ## 1. Install
 
 ```bash
-composer require owlstack/owlstack-core
+composer require owlstack/cloud
 ```
 
-## 2. Configure credentials
+## 2. Get your API key
 
-Each platform needs specific API credentials. Here's an example with Telegram (the simplest to set up):
+1. Sign up at [app.owlstack.dev](https://app.owlstack.dev)
+2. Create a project
+3. Connect at least one social media platform via OAuth
+4. Copy your API key from the project settings
 
-```php
-use Owlstack\Core\Config\PlatformCredentials;
-
-$credentials = new PlatformCredentials('telegram', [
-    'api_token' => 'your-bot-token',
-    'channel_username' => '@your-channel',
-]);
-```
-
-:::tip Getting a Telegram Bot Token
-1. Open Telegram and search for **@BotFather**
-2. Send `/newbot` and follow the prompts
-3. Copy the API token
-4. Add your bot as an admin to your channel
-:::
-
-## 3. Create the platform
-
-```php
-use Owlstack\Core\Http\HttpClient;
-use Owlstack\Core\Platforms\Telegram\TelegramPlatform;
-use Owlstack\Core\Platforms\Telegram\TelegramFormatter;
-
-$httpClient = new HttpClient();
-$formatter  = new TelegramFormatter();
-$platform   = new TelegramPlatform($credentials, $httpClient, $formatter);
-```
-
-## 4. Register and publish
-
-```php
-use Owlstack\Core\Content\Post;
-use Owlstack\Core\Platforms\PlatformRegistry;
-use Owlstack\Core\Publishing\Publisher;
-
-$registry = new PlatformRegistry();
-$registry->register($platform);
-
-$publisher = new Publisher($registry);
-
-$post = new Post(
-    title: 'Hello World',
-    body: 'My first post via OwlStack!',
-    url: 'https://example.com/hello-world',
-    tags: ['opensource', 'php'],
-);
-
-$result = $publisher->publish($post, 'telegram');
-
-if ($result->success) {
-    echo "✓ Published! ID: {$result->externalId}\n";
-    echo "  URL: {$result->externalUrl}\n";
-} else {
-    echo "✗ Failed: {$result->error}\n";
-}
-```
-
-## 5. Multi-platform publishing
-
-Add more platforms and publish to all of them:
-
-```php
-$registry->register($twitterPlatform);
-$registry->register($discordPlatform);
-
-foreach ($registry->names() as $name) {
-    $result = $publisher->publish($post, $name);
-    echo $result->success
-        ? "✓ {$name}: {$result->externalUrl}\n"
-        : "✗ {$name}: {$result->error}\n";
-}
-```
-
-## Full example
+## 3. Publish your first post
 
 ```php
 <?php
 
 require __DIR__ . '/vendor/autoload.php';
 
-use Owlstack\Core\Content\Post;
-use Owlstack\Core\Config\PlatformCredentials;
-use Owlstack\Core\Http\HttpClient;
-use Owlstack\Core\Platforms\PlatformRegistry;
-use Owlstack\Core\Platforms\Telegram\TelegramPlatform;
-use Owlstack\Core\Platforms\Telegram\TelegramFormatter;
-use Owlstack\Core\Publishing\Publisher;
+use OwlStack\Cloud\OwlStackClient;
+use OwlStack\Post;
+use OwlStack\Enums\Platform;
 
-// Setup
-$credentials = new PlatformCredentials('telegram', [
-    'api_token' => getenv('TELEGRAM_BOT_TOKEN'),
-    'channel_username' => getenv('TELEGRAM_CHANNEL'),
+$client = new OwlStackClient(
+    apiKey: getenv('OWLSTACK_API_KEY'),
+);
+
+$post = Post::create('Hello world! My first post via OwlStack.')
+    ->withHashtags(['opensource', 'php']);
+
+$result = $client->publish($post, [Platform::Telegram]);
+
+if ($result->isSuccessful()) {
+    echo "Published! URL: {$result->externalUrl()}\n";
+} else {
+    echo "Failed: {$result->error()}\n";
+}
+```
+
+## 4. Multi-platform publishing
+
+Publish to multiple platforms in a single call:
+
+```php
+$results = $client->publish($post, [
+    Platform::Telegram,
+    Platform::Twitter,
+    Platform::LinkedIn,
 ]);
 
-$platform = new TelegramPlatform(
-    $credentials,
-    new HttpClient(),
-    new TelegramFormatter(),
-);
-
-$registry = new PlatformRegistry();
-$registry->register($platform);
-$publisher = new Publisher($registry);
-
-// Publish
-$post = new Post(
-    title: 'Hello World',
-    body: 'My first post via OwlStack!',
-    url: 'https://example.com/hello-world',
-    tags: ['opensource', 'php'],
-);
-
-$result = $publisher->publish($post, 'telegram');
-
-echo $result->success
-    ? "Published: {$result->externalUrl}\n"
-    : "Failed: {$result->error}\n";
+foreach ($results as $result) {
+    echo $result->isSuccessful()
+        ? "{$result->platform()->value}: {$result->externalUrl()}\n"
+        : "{$result->platform()->value}: {$result->error()}\n";
+}
 ```
+
+OwlStack formats your content for each platform automatically -- character limits, markup syntax, hashtag placement, and media constraints are all handled server-side.
+
+## 5. Add media
+
+```php
+use OwlStack\Media;
+
+$post = Post::create('Check out this photo!')
+    ->withMedia(Media::image('/path/to/photo.jpg'))
+    ->withHashtags(['photography']);
+
+$client->publish($post, [Platform::Instagram, Platform::Twitter]);
+```
+
+OwlStack uploads and processes media on the server, resizing and converting as needed for each platform.
 
 ## Next steps
 
-- [Core Concepts](../core-concepts/posts-and-content.md) — Learn about Posts, Media, and the content model
-- [Platforms](../platforms/overview.mdx) — See all 11 supported platforms and their credentials
-- [Formatting](../formatting/platform-formatters.md) — Understand how content is formatted per platform
+- [Connect Platforms](./connect-platforms.md) -- Set up social media accounts
+- [Core Concepts](../core-concepts/posts-and-content.md) -- Learn about Posts, Media, and the content model
+- [Platforms](../platforms/overview.mdx) -- See all 11 supported platforms

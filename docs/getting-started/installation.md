@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 title: Installation
-description: How to install OwlStack packages via Composer.
+description: How to install OwlStack SDK packages via Composer.
 ---
 
 # Installation
@@ -10,25 +10,25 @@ description: How to install OwlStack packages via Composer.
 
 | Requirement | Version |
 |:------------|:--------|
-| PHP | ≥ 8.1 |
+| PHP | 8.1 or higher |
 | ext-curl | * |
 | ext-json | * |
 
-## Core package (standalone PHP)
+## PHP (standalone)
 
 ```bash
-composer require owlstack/owlstack-core
+composer require owlstack/cloud
 ```
 
-This is the framework-agnostic core. Use this if you're building a standalone PHP application or integrating with a framework not yet supported.
+This installs `owlstack/cloud` (the API client) and `owlstack/core` (interfaces, value objects) automatically.
 
 ## Laravel
 
 ```bash
-composer require owlstack/owlstack-laravel
+composer require owlstack/laravel
 ```
 
-This installs both `owlstack-laravel` and `owlstack-core` automatically.
+This installs `owlstack/laravel`, `owlstack/cloud`, and `owlstack/core` automatically.
 
 Then publish the config file:
 
@@ -36,29 +36,34 @@ Then publish the config file:
 php artisan vendor:publish --tag=owlstack-config
 ```
 
+Add your API key to `.env`:
+
+```ini
+OWLSTACK_API_KEY=your-api-key-here
+```
+
 See the [Laravel quick start](./quick-start-laravel.md) for setup details.
 
 ## WordPress
+
+Download the OwlStack plugin from the [OwlStack dashboard](https://app.owlstack.dev) or install via Composer:
 
 ```bash
 cd wp-content/plugins/owlstack-wordpress
 composer install
 ```
 
-Then activate the plugin from **WP Admin → Plugins**.
+Activate the plugin from **WP Admin > Plugins**, then enter your API key in **WP Admin > OwlStack > Settings**.
 
 See the [WordPress quick start](./quick-start-wordpress.md) for setup details.
 
-## Pro packages
+## Get your API key
 
-```bash
-# Standalone PHP
-composer require owlstack/owlstack-pro-core
+1. Sign up at [app.owlstack.dev](https://app.owlstack.dev)
+2. Create a project
+3. Copy your API key from the project dashboard
+4. Connect your social media platforms via OAuth
 
-# Laravel
-composer require owlstack/owlstack-pro-laravel
-```
-
-:::tip Pro License Required
-Pro packages require a valid OwlStack Pro license. Visit [owlstack.dev](https://owlstack.dev) for licensing information.
+:::tip Free tier available
+The Starter plan starts at $19/mo, but you can try OwlStack with a free tier: 1 platform, 10 posts/month. No credit card required.
 :::

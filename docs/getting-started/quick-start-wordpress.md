@@ -4,11 +4,13 @@ title: Quick Start (WordPress)
 description: Set up OwlStack in a WordPress site.
 ---
 
-# Quick Start — WordPress
+# Quick Start -- WordPress
 
 This guide gets OwlStack working in your WordPress site.
 
 ## 1. Install
+
+Download the plugin from the [OwlStack dashboard](https://app.owlstack.dev) and upload it, or install via Composer:
 
 ```bash
 cd wp-content/plugins/owlstack-wordpress
@@ -17,41 +19,42 @@ composer install
 
 ## 2. Activate
 
-Go to **WP Admin → Plugins** and activate **OwlStack**.
+Go to **WP Admin > Plugins** and activate **OwlStack**.
 
 ## 3. Configure
 
-Navigate to **WP Admin → OwlStack → Settings** and enter your platform credentials:
+Navigate to **WP Admin > OwlStack > Settings** and:
 
-- **Telegram** — Bot token, channel username
-- **Twitter/X** — Consumer key/secret, access token/secret
-- **Facebook** — App ID/secret, page access token, page ID
+1. Enter your **OwlStack API key** (get one from [app.owlstack.dev](https://app.owlstack.dev))
+2. Your connected platforms will appear automatically based on what you've set up in the OwlStack dashboard
+
+:::info
+Platform connections (OAuth) are managed in the OwlStack dashboard, not in WordPress. The plugin reads your connected platforms via the API key.
+:::
 
 ## 4. Publish from the editor
 
-When editing a post, you'll see the **OwlStack** meta box in the sidebar. Select your target platforms and hit **Publish** — the post will be automatically published to all selected platforms.
+When editing a post, you'll see the **OwlStack** meta box in the sidebar. Select your target platforms and hit **Publish** -- the post will be automatically published to all selected platforms.
 
 ## 5. Publish from code
 
 ```php
 // Publish to Telegram
-owlstack()->telegram('Hello from WordPress!');
+owlstack()->publish('Hello from WordPress!', ['telegram']);
 
-// Publish to Twitter/X
-owlstack()->twitter('Hello from WordPress!');
-
-// Publish to Facebook
-owlstack()->facebook('Hello from WordPress!', 'link', [
-    'link' => 'https://example.com',
+// Publish to multiple platforms
+owlstack()->publish('Hello from WordPress!', [
+    'telegram',
+    'twitter',
+    'linkedin',
 ]);
 
-// Publish to all configured platforms
-$post = new \Owlstack\Core\Content\Post(
-    title: 'My Post',
-    body: 'Hello world!',
-    url: 'https://example.com/my-post',
-);
-owlstack()->toAll($post);
+// Publish a Post object
+$post = \OwlStack\Post::create('My Post')
+    ->withUrl('https://example.com/my-post')
+    ->withHashtags(['wordpress']);
+
+owlstack()->publishPost($post, ['telegram', 'twitter']);
 ```
 
 ## 6. Hooks
@@ -60,19 +63,14 @@ owlstack()->toAll($post);
 
 ```php
 // After successful publishing
-add_action('owlstack_post_published', function ($event) {
-    error_log("Published to {$event->result->platformName}");
+add_action('owlstack_post_published', function ($result) {
+    error_log("Published to {$result->platform()->value}");
 });
 
 // After a failure
-add_action('owlstack_post_failed', function ($event) {
-    error_log("Failed: {$event->result->error}");
+add_action('owlstack_post_failed', function ($result) {
+    error_log("Failed: {$result->error()}");
 });
-
-// Before publishing starts
-add_action('owlstack_before_publish', function ($wp_post, $platforms) {
-    // Modify or log before publishing
-}, 10, 2);
 ```
 
 ### Filters
@@ -85,13 +83,12 @@ add_filter('owlstack_supported_post_types', function ($types) {
 
 // Modify the Post object before publishing
 add_filter('owlstack_post_data', function ($post) {
-    // Modify the Post object
     return $post;
 });
 ```
 
 ## Next steps
 
-- [WordPress Admin Panel](../frameworks/wordpress/admin-panel.md) — Settings page walkthrough
-- [WordPress Hooks](../frameworks/wordpress/hooks.md) — Full hooks reference
-- [WordPress REST API](../frameworks/wordpress/rest-api.md) — AJAX endpoints
+- [WordPress Admin Panel](../frameworks/wordpress/admin-panel.md) -- Settings page walkthrough
+- [WordPress Hooks](../frameworks/wordpress/hooks.md) -- Full hooks reference
+- [WordPress REST API](../frameworks/wordpress/rest-api.md) -- REST endpoints
