@@ -111,7 +111,7 @@ const config: Config = {
     announcementBar: {
       id: 'launch',
       content:
-        '🦉 OwlStack is now available! <a href="/docs/blog/introducing-owlstack">Read the announcement</a>.',
+        '🦉 OwlStack is now available! <a href="/blog/introducing-owlstack">Read the announcement</a>.',
       backgroundColor: '#6C3FC5',
       textColor: '#ffffff',
       isCloseable: true,
