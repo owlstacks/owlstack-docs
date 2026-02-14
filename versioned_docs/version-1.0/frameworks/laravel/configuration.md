@@ -4,48 +4,46 @@ title: Configuration
 description: Full configuration reference for OwlStack Laravel.
 ---
 
-# Laravel — Configuration
+# Laravel -- Configuration
 
 ## Environment variables
 
-Add your credentials to `.env`:
+Add your API key to `.env`:
 
-```dotenv
-# Telegram
-TELEGRAM_BOT_TOKEN=your-bot-token
-TELEGRAM_BOT_USERNAME=your_bot
-TELEGRAM_CHANNEL_USERNAME=@your_channel
-TELEGRAM_CHANNEL_SIGNATURE=
-TELEGRAM_PARSE_MODE=HTML
-
-# X (Twitter)
-TWITTER_CONSUMER_KEY=your-key
-TWITTER_CONSUMER_SECRET=your-secret
-TWITTER_ACCESS_TOKEN=your-token
-TWITTER_ACCESS_TOKEN_SECRET=your-token-secret
-
-# Facebook
-FACEBOOK_APP_ID=your-app-id
-FACEBOOK_APP_SECRET=your-app-secret
-FACEBOOK_PAGE_ACCESS_TOKEN=your-page-token
-FACEBOOK_PAGE_ID=your-page-id
-FACEBOOK_GRAPH_VERSION=v21.0
-
-# Proxy (optional — for restricted networks)
-OWLSTACK_PROXY_HOST=localhost
-OWLSTACK_PROXY_PORT=9050
-OWLSTACK_PROXY_TYPE=7
+```ini
+OWLSTACK_API_KEY=your-api-key-here
 ```
 
-## Auto-registration
+Configuration is published to `config/owlstack.php`:
 
-Only platforms with valid credentials are registered. If you leave Twitter credentials empty, only Telegram and Facebook will be available. No errors — platforms are silently skipped.
+```php
+return [
+    'api_key' => env('OWLSTACK_API_KEY'),
+
+    // Optional: override the API base URL
+    'api_url' => env('OWLSTACK_API_URL', 'https://api.owlstack.dev'),
+
+    // Optional: HTTP timeout in seconds
+    'timeout' => env('OWLSTACK_TIMEOUT', 30),
+
+    // Optional: proxy settings for restricted networks
+    'proxy' => [
+        'host' => env('OWLSTACK_PROXY_HOST'),
+        'port' => env('OWLSTACK_PROXY_PORT'),
+        'type' => env('OWLSTACK_PROXY_TYPE', 7),
+    ],
+];
+```
+
+## Platform connections
+
+Platform connections are managed in the [OwlStack dashboard](https://app.owlstack.dev), not in your Laravel configuration. The API key determines which platforms are available.
 
 ## Proxy support
 
-For restricted networks (e.g., countries blocking Telegram), configure a SOCKS proxy:
+For restricted networks (e.g., countries blocking certain platforms), configure a SOCKS proxy:
 
-```dotenv
+```ini
 OWLSTACK_PROXY_HOST=localhost
 OWLSTACK_PROXY_PORT=9050
 OWLSTACK_PROXY_TYPE=7

@@ -4,7 +4,7 @@ title: Events
 description: Laravel event integration for OwlStack publishing.
 ---
 
-# Laravel — Events
+# Laravel -- Events
 
 OwlStack dispatches events through Laravel's event system automatically.
 
@@ -12,26 +12,27 @@ OwlStack dispatches events through Laravel's event system automatically.
 
 | Event | When |
 |:------|:-----|
-| `Owlstack\Core\Events\PostPublished` | After successful publishing |
-| `Owlstack\Core\Events\PostFailed` | After a publishing failure |
+| `OwlStack\Events\PostPublished` | After successful publishing |
+| `OwlStack\Events\PostFailed` | After a publishing failure |
 
 ## Listening
 
 ```php
-use Owlstack\Core\Events\PostPublished;
-use Owlstack\Core\Events\PostFailed;
+use OwlStack\Events\PostPublished;
+use OwlStack\Events\PostFailed;
 
 // In a service provider or EventServiceProvider
 Event::listen(PostPublished::class, function (PostPublished $event) {
-    Log::info("Published to {$event->result->platformName}", [
-        'external_id' => $event->result->externalId,
-        'url' => $event->result->externalUrl,
+    Log::info("Published to {$event->result->platform()->value}", [
+        'external_id' => $event->result->externalId(),
+        'url' => $event->result->externalUrl(),
     ]);
 });
 
 Event::listen(PostFailed::class, function (PostFailed $event) {
-    Log::error("Failed to publish to {$event->result->platformName}", [
-        'error' => $event->result->error,
+    Log::error("Failed to publish to {$event->result->platform()->value}", [
+        'error' => $event->result->error(),
+        'code' => $event->result->errorCode(),
     ]);
 });
 ```
@@ -40,16 +41,22 @@ Event::listen(PostFailed::class, function (PostFailed $event) {
 
 ```php
 // app/Listeners/LogPublishing.php
+use OwlStack\Events\PostPublished;
+
 class LogPublishing
 {
     public function handle(PostPublished $event): void
     {
         DeliveryLog::create([
-            'platform' => $event->result->platformName,
-            'external_id' => $event->result->externalId,
-            'external_url' => $event->result->externalUrl,
-            'published_at' => $event->result->timestamp,
+            'platform' => $event->result->platform()->value,
+            'external_id' => $event->result->externalId(),
+            'external_url' => $event->result->externalUrl(),
+            'published_at' => now(),
         ]);
     }
 }
 ```
+
+## Webhook events
+
+For server-to-server notifications (e.g., async delivery confirmation), use [webhooks](/events/webhooks) instead of SDK events.

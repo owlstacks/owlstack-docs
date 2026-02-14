@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 title: Migration from Larasap
-description: Upgrading from alihesari/larasap to owlstack/owlstack-laravel.
+description: Upgrading from alihesari/larasap to owlstack/laravel.
 ---
 
 # Migration from Larasap
@@ -14,58 +14,89 @@ If you're upgrading from the old `alihesari/larasap` package, follow these steps
 
 ```bash
 composer remove alihesari/larasap
-composer require owlstack/owlstack-laravel
+composer require owlstack/laravel
 ```
 
-### 2. Rename config
+### 2. Create config
 
-Rename `config/larasap.php` to `config/owlstack.php` and update the format:
+Delete `config/larasap.php` and publish the new config:
 
 ```bash
 php artisan vendor:publish --tag=owlstack-config
 ```
 
-### 3. Update imports
+### 3. Add API key
+
+Replace your platform credentials in `.env` with a single API key:
+
+```diff
+- TELEGRAM_BOT_TOKEN=...
+- TWITTER_CONSUMER_KEY=...
+- FACEBOOK_PAGE_ACCESS_TOKEN=...
++ OWLSTACK_API_KEY=your-api-key-here
+```
+
+Get your API key from the [OwlStack dashboard](https://app.owlstack.dev).
+
+### 4. Connect platforms
+
+Connect your social accounts via the [OwlStack dashboard](https://app.owlstack.dev) using OAuth. No more manual token management.
+
+### 5. Update imports
 
 ```diff
 - use Alihesari\Larasap\SendTo;
-+ use Owlstack\Laravel\SendTo;
++ use OwlStack\Laravel\Facades\OwlStack;
++ use OwlStack\Post;
++ use OwlStack\Enums\Platform;
 ```
 
-### 4. Update call style
+### 6. Update publishing calls
 
 ```diff
-// Old: static calls
+// Old: platform-specific static calls
 - SendTo::telegram($msg);
+- SendTo::twitter($msg);
+- SendTo::facebook('link', $data);
 
-// New: instance method (via DI)
-+ $sendTo->telegram($msg);
+// New: unified API
++ OwlStack::publish($msg, [Platform::Telegram]);
++ OwlStack::publish($msg, [Platform::Twitter]);
++ OwlStack::publish($msg, [Platform::Facebook]);
 
-// Or via facade
-+ Owlstack::telegram($msg);
+// Or use Post builder for complex content
++ $post = Post::create($msg)
++     ->withUrl('https://example.com')
++     ->withHashtags(['laravel']);
++ OwlStack::publish($post, [Platform::Twitter, Platform::Facebook]);
 ```
 
-### 5. Update Facebook calls
+### 7. Update event listeners
 
 ```diff
-- SendTo::facebook('link', $data);
-+ $sendTo->facebook($msg, 'link', $data);
+- use Owlstack\Core\Events\PostPublished;
++ use OwlStack\Events\PostPublished;
+
+// Property access changed to methods:
+- $event->result->platformName
++ $event->result->platform()->value
+
+- $event->result->externalId
++ $event->result->externalId()
 ```
 
-### 6. Update event listeners
+### 8. Remove old dependencies
 
-If you had custom event listeners, update them to use the new event classes.
-
-### 7. Remove old dependencies
-
-The `facebook/graph-sdk` and `facebook/php-business-sdk` dependencies are no longer needed — OwlStack uses its own HTTP client.
+The `facebook/graph-sdk` and `facebook/php-business-sdk` dependencies are no longer needed -- OwlStack Cloud handles all API communication.
 
 ## Key API changes
 
 | Old (Larasap) | New (OwlStack) |
 |:--------------|:---------------|
-| `SendTo::telegram($msg)` | `$sendTo->telegram($msg)` |
-| `SendTo::x($msg)` | `$sendTo->x($msg)` or `$sendTo->twitter($msg)` |
-| `SendTo::facebook('link', $data)` | `$sendTo->facebook($msg, 'link', $data)` |
-| Returns raw array | Returns `PublishResult` |
-| Static calls only | DI + Facade |
+| `SendTo::telegram($msg)` | `OwlStack::publish($msg, [Platform::Telegram])` |
+| `SendTo::x($msg)` | `OwlStack::publish($msg, [Platform::Twitter])` |
+| `SendTo::facebook('link', $data)` | `OwlStack::publish($post, [Platform::Facebook])` |
+| Platform credentials in `.env` | Single `OWLSTACK_API_KEY` |
+| Returns raw array | Returns `DeliveryResult[]` |
+| Static calls only | Facade + DI |
+| Self-hosted API calls | Cloud-powered API |

@@ -4,7 +4,7 @@ title: Installation & Setup
 description: Installing and configuring OwlStack for Laravel.
 ---
 
-# Laravel — Installation & Setup
+# Laravel -- Installation & Setup
 
 ## Requirements
 
@@ -14,10 +14,10 @@ description: Installing and configuring OwlStack for Laravel.
 ## Install
 
 ```bash
-composer require owlstack/owlstack-laravel
+composer require owlstack/laravel
 ```
 
-This installs both `owlstack-laravel` and `owlstack-core`.
+This installs `owlstack/laravel`, `owlstack/cloud`, and `owlstack/core`.
 
 ## Publish config
 
@@ -27,23 +27,29 @@ php artisan vendor:publish --tag=owlstack-config
 
 This creates `config/owlstack.php`.
 
+## Add API key
+
+Add your OwlStack API key to `.env`:
+
+```ini
+OWLSTACK_API_KEY=your-api-key-here
+```
+
+Get your API key from the [OwlStack dashboard](https://app.owlstack.dev).
+
 ## Architecture
 
-The Laravel package is a thin wrapper around `owlstack-core`:
+The Laravel package is a thin wrapper around the OwlStack cloud client:
 
 ```
 Your Laravel App
-    └── Owlstack\Laravel\SendTo (or Facade)
-        └── Owlstack\Core\Publishing\Publisher
-            └── Owlstack\Core\Platforms\{Platform}Platform
-                └── Owlstack\Core\Http\HttpClient (cURL)
+    └── OwlStack\Laravel\Facades\OwlStack (Facade)
+        └── OwlStack\Cloud\OwlStackClient
+            └── HTTPS → api.owlstack.dev
 ```
 
 The service provider wires everything together:
 
-- **`OwlstackConfig`** — built from `config/owlstack.php`
-- **`HttpClient`** — core's cURL client (with optional proxy)
-- **Platform instances** — only registered if credentials are configured
-- **`PlatformRegistry`** — holds all active platforms
-- **`Publisher`** — orchestrates publishing with event dispatch
-- **`SendTo`** — high-level API bound as `'owlstack'` singleton
+- **`OwlStackClient`** -- configured with your API key
+- **Event bridge** -- connects OwlStack events to Laravel's event system
+- **Facade** -- provides a clean `OwlStack::publish()` API
