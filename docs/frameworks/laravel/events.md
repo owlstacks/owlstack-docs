@@ -4,7 +4,7 @@ title: Events
 description: Laravel event integration for OwlStack publishing.
 ---
 
-# Laravel -- Events
+# Laravel - Events
 
 OwlStack dispatches events through Laravel's event system automatically.
 

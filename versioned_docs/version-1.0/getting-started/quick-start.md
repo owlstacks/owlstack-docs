@@ -4,7 +4,7 @@ title: Quick Start (Standalone PHP)
 description: Publish your first post with OwlStack in minutes.
 ---
 
-# Quick Start -- Standalone PHP
+# Quick Start - Standalone PHP
 
 This guide gets you publishing to social media in under 5 minutes.
 
@@ -66,7 +66,7 @@ foreach ($results as $result) {
 }
 ```
 
-OwlStack formats your content for each platform automatically -- character limits, markup syntax, hashtag placement, and media constraints are all handled server-side.
+OwlStack formats your content for each platform automatically - character limits, markup syntax, hashtag placement, and media constraints are all handled server-side.
 
 ## 5. Add media
 
@@ -84,6 +84,6 @@ OwlStack uploads and processes media on the server, resizing and converting as n
 
 ## Next steps
 
-- [Connect Platforms](./connect-platforms.md) -- Set up social media accounts
-- [Core Concepts](../core-concepts/posts-and-content.md) -- Learn about Posts, Media, and the content model
-- [Platforms](../platforms/overview.mdx) -- See all 11 supported platforms
+- [Connect Platforms](./connect-platforms.md) - Set up social media accounts
+- [Core Concepts](../core-concepts/posts-and-content.md) - Learn about Posts, Media, and the content model
+- [Platforms](../platforms/overview.mdx) - See all 11 supported platforms

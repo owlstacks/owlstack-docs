@@ -4,7 +4,7 @@ title: Hooks
 description: WordPress actions and filters provided by OwlStack.
 ---
 
-# WordPress -- Hooks
+# WordPress - Hooks
 
 ## Actions
 

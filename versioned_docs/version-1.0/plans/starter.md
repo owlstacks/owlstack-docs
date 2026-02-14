@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: Starter Plan
-description: OwlStack Starter plan -- for individual creators and small projects.
+description: OwlStack Starter plan - for individual creators and small projects.
 ---
 
 # Starter Plan
@@ -12,11 +12,11 @@ The Starter plan is designed for individual creators, bloggers, and small projec
 
 ## What's included
 
-- **3 platform connections** -- Connect up to 3 social platforms
-- **200 posts/month** -- Enough for daily publishing across 3 platforms
-- **Basic analytics** -- Post counts and delivery status
-- **All SDK features** -- Post builder, Media, DeliveryResult, events
-- **Email support** -- Standard response time
+- **3 platform connections** - Connect up to 3 social platforms
+- **200 posts/month** - Enough for daily publishing across 3 platforms
+- **Basic analytics** - Post counts and delivery status
+- **All SDK features** - Post builder, Media, DeliveryResult, events
+- **Email support** - Standard response time
 
 ## Available platforms
 

@@ -21,8 +21,8 @@ These events are dispatched through your framework's event system:
 
 | Framework | Event System |
 |:----------|:------------|
-| **Laravel** | `Event::dispatch()` -- listen with `Event::listen()` or event listeners |
-| **WordPress** | `do_action()` -- listen with `add_action()` |
+| **Laravel** | `Event::dispatch()` - listen with `Event::listen()` or event listeners |
+| **WordPress** | `do_action()` - listen with `add_action()` |
 | **Standalone PHP** | Implement `EventDispatcherInterface` and pass to client |
 
 ## Server-side webhooks

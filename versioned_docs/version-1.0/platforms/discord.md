@@ -6,7 +6,7 @@ description: Publishing to Discord channels via bot or webhook.
 
 # Discord
 
-Discord supports two modes -- **bot** and **webhook** -- with rich embed support.
+Discord supports two modes - **bot** and **webhook** - with rich embed support.
 
 ## Connect
 

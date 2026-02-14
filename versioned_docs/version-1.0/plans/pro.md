@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 title: Pro Plan
-description: OwlStack Pro plan -- for teams and power users.
+description: OwlStack Pro plan - for teams and power users.
 ---
 
 # Pro Plan
@@ -14,13 +14,13 @@ The Pro plan unlocks the full power of OwlStack for teams and power users who ne
 
 Everything in Starter, plus:
 
-- **All 11 platforms** -- Connect every supported platform
-- **2,000 posts/month** -- High-volume publishing
-- **Scheduling** -- Schedule posts for future delivery
-- **Batch publishing** -- Publish to many platforms in one API call with per-platform optimization
-- **Templates** -- Create reusable post templates
-- **Full analytics** -- Engagement metrics, delivery logs, performance trends
-- **Webhooks** -- Server-to-server event notifications
+- **All 11 platforms** - Connect every supported platform
+- **2,000 posts/month** - High-volume publishing
+- **Scheduling** - Schedule posts for future delivery
+- **Batch publishing** - Publish to many platforms in one API call with per-platform optimization
+- **Templates** - Create reusable post templates
+- **Full analytics** - Engagement metrics, delivery logs, performance trends
+- **Webhooks** - Server-to-server event notifications
 - **Priority email support**
 
 ## Scheduling
@@ -57,7 +57,7 @@ $client->publishBatch([
 ```php
 // Create a reusable template
 $client->createTemplate('product-launch', [
-    'body' => 'Introducing {product_name} -- {description}',
+    'body' => 'Introducing {product_name} - {description}',
     'hashtags' => ['launch', 'product'],
     'platforms' => [Platform::Twitter, Platform::LinkedIn, Platform::Facebook],
 ]);

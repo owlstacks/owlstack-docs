@@ -126,10 +126,10 @@ Connect platforms through the [OwlStack dashboard](https://app.owlstack.dev). We
 Send your own platform credentials with each API call. OwlStack uses them for that request only and never stores them.
 
 ```php
-// Option A -- tokens managed by OwlStack
+// Option A - tokens managed by OwlStack
 $client->publish($post, [Platform::Twitter]);
 
-// Option B -- you pass credentials per request
+// Option B - you pass credentials per request
 $client->publish($post, [
     Platform::Twitter->withCredentials([
         'api_key' => env('TWITTER_API_KEY'),
@@ -157,7 +157,7 @@ The client wraps all API calls and always returns a `DeliveryResult`:
 
 ```php
 $result = $client->publish($post, [Platform::Twitter]);
-// Never throws -- always check $result->isSuccessful()
+// Never throws - always check $result->isSuccessful()
 ```
 
 ### Open interfaces, cloud implementation

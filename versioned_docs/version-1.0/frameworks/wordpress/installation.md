@@ -4,7 +4,7 @@ title: Installation
 description: Installing the OwlStack WordPress plugin.
 ---
 
-# WordPress -- Installation
+# WordPress - Installation
 
 ## Requirements
 
@@ -31,9 +31,9 @@ Get your API key from the [OwlStack dashboard](https://app.owlstack.dev).
 
 ## Features overview
 
-- **Admin Settings Page** -- Enter your API key and configure options
-- **Publish Meta Box** -- Select platforms from the post editor
-- **Delivery Logs** -- Track all publishing activity
-- **REST API** -- AJAX endpoints for testing and manual publishing
-- **WordPress Events** -- Hooks into `do_action` for publishing events
-- **OAuth via Dashboard** -- Connect platforms through the OwlStack dashboard (no local tokens)
+- **Admin Settings Page** - Enter your API key and configure options
+- **Publish Meta Box** - Select platforms from the post editor
+- **Delivery Logs** - Track all publishing activity
+- **REST API** - AJAX endpoints for testing and manual publishing
+- **WordPress Events** - Hooks into `do_action` for publishing events
+- **OAuth via Dashboard** - Connect platforms through the OwlStack dashboard (no local tokens)

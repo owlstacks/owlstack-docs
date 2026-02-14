@@ -4,7 +4,7 @@ title: Quick Start (Laravel)
 description: Set up OwlStack in a Laravel application.
 ---
 
-# Quick Start -- Laravel
+# Quick Start - Laravel
 
 This guide gets OwlStack working in your Laravel application in minutes.
 
@@ -110,6 +110,6 @@ Event::listen(PostFailed::class, function (PostFailed $event) {
 
 ## Next steps
 
-- [Laravel Configuration](../frameworks/laravel/configuration.md) -- Full config reference
-- [Laravel Usage](../frameworks/laravel/usage.md) -- Advanced usage patterns
-- [Laravel Events](../frameworks/laravel/events.md) -- Event handling in Laravel
+- [Laravel Configuration](../frameworks/laravel/configuration.md) - Full config reference
+- [Laravel Usage](../frameworks/laravel/usage.md) - Advanced usage patterns
+- [Laravel Events](../frameworks/laravel/events.md) - Event handling in Laravel

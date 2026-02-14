@@ -26,7 +26,7 @@ OwlStack handles character truncation automatically on the server. Your content 
 
 ## How truncation works
 
-- Breaks at **word boundaries** -- never cuts a word in half
+- Breaks at **word boundaries** - never cuts a word in half
 - Appends an **ellipsis** to indicate truncation
 - Accounts for hashtags and URLs in the character budget
 - For Twitter, accounts for `t.co` URL wrapping (23 characters per URL)

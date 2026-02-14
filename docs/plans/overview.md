@@ -13,19 +13,19 @@ OwlStack offers flexible plans for individuals, teams, and enterprises.
 | Feature | Free | Starter | Pro | Pro+AI | Enterprise |
 |:--------|:-----|:--------|:----|:-------|:-----------|
 | **Price** | $0/mo | $19/mo | $49/mo | $89/mo | Custom |
-| **Annual** | -- | $179/yr | $449/yr | $799/yr | Custom |
+| **Annual** | - | $179/yr | $449/yr | $799/yr | Custom |
 | **Platforms** | 1 | 3 | 11 (all) | 11 (all) | 11 (all) |
 | **Posts/month** | 10 | 200 | 2,000 | 5,000 | Unlimited |
-| **Scheduling** | -- | -- | Yes | Yes | Yes |
-| **Batch publishing** | -- | -- | Yes | Yes | Yes |
-| **Templates** | -- | -- | Yes | Yes | Yes |
-| **Analytics** | -- | Basic | Full | Full | Full + custom |
-| **AI content** | -- | -- | -- | Yes | Yes |
-| **Auto-hashtags** | -- | -- | -- | Yes | Yes |
-| **A/B testing** | -- | -- | -- | Yes | Yes |
-| **Webhooks** | -- | -- | Yes | Yes | Yes |
-| **Priority support** | -- | -- | -- | -- | Yes |
-| **SLA** | -- | -- | -- | -- | 99.9% |
+| **Scheduling** | - | - | Yes | Yes | Yes |
+| **Batch publishing** | - | - | Yes | Yes | Yes |
+| **Templates** | - | - | Yes | Yes | Yes |
+| **Analytics** | - | Basic | Full | Full | Full + custom |
+| **AI content** | - | - | - | Yes | Yes |
+| **Auto-hashtags** | - | - | - | Yes | Yes |
+| **A/B testing** | - | - | - | Yes | Yes |
+| **Webhooks** | - | - | Yes | Yes | Yes |
+| **Priority support** | - | - | - | - | Yes |
+| **SLA** | - | - | - | - | 99.9% |
 
 ## Free tier
 

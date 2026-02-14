@@ -4,7 +4,7 @@ title: Quick Start (WordPress)
 description: Set up OwlStack in a WordPress site.
 ---
 
-# Quick Start -- WordPress
+# Quick Start - WordPress
 
 This guide gets OwlStack working in your WordPress site.
 
@@ -34,7 +34,7 @@ Platform connections (OAuth) are managed in the OwlStack dashboard, not in WordP
 
 ## 4. Publish from the editor
 
-When editing a post, you'll see the **OwlStack** meta box in the sidebar. Select your target platforms and hit **Publish** -- the post will be automatically published to all selected platforms.
+When editing a post, you'll see the **OwlStack** meta box in the sidebar. Select your target platforms and hit **Publish** - the post will be automatically published to all selected platforms.
 
 ## 5. Publish from code
 
@@ -89,6 +89,6 @@ add_filter('owlstack_post_data', function ($post) {
 
 ## Next steps
 
-- [WordPress Admin Panel](../frameworks/wordpress/admin-panel.md) -- Settings page walkthrough
-- [WordPress Hooks](../frameworks/wordpress/hooks.md) -- Full hooks reference
-- [WordPress REST API](../frameworks/wordpress/rest-api.md) -- REST endpoints
+- [WordPress Admin Panel](../frameworks/wordpress/admin-panel.md) - Settings page walkthrough
+- [WordPress Hooks](../frameworks/wordpress/hooks.md) - Full hooks reference
+- [WordPress REST API](../frameworks/wordpress/rest-api.md) - REST endpoints

@@ -34,9 +34,9 @@ $results = $client->publish($post, [
 
 OwlStack's servers handle all platform API communication. Your application never makes direct API calls to Twitter, Facebook, or any other platform.
 
-- **No API credentials in your code** -- connect platforms via OAuth through the OwlStack dashboard
-- **No maintenance burden** -- when Twitter changes their API, OwlStack updates the server. Your code stays the same.
-- **Instant platform support** -- new platforms are added server-side. No SDK update required.
+- **No API credentials in your code** - connect platforms via OAuth through the OwlStack dashboard
+- **No maintenance burden** - when Twitter changes their API, OwlStack updates the server. Your code stays the same.
+- **Instant platform support** - new platforms are added server-side. No SDK update required.
 
 ### Clean PHP SDK
 
@@ -46,7 +46,7 @@ $post = Post::create('Hello world')
     ->withMedia(Media::image('/path/to/photo.jpg'))
     ->withHashtags(['php', 'opensource']);
 
-// Post is readonly -- safe to pass around
+// Post is readonly - safe to pass around
 ```
 
 ### Framework integrations

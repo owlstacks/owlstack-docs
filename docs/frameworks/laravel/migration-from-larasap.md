@@ -87,7 +87,7 @@ Connect your social accounts via the [OwlStack dashboard](https://app.owlstack.d
 
 ### 8. Remove old dependencies
 
-The `facebook/graph-sdk` and `facebook/php-business-sdk` dependencies are no longer needed -- OwlStack Cloud handles all API communication.
+The `facebook/graph-sdk` and `facebook/php-business-sdk` dependencies are no longer needed - OwlStack Cloud handles all API communication.
 
 ## Key API changes
 

@@ -31,10 +31,10 @@ sequenceDiagram
 
 ## What OwlStack handles
 
-- **Token exchange** -- converting authorization codes to access tokens
-- **Secure storage** -- tokens are encrypted at rest
-- **Automatic refresh** -- tokens are refreshed before they expire
-- **Scope management** -- requesting the right permissions for each platform
+- **Token exchange** - converting authorization codes to access tokens
+- **Secure storage** - tokens are encrypted at rest
+- **Automatic refresh** - tokens are refreshed before they expire
+- **Scope management** - requesting the right permissions for each platform
 
 ## You never touch tokens
 

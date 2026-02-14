@@ -6,7 +6,7 @@ description: Publishing messages to Slack channels.
 
 # Slack
 
-Slack supports two modes -- **bot token** and **webhook** -- with Block Kit layout support.
+Slack supports two modes - **bot token** and **webhook** - with Block Kit layout support.
 
 ## Connect
 

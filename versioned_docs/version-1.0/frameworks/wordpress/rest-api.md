@@ -4,7 +4,7 @@ title: REST API
 description: OwlStack WordPress REST API endpoints.
 ---
 
-# WordPress -- REST API
+# WordPress - REST API
 
 OwlStack registers AJAX endpoints for use from the WordPress admin panel.
 

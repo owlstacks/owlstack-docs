@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 title: Pro+AI Plan
-description: OwlStack Pro+AI plan -- AI-powered content creation and optimization.
+description: OwlStack Pro+AI plan - AI-powered content creation and optimization.
 ---
 
 # Pro+AI Plan
@@ -14,12 +14,12 @@ The Pro+AI plan adds AI-powered features to supercharge your content strategy.
 
 Everything in Pro, plus:
 
-- **5,000 posts/month** -- Even higher volume
-- **AI content generation** -- Generate platform-optimized posts from prompts or URLs
-- **Auto-hashtags** -- AI suggests relevant hashtags based on content and trends
-- **Post optimization** -- AI rewrites your content for each platform's best practices
-- **A/B testing** -- Create content variants and track performance
-- **Content calendar** -- AI-suggested optimal posting times
+- **5,000 posts/month** - Even higher volume
+- **AI content generation** - Generate platform-optimized posts from prompts or URLs
+- **Auto-hashtags** - AI suggests relevant hashtags based on content and trends
+- **Post optimization** - AI rewrites your content for each platform's best practices
+- **A/B testing** - Create content variants and track performance
+- **Content calendar** - AI-suggested optimal posting times
 
 ## AI content generation
 
@@ -68,7 +68,7 @@ $test = $client->ai()->abTest(
     variants: [
         'Check out our new AI features!',
         'OwlStack now has AI-powered publishing',
-        'AI meets social media -- try OwlStack Pro+AI',
+        'AI meets social media - try OwlStack Pro+AI',
     ],
     platforms: [Platform::Twitter],
     duration_hours: 24,

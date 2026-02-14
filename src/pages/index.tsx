@@ -71,7 +71,7 @@ function HomepageHeader() {
           <Link
             className="button button--primary button--lg"
             to="/getting-started/installation">
-            Get Started -- Free
+            Get Started - Free
           </Link>
           <Link
             className="button button--outline button--lg"

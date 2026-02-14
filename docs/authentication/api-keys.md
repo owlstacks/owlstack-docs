@@ -14,7 +14,7 @@ API keys authenticate your application with OwlStack's cloud service. Every API 
 2. Go to **Project Settings > API Keys**
 3. Click **Create API Key**
 4. Name the key (e.g., "Production", "Staging")
-5. Copy the key -- it's only shown once
+5. Copy the key - it's only shown once
 
 ## Using your API key
 

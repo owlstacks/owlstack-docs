@@ -1,10 +1,10 @@
 ---
 sidebar_position: 3
 title: Usage
-description: Using OwlStack in Laravel -- Facade, DI, and publishing features.
+description: Using OwlStack in Laravel - Facade, DI, and publishing features.
 ---
 
-# Laravel -- Usage
+# Laravel - Usage
 
 ## Facade
 

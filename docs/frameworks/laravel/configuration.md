@@ -4,7 +4,7 @@ title: Configuration
 description: Full configuration reference for OwlStack Laravel.
 ---
 
-# Laravel -- Configuration
+# Laravel - Configuration
 
 ## Environment variables
 

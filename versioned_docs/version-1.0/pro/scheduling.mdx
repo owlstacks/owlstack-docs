@@ -33,10 +33,10 @@ echo "Scheduled ID: {$scheduled->id}";
 
 ## Features
 
-- **Specific datetime** -- Publish at an exact time (UTC or any timezone)
-- **Time windows** -- Publish within a range (e.g., 9 AM - 12 PM local time)
-- **Timezone support** -- Schedule in any timezone, converted to UTC server-side
-- **Cancel/reschedule** -- Modify or cancel scheduled posts before delivery
+- **Specific datetime** - Publish at an exact time (UTC or any timezone)
+- **Time windows** - Publish within a range (e.g., 9 AM - 12 PM local time)
+- **Timezone support** - Schedule in any timezone, converted to UTC server-side
+- **Cancel/reschedule** - Modify or cancel scheduled posts before delivery
 
 ## Manage scheduled posts
 
@@ -65,4 +65,4 @@ OwlStack::schedule($post, [Platform::Twitter], [
 
 ## How it works
 
-Scheduled posts are stored on OwlStack Cloud and delivered at the specified time. No local cron jobs or queue workers are needed -- the cloud handles delivery automatically.
+Scheduled posts are stored on OwlStack Cloud and delivered at the specified time. No local cron jobs or queue workers are needed - the cloud handles delivery automatically.

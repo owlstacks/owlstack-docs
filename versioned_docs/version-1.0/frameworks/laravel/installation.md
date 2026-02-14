@@ -4,7 +4,7 @@ title: Installation & Setup
 description: Installing and configuring OwlStack for Laravel.
 ---
 
-# Laravel -- Installation & Setup
+# Laravel - Installation & Setup
 
 ## Requirements
 
@@ -50,6 +50,6 @@ Your Laravel App
 
 The service provider wires everything together:
 
-- **`OwlStackClient`** -- configured with your API key
-- **Event bridge** -- connects OwlStack events to Laravel's event system
-- **Facade** -- provides a clean `OwlStack::publish()` API
+- **`OwlStackClient`** - configured with your API key
+- **Event bridge** - connects OwlStack events to Laravel's event system
+- **Facade** - provides a clean `OwlStack::publish()` API

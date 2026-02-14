@@ -21,7 +21,7 @@ use OwlStack\Enums\Platform;
 $client = new OwlStackClient('your-api-key');
 
 $client->templates()->create('product-launch', [
-    'body' => 'Introducing {product_name} -- {description}',
+    'body' => 'Introducing {product_name} - {description}',
     'hashtags' => ['launch', '{product_name}'],
     'platforms' => [Platform::Twitter, Platform::LinkedIn],
 ]);
@@ -38,10 +38,10 @@ $results = $client->templates()->publish('product-launch', [
 
 ## Features
 
-- **Placeholders** -- `{title}`, `{url}`, `{tags}`, and custom placeholders
-- **Per-platform body** -- Different template text for different platforms
-- **Default values** -- Set fallback values for optional placeholders
-- **Template management** -- List, update, and delete templates via API or dashboard
+- **Placeholders** - `{title}`, `{url}`, `{tags}`, and custom placeholders
+- **Per-platform body** - Different template text for different platforms
+- **Default values** - Set fallback values for optional placeholders
+- **Template management** - List, update, and delete templates via API or dashboard
 
 ## Per-platform templates
 

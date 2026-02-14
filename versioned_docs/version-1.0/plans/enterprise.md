@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 title: Enterprise Plan
-description: OwlStack Enterprise -- custom plans for large organizations.
+description: OwlStack Enterprise - custom plans for large organizations.
 ---
 
 # Enterprise Plan
@@ -14,14 +14,14 @@ The Enterprise plan is designed for large organizations that need unlimited publ
 
 Everything in Pro+AI, plus:
 
-- **Unlimited posts** -- No monthly post limits
-- **99.9% SLA** -- Guaranteed uptime with service credits
-- **Priority support** -- Dedicated support channel with fast response times
-- **Custom integrations** -- Work with our team to build custom platform adapters
-- **On-premise option** -- Deploy the OwlStack API on your own infrastructure
-- **Team management** -- Multiple API keys with role-based permissions
-- **Audit logs** -- Full audit trail of all API activity
-- **Custom analytics** -- Tailored reporting and data export
+- **Unlimited posts** - No monthly post limits
+- **99.9% SLA** - Guaranteed uptime with service credits
+- **Priority support** - Dedicated support channel with fast response times
+- **Custom integrations** - Work with our team to build custom platform adapters
+- **On-premise option** - Deploy the OwlStack API on your own infrastructure
+- **Team management** - Multiple API keys with role-based permissions
+- **Audit logs** - Full audit trail of all API activity
+- **Custom analytics** - Tailored reporting and data export
 
 ## Team management
 

@@ -6,7 +6,7 @@ description: Receive server-side notifications for publishing events.
 
 # Webhooks
 
-Webhooks allow OwlStack to notify your application when events happen on the server -- such as scheduled posts being published, batch operations completing, or retries succeeding.
+Webhooks allow OwlStack to notify your application when events happen on the server - such as scheduled posts being published, batch operations completing, or retries succeeding.
 
 ## Setup
 

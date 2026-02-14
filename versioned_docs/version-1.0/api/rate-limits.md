@@ -70,11 +70,11 @@ Post quotas are separate from request rate limits:
 
 ## Best practices
 
-1. **Check headers** -- Monitor `X-RateLimit-Remaining` to avoid hitting limits
-2. **Implement backoff** -- On `429`, wait for `retry_after` seconds before retrying
-3. **Batch requests** -- Use batch publishing instead of individual calls
-4. **Cache results** -- Don't poll the API unnecessarily
-5. **Use webhooks** -- For delivery confirmation, use webhooks instead of polling
+1. **Check headers** - Monitor `X-RateLimit-Remaining` to avoid hitting limits
+2. **Implement backoff** - On `429`, wait for `retry_after` seconds before retrying
+3. **Batch requests** - Use batch publishing instead of individual calls
+4. **Cache results** - Don't poll the API unnecessarily
+5. **Use webhooks** - For delivery confirmation, use webhooks instead of polling
 
 ## SDK handling
 

@@ -23,7 +23,7 @@ $client = new OwlStackClient('your-api-key');
 $test = $client->ai()->abTest(
     variants: [
         'Exciting news: OwlStack 2.0 is here!',
-        'We just shipped OwlStack 2.0 -- check it out',
+        'We just shipped OwlStack 2.0 - check it out',
         'OwlStack 2.0: AI-powered social media publishing',
     ],
     platforms: [Platform::Twitter],
@@ -36,11 +36,11 @@ echo "Status: {$test->status}\n";
 
 ## How it works
 
-1. **Create variants** -- Provide 2-5 different versions of your post
-2. **AI publishes** -- Each variant is sent to a portion of your audience
-3. **Track engagement** -- OwlStack monitors likes, clicks, shares per variant
-4. **Winner selected** -- After the test period, AI picks the best performer
-5. **Scale up** -- Optionally auto-publish the winner to remaining platforms
+1. **Create variants** - Provide 2-5 different versions of your post
+2. **AI publishes** - Each variant is sent to a portion of your audience
+3. **Track engagement** - OwlStack monitors likes, clicks, shares per variant
+4. **Winner selected** - After the test period, AI picks the best performer
+5. **Scale up** - Optionally auto-publish the winner to remaining platforms
 
 ## Check results
 

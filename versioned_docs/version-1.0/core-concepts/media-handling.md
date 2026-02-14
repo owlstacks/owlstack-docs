@@ -8,7 +8,7 @@ description: Working with Media for images, videos, and documents.
 
 ## Media
 
-A single media attachment -- image, video, audio, or document.
+A single media attachment - image, video, audio, or document.
 
 ```php
 use OwlStack\Media;

@@ -16,7 +16,7 @@ const FeatureList: FeatureItem[] = [
     description: (
       <>
         Telegram, Twitter/X, Facebook, LinkedIn, Discord, Instagram, Pinterest,
-        Reddit, Slack, Tumblr, and WhatsApp -- all through a single API call.
+        Reddit, Slack, Tumblr, and WhatsApp - all through a single API call.
       </>
     ),
   },
@@ -36,7 +36,7 @@ const FeatureList: FeatureItem[] = [
     description: (
       <>
         First-class support for Laravel (10/11/12) and WordPress (6.4+).
-        Or use the PHP SDK standalone -- no framework required.
+        Or use the PHP SDK standalone - no framework required.
       </>
     ),
   },
@@ -46,7 +46,7 @@ const FeatureList: FeatureItem[] = [
     description: (
       <>
         PHP 8.1+ with readonly value objects, enums, and strict typing.
-        The client never throws -- always returns a result you can inspect.
+        The client never throws - always returns a result you can inspect.
       </>
     ),
   },
@@ -56,7 +56,7 @@ const FeatureList: FeatureItem[] = [
     description: (
       <>
         Generate platform-optimized posts, auto-hashtags, A/B testing, and
-        optimal posting times -- all powered by AI on the Pro+AI plan.
+        optimal posting times - all powered by AI on the Pro+AI plan.
       </>
     ),
   },
