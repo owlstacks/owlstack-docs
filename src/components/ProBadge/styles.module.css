@@ -1,0 +1,14 @@
+.proBadge {
+  display: inline-block;
+  background: linear-gradient(135deg, #6C3FC5, #9D6FE8);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+  line-height: 1.4;
+}

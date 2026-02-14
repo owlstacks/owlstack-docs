@@ -1,0 +1,38 @@
+---
+sidebar_position: 2
+title: Batch Publishing
+description: Publish to multiple platforms in a single call.
+---
+
+# Batch Publishing
+
+import ProBadge from '@site/src/components/ProBadge';
+
+<ProBadge />
+
+Publish to multiple platforms in a single call with built-in error handling and retry strategies.
+
+```php
+use Owlstack\Pro\Publishing\BatchPublisher;
+
+$batchPublisher = new BatchPublisher($publisher);
+
+$results = $batchPublisher->publish($post, ['telegram', 'twitter', 'discord']);
+
+// Results is an array: ['telegram' => PublishResult, 'twitter' => PublishResult, ...]
+foreach ($results as $platform => $result) {
+    echo $result->success
+        ? "✓ {$platform}\n"
+        : "✗ {$platform}: {$result->error}\n";
+}
+```
+
+## Laravel
+
+In Laravel, batch publishing can be dispatched as a queue job:
+
+```php
+use Owlstack\Pro\Laravel\Jobs\BatchPublishJob;
+
+BatchPublishJob::dispatch($post, ['telegram', 'twitter', 'discord']);
+```

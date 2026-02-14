@@ -1,0 +1,16 @@
+announcement:
+  label: Announcement
+  description: Official announcements
+  permalink: /announcement
+migration:
+  label: Migration
+  description: Migration guides
+  permalink: /migration
+tutorial:
+  label: Tutorial
+  description: Tutorials and how-tos
+  permalink: /tutorial
+release:
+  label: Release
+  description: Release notes
+  permalink: /release

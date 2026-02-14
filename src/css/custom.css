@@ -1,0 +1,67 @@
+/**
+ * OwlStack brand colors and global styles.
+ * Infima CSS framework variables.
+ */
+
+:root {
+  --ifm-color-primary: #6C3FC5;
+  --ifm-color-primary-dark: #5E33B3;
+  --ifm-color-primary-darker: #5830A9;
+  --ifm-color-primary-darkest: #48278B;
+  --ifm-color-primary-light: #7E56CF;
+  --ifm-color-primary-lighter: #8560D3;
+  --ifm-color-primary-lightest: #9D7EDD;
+  --ifm-code-font-size: 95%;
+  --ifm-font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+  --docusaurus-highlighted-code-line-bg: rgba(108, 63, 197, 0.1);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #9D6FE8;
+  --ifm-color-primary-dark: #8B55E3;
+  --ifm-color-primary-darker: #8248E1;
+  --ifm-color-primary-darkest: #6922D8;
+  --ifm-color-primary-light: #AF89ED;
+  --ifm-color-primary-lighter: #B896EF;
+  --ifm-color-primary-lightest: #D0BCF5;
+  --docusaurus-highlighted-code-line-bg: rgba(157, 111, 232, 0.15);
+}
+
+/* Hero section */
+.hero--primary {
+  background: linear-gradient(135deg, #6C3FC5 0%, #4A1FA0 100%);
+}
+
+[data-theme='dark'] .hero--primary {
+  background: linear-gradient(135deg, #2D1B69 0%, #1a1a2e 100%);
+}
+
+/* Announcement bar */
+div[class*='announcementBar'] {
+  font-weight: 500;
+}
+
+/* Sidebar Pro badge integration */
+.menu__link .pro-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #6C3FC5, #9D6FE8);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  margin-left: 0.35rem;
+  vertical-align: middle;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Code block styling */
+.prism-code {
+  font-size: 0.9rem;
+}
+
+/* Navbar logo */
+.navbar__logo img {
+  border-radius: 6px;
+}

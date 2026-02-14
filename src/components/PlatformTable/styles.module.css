@@ -1,0 +1,12 @@
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.platformTable {
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.platformTable th {
+  white-space: nowrap;
+}

@@ -1,0 +1,50 @@
+{
+  "version.label": {
+    "message": "1.x",
+    "description": "The label for version current"
+  },
+  "sidebar.docsSidebar.category.Introduction": {
+    "message": "Introduction",
+    "description": "The label for category 'Introduction' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Getting Started": {
+    "message": "Getting Started",
+    "description": "The label for category 'Getting Started' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Core Concepts": {
+    "message": "Core Concepts",
+    "description": "The label for category 'Core Concepts' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Platforms": {
+    "message": "Platforms",
+    "description": "The label for category 'Platforms' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Formatting": {
+    "message": "Formatting",
+    "description": "The label for category 'Formatting' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Authentication": {
+    "message": "Authentication",
+    "description": "The label for category 'Authentication' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Events": {
+    "message": "Events",
+    "description": "The label for category 'Events' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Laravel": {
+    "message": "Laravel",
+    "description": "The label for category 'Laravel' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.WordPress": {
+    "message": "WordPress",
+    "description": "The label for category 'WordPress' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Pro Features": {
+    "message": "Pro Features",
+    "description": "The label for category 'Pro Features' in sidebar 'docsSidebar'"
+  },
+  "sidebar.docsSidebar.category.Extending": {
+    "message": "Extending",
+    "description": "The label for category 'Extending' in sidebar 'docsSidebar'"
+  }
+}
