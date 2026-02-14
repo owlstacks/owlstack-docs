@@ -1,70 +1,49 @@
 ---
 sidebar_position: 1
 title: OAuth Flow
-description: OwlStack's OAuth handling with OAuthHandler.
+description: How OwlStack manages platform OAuth authentication.
 ---
 
 # OAuth Flow
 
-The auth layer provides contracts for OAuth flows. Framework packages supply concrete implementations for token storage.
+OwlStack manages OAuth authentication for all platforms on the server side. You connect platforms through the dashboard, and OwlStack handles token exchange, storage, and refresh automatically.
 
-## OAuthHandler
-
-```php
-use Owlstack\Core\Auth\OAuthHandler;
-
-$handler = new OAuthHandler($provider, $tokenStore, 'twitter');
-
-// Step 1: Generate authorization URL
-$authUrl = $handler->authorize('https://app.com/callback', ['tweet.read', 'tweet.write']);
-// Redirect user to $authUrl
-
-// Step 2: Handle callback after user authorizes
-$token = $handler->handleCallback($code, 'https://app.com/callback', 'user-123');
-
-// Step 3: Get valid token (auto-refreshes if expired)
-$token = $handler->getToken('user-123');
-```
-
-## Flow diagram
+## How it works
 
 ```mermaid
 sequenceDiagram
-    participant App as Your App
-    participant OH as OAuthHandler
-    participant OP as OAuthProvider
-    participant TS as TokenStore
-    participant API as Platform API
+    participant User as You
+    participant Dash as OwlStack Dashboard
+    participant Cloud as api.owlstack.dev
+    participant Platform as Twitter / LinkedIn / etc.
 
-    App->>OH: authorize(redirectUri, scopes)
-    OH->>OP: getAuthorizationUrl()
-    OP-->>OH: Auth URL
-    OH-->>App: Auth URL → redirect user
-
-    Note over App: User authorizes on platform
-
-    App->>OH: handleCallback(code, redirectUri, accountId)
-    OH->>OP: exchangeCode(code, redirectUri)
-    OP->>API: POST /oauth/token
-    API-->>OP: AccessToken
-    OP-->>OH: AccessToken
-    OH->>TS: store(platform, accountId, token)
-    OH-->>App: AccessToken
-
-    App->>OH: getToken(accountId)
-    OH->>TS: get(platform, accountId)
-    TS-->>OH: AccessToken
-    alt Token Expired
-        OH->>OP: refreshToken(token)
-        OP->>API: POST /oauth/refresh
-        API-->>OP: New AccessToken
-        OP-->>OH: New AccessToken
-        OH->>TS: store(platform, accountId, newToken)
-    end
-    OH-->>App: Valid AccessToken
+    User->>Dash: Click "Connect Twitter"
+    Dash->>Cloud: Initiate OAuth flow
+    Cloud->>Platform: Redirect to authorization page
+    Platform->>User: "Authorize OwlStack?"
+    User->>Platform: Approve
+    Platform->>Cloud: OAuth callback with code
+    Cloud->>Platform: Exchange code for tokens
+    Platform-->>Cloud: Access + Refresh tokens
+    Cloud->>Cloud: Store encrypted tokens
+    Cloud-->>Dash: "Twitter connected"
 ```
 
-The `OAuthHandler` requires two interface implementations:
+## What OwlStack handles
 
-- **`OAuthProviderInterface`** — Generates auth URLs, exchanges codes, refreshes tokens
-- **`TokenStoreInterface`** — Persists and retrieves access tokens
+- **Token exchange** -- converting authorization codes to access tokens
+- **Secure storage** -- tokens are encrypted at rest
+- **Automatic refresh** -- tokens are refreshed before they expire
+- **Scope management** -- requesting the right permissions for each platform
+
+## You never touch tokens
+
+In the SaaS model, your code only needs an OwlStack API key:
+
+```php
+$client = new OwlStackClient(apiKey: env('OWLSTACK_API_KEY'));
+$client->publish($post, [Platform::Twitter]);
+// OwlStack uses the stored OAuth tokens automatically
+```
+
+See [API Keys](./api-keys.md) for managing your OwlStack API key, and [Platform Credentials](./platform-credentials.md) for the pass-per-request alternative.
