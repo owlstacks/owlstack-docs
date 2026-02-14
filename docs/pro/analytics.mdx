@@ -10,11 +10,73 @@ import ProBadge from '@site/src/components/ProBadge';
 
 <ProBadge />
 
-Track engagement metrics across all your published content.
+Track engagement metrics across all your published content. Available on **Pro** plans and above.
 
-## Features
+## Overview
 
-- **Engagement tracking** — Likes, shares, comments, clicks per platform
-- **Reporting** — Aggregate reports across platforms and time periods
-- **Per-post analytics** — Detailed metrics for individual publications
-- **Export** — Export data for external analysis
+```php
+use OwlStack\Cloud\OwlStackClient;
+
+$client = new OwlStackClient('your-api-key');
+
+// Get analytics summary
+$summary = $client->analytics()->summary([
+    'from' => '2026-01-01',
+    'to' => '2026-01-31',
+]);
+
+echo "Total posts: {$summary->totalPosts}\n";
+echo "Successful: {$summary->successful}\n";
+echo "Failed: {$summary->failed}\n";
+echo "Platforms used: " . implode(', ', $summary->platforms) . "\n";
+```
+
+## Per-platform metrics
+
+```php
+$platformStats = $client->analytics()->byPlatform([
+    'from' => '2026-01-01',
+    'to' => '2026-01-31',
+]);
+
+foreach ($platformStats as $stat) {
+    echo "{$stat->platform}: {$stat->posts} posts, {$stat->successRate}% success\n";
+}
+```
+
+## Engagement tracking
+
+On supported platforms, OwlStack Cloud tracks engagement metrics:
+
+| Metric | Platforms |
+|:-------|:----------|
+| Likes | Twitter, Facebook, LinkedIn, Instagram |
+| Shares/Retweets | Twitter, Facebook, LinkedIn |
+| Comments | Twitter, Facebook, LinkedIn, Instagram |
+| Clicks | Twitter, LinkedIn |
+| Impressions | Twitter, LinkedIn |
+
+```php
+$engagement = $client->analytics()->engagement($postId);
+
+echo "Likes: {$engagement->likes}\n";
+echo "Shares: {$engagement->shares}\n";
+echo "Comments: {$engagement->comments}\n";
+```
+
+## Export
+
+```php
+// Export as CSV
+$csv = $client->analytics()->export([
+    'format' => 'csv',
+    'from' => '2026-01-01',
+    'to' => '2026-01-31',
+]);
+
+file_put_contents('analytics.csv', $csv);
+```
+
+## Dashboard
+
+Full analytics dashboards with charts and trends are available in the [OwlStack dashboard](https://app.owlstack.dev).

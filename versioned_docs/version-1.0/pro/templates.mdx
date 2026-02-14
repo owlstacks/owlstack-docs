@@ -1,7 +1,7 @@
 ---
 sidebar_position: 6
 title: Templates
-description: User-defined templates with placeholder resolution.
+description: Reusable post templates with placeholder resolution.
 ---
 
 # Templates
@@ -10,10 +10,61 @@ import ProBadge from '@site/src/components/ProBadge';
 
 <ProBadge />
 
-Create reusable templates with placeholder resolution for consistent content across platforms.
+Create reusable post templates with placeholder resolution for consistent content. Available on **Pro** plans and above.
+
+## Create a template
+
+```php
+use OwlStack\Cloud\OwlStackClient;
+use OwlStack\Enums\Platform;
+
+$client = new OwlStackClient('your-api-key');
+
+$client->templates()->create('product-launch', [
+    'body' => 'Introducing {product_name} -- {description}',
+    'hashtags' => ['launch', '{product_name}'],
+    'platforms' => [Platform::Twitter, Platform::LinkedIn],
+]);
+```
+
+## Publish from template
+
+```php
+$results = $client->templates()->publish('product-launch', [
+    'product_name' => 'OwlStack Pro',
+    'description' => 'Advanced social media publishing for teams',
+]);
+```
 
 ## Features
 
-- **Placeholder resolution** — `{title}`, `{url}`, `{tags}`, custom placeholders
-- **Per-platform templates** — Different templates for different platforms
-- **Template inheritance** — Base templates with overrides
+- **Placeholders** -- `{title}`, `{url}`, `{tags}`, and custom placeholders
+- **Per-platform body** -- Different template text for different platforms
+- **Default values** -- Set fallback values for optional placeholders
+- **Template management** -- List, update, and delete templates via API or dashboard
+
+## Per-platform templates
+
+```php
+$client->templates()->create('blog-post', [
+    'body' => [
+        'twitter' => 'New blog: {title} {url} #{tag1} #{tag2}',
+        'linkedin' => "I just published: {title}\n\n{summary}\n\nRead more: {url}",
+        'telegram' => "**{title}**\n\n{summary}\n\n[Read more]({url})",
+    ],
+]);
+```
+
+## List templates
+
+```php
+$templates = $client->templates()->list();
+
+foreach ($templates as $template) {
+    echo "{$template->name}: {$template->placeholders}\n";
+}
+```
+
+## Dashboard
+
+Templates can also be created and managed in the [OwlStack dashboard](https://app.owlstack.dev) with a visual editor.

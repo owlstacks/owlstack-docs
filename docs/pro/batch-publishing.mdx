@@ -10,29 +10,71 @@ import ProBadge from '@site/src/components/ProBadge';
 
 <ProBadge />
 
-Publish to multiple platforms in a single call with built-in error handling and retry strategies.
+Publish to multiple platforms in a single optimized API call. Available on **Pro** plans and above.
+
+## Basic usage
 
 ```php
-use Owlstack\Pro\Publishing\BatchPublisher;
+use OwlStack\Cloud\OwlStackClient;
+use OwlStack\Post;
+use OwlStack\Enums\Platform;
 
-$batchPublisher = new BatchPublisher($publisher);
+$client = new OwlStackClient('your-api-key');
 
-$results = $batchPublisher->publish($post, ['telegram', 'twitter', 'discord']);
+$post = Post::create('Big announcement!')
+    ->withUrl('https://example.com/announcement')
+    ->withHashtags(['news', 'update']);
 
-// Results is an array: ['telegram' => PublishResult, 'twitter' => PublishResult, ...]
-foreach ($results as $platform => $result) {
-    echo $result->success
-        ? "✓ {$platform}\n"
-        : "✗ {$platform}: {$result->error}\n";
+// Single call publishes to all platforms
+$results = $client->publish($post, [
+    Platform::Twitter,
+    Platform::LinkedIn,
+    Platform::Telegram,
+    Platform::Discord,
+    Platform::Facebook,
+]);
+
+foreach ($results as $result) {
+    echo $result->isSuccessful()
+        ? "Published to {$result->platform()->value}\n"
+        : "Failed on {$result->platform()->value}: {$result->error()}\n";
 }
+```
+
+## Batch multiple posts
+
+Publish different content to different platforms in one API call:
+
+```php
+$results = $client->publishBatch([
+    ['post' => $announcementPost, 'platforms' => [Platform::Twitter, Platform::LinkedIn]],
+    ['post' => $casualPost, 'platforms' => [Platform::Discord, Platform::Telegram]],
+    ['post' => $visualPost, 'platforms' => [Platform::Instagram, Platform::Pinterest]],
+]);
 ```
 
 ## Laravel
 
-In Laravel, batch publishing can be dispatched as a queue job:
+In Laravel, dispatch batch publishing as a queue job:
 
 ```php
-use Owlstack\Pro\Laravel\Jobs\BatchPublishJob;
+use OwlStack\Laravel\Facades\OwlStack;
 
-BatchPublishJob::dispatch($post, ['telegram', 'twitter', 'discord']);
+// Async via Laravel queues
+OwlStack::publishAsync($post, [
+    Platform::Twitter,
+    Platform::LinkedIn,
+    Platform::Telegram,
+]);
 ```
+
+## How it works
+
+Batch publishing is processed server-side on OwlStack Cloud:
+
+1. Your SDK sends a single API request with all posts and platforms
+2. OwlStack Cloud formats content per-platform (character limits, hashtags, media)
+3. Posts are delivered concurrently to all platforms
+4. Results are returned in one response
+
+This is faster and more reliable than making individual API calls.

@@ -1,7 +1,7 @@
 ---
 sidebar_position: 5
 title: Delivery Logging
-description: Full delivery records with attempt history and retry strategies.
+description: Full delivery records with attempt history.
 ---
 
 # Delivery Logging
@@ -10,19 +10,61 @@ import ProBadge from '@site/src/components/ProBadge';
 
 <ProBadge />
 
-Track every publishing attempt with full delivery records, including attempt history and retry strategies.
+Track every publishing attempt with full delivery records. Available on **Pro** plans and above.
 
-## Features
+## View delivery logs
 
-- **Delivery records** — One record per platform per publish
-- **Attempt history** — Log each retry attempt with timestamps and errors
-- **Retry strategies** — Configurable retry logic (exponential backoff, fixed delay)
-- **Status tracking** — Pending → Publishing → Published / Failed
+```php
+use OwlStack\Cloud\OwlStackClient;
 
-## Laravel
+$client = new OwlStackClient('your-api-key');
 
-Delivery logs are stored in Eloquent models with database migrations provided:
+// Get recent delivery logs
+$logs = $client->logs()->list([
+    'limit' => 50,
+    'platform' => 'twitter',
+]);
 
-```bash
-php artisan migrate
+foreach ($logs as $log) {
+    echo "{$log->platform} | {$log->status} | {$log->createdAt}\n";
+}
+```
+
+## Log details
+
+Each delivery log includes:
+
+| Field | Description |
+|:------|:------------|
+| `id` | Unique delivery ID |
+| `platform` | Platform name |
+| `status` | `published`, `failed`, `pending`, `scheduled` |
+| `externalId` | Platform's post ID |
+| `externalUrl` | URL to the published post |
+| `error` | Error message (if failed) |
+| `errorCode` | Error classification |
+| `attempts` | Number of delivery attempts |
+| `createdAt` | When the publish was initiated |
+| `publishedAt` | When delivery was confirmed |
+
+## Filtering and search
+
+```php
+$logs = $client->logs()->list([
+    'platform' => 'twitter',
+    'status' => 'failed',
+    'from' => '2026-01-01',
+    'to' => '2026-01-31',
+]);
+```
+
+## Dashboard
+
+Delivery logs are also available in the [OwlStack dashboard](https://app.owlstack.dev) with filtering, search, and export capabilities.
+
+## Retry failed deliveries
+
+```php
+// Retry a specific failed delivery
+$client->logs()->retry($logId);
 ```

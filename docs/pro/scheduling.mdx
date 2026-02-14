@@ -10,20 +10,59 @@ import ProBadge from '@site/src/components/ProBadge';
 
 <ProBadge />
 
-Schedule content for future publication with time windows and cron expressions.
+Schedule content for future publication. Available on **Pro** plans and above.
+
+## Schedule a post
+
+```php
+use OwlStack\Cloud\OwlStackClient;
+use OwlStack\Post;
+use OwlStack\Enums\Platform;
+
+$client = new OwlStackClient('your-api-key');
+
+$post = Post::create('Coming soon!')
+    ->withUrl('https://example.com/launch');
+
+$scheduled = $client->schedule($post, [Platform::Twitter, Platform::LinkedIn], [
+    'scheduled_at' => '2026-03-15T09:00:00Z',
+]);
+
+echo "Scheduled ID: {$scheduled->id}";
+```
 
 ## Features
 
-- **Scheduled times** — Publish at a specific datetime
-- **Time windows** — Publish within a range (e.g., business hours)
-- **Cron expressions** — Recurring schedules
-- **Timezone support** — Schedule in any timezone
+- **Specific datetime** -- Publish at an exact time (UTC or any timezone)
+- **Time windows** -- Publish within a range (e.g., 9 AM - 12 PM local time)
+- **Timezone support** -- Schedule in any timezone, converted to UTC server-side
+- **Cancel/reschedule** -- Modify or cancel scheduled posts before delivery
+
+## Manage scheduled posts
+
+```php
+// List scheduled posts
+$scheduled = $client->scheduled()->list();
+
+// Cancel a scheduled post
+$client->scheduled()->cancel($scheduledId);
+
+// Reschedule
+$client->scheduled()->reschedule($scheduledId, [
+    'scheduled_at' => '2026-03-16T10:00:00Z',
+]);
+```
 
 ## Laravel
 
-```bash
-# List scheduled publications
-php artisan owlstack:schedule:list
+```php
+use OwlStack\Laravel\Facades\OwlStack;
+
+OwlStack::schedule($post, [Platform::Twitter], [
+    'scheduled_at' => now()->addHours(6)->toIso8601String(),
+]);
 ```
 
-Scheduled items are stored in the database and processed by Laravel's scheduler.
+## How it works
+
+Scheduled posts are stored on OwlStack Cloud and delivered at the specified time. No local cron jobs or queue workers are needed -- the cloud handles delivery automatically.
