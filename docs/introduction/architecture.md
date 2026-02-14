@@ -1,177 +1,165 @@
 ---
 sidebar_position: 3
 title: Architecture
-description: OwlStack's contract-driven, layered architecture overview.
+description: How OwlStack's SaaS-first architecture works.
 ---
 
-# Architecture Overview
+# Architecture
 
-OwlStack is built on a **contract-driven, layered architecture** with zero framework dependencies. Framework packages (Laravel, WordPress) provide concrete implementations for storage, queues, and events.
+OwlStack follows a **SaaS-first architecture** with open-source SDKs. Your application talks to OwlStack's cloud API, which handles all platform communication.
 
-## Package hierarchy
-
-```mermaid
-graph TB
-    subgraph "Free"
-        CORE[owlstack-core<br/>Framework-agnostic PHP engine]
-        LARAVEL[owlstack-laravel<br/>ServiceProvider + Facade]
-        WP[owlstack-wordpress<br/>Plugin + Admin UI + REST API]
-    end
-
-    subgraph "Pro"
-        PRO_CORE[owlstack-pro-core<br/>Batch, Scheduling, AI, Analytics]
-        PRO_LARAVEL[owlstack-pro-laravel<br/>Eloquent, Queue Jobs, Commands]
-        PRO_WP[owlstack-pro-wordpress<br/>Coming soon]
-    end
-
-    CORE --> LARAVEL
-    CORE --> WP
-    CORE --> PRO_CORE
-    PRO_CORE --> PRO_LARAVEL
-    PRO_CORE --> PRO_WP
-```
-
-## Core architecture
+## Overview
 
 ```mermaid
 graph TB
     subgraph "Your Application"
-        APP[Application Code]
+        APP[Your PHP / Laravel / WordPress App]
+        SDK["owlstack/cloud<br/>(thin API client)"]
+        CORE["owlstack/core<br/>(interfaces, value objects)"]
     end
 
-    subgraph "OwlStack Core"
-        direction TB
-        PUB[Publisher]
-        REG[PlatformRegistry]
-
-        subgraph "Content Layer"
-            POST[Post]
-            MEDIA[Media / MediaCollection]
-            CLINK[CanonicalLink]
-        end
-
-        subgraph "Platform Layer"
-            PI[PlatformInterface]
-            TG[Telegram]
-            TW[Twitter/X]
-            FB[Facebook]
-            LI[LinkedIn]
-            DC[Discord]
-            IG[Instagram]
-            PT[Pinterest]
-            RD[Reddit]
-            SL[Slack]
-            TB[Tumblr]
-            WA[WhatsApp]
-        end
-
-        subgraph "Formatting"
-            FI[FormatterInterface]
-            CT[CharacterTruncator]
-            HE[HashtagExtractor]
-        end
-
-        subgraph "Infrastructure"
-            HTTP[HttpClient]
-            AUTH[OAuthHandler]
-            EVT[EventDispatcher]
-            CFG[Config / Credentials]
-        end
+    subgraph "OwlStack Cloud"
+        API["api.owlstack.dev"]
+        FMT[Smart Formatters]
+        RATE[Rate Limiter]
+        RETRY[Retry Engine]
+        SCHED[Scheduler]
+        AI_ENGINE[AI Engine]
+        ANALYTICS[Analytics]
     end
 
-    APP --> PUB
-    PUB --> REG
-    REG --> PI
-    PI --> TG & TW & FB & LI & DC & IG & PT & RD & SL & TB & WA
-    PUB --> EVT
-    TG & TW & FB & LI & DC & IG & PT & RD & SL & TB & WA --> HTTP
-    POST --> PUB
-    MEDIA --> POST
+    subgraph "Social Platforms"
+        TG[Telegram]
+        TW[Twitter/X]
+        FB[Facebook]
+        LI[LinkedIn]
+        DC[Discord]
+        MORE[+ 6 more]
+    end
+
+    APP --> SDK
+    SDK --> CORE
+    SDK -->|HTTPS| API
+    API --> FMT
+    API --> RATE
+    API --> RETRY
+    API --> SCHED
+    API --> AI_ENGINE
+    API --> ANALYTICS
+    API --> TG
+    API --> TW
+    API --> FB
+    API --> LI
+    API --> DC
+    API --> MORE
 ```
+
+## What runs where
+
+### In your application (SDK side)
+
+The SDK packages are **thin clients** with no platform logic:
+
+| Component | Description |
+|:----------|:------------|
+| `Post` | Immutable value object for content |
+| `Media` | Immutable value object for attachments |
+| `Platform` | Enum of supported platforms |
+| `DeliveryResult` | Result object returned after publishing |
+| `OwlStackClient` | HTTP client that calls `api.owlstack.dev` |
+| Events | `PostPublished`, `PostFailed` fired locally |
+
+### On OwlStack's cloud (api.owlstack.dev)
+
+All business logic runs on our servers:
+
+| Component | Description |
+|:----------|:------------|
+| Platform integrations | All 11 platform API implementations |
+| Smart formatters | Character limits, hashtags, markup per platform |
+| OAuth management | Token storage, automatic refresh |
+| Rate limiting | Per-platform throttling |
+| Retry engine | Exponential backoff, circuit breaker |
+| Media processing | Resize, optimize, format conversion |
+| Scheduling | Delayed and recurring publishing |
+| AI engine | Content generation, optimization, hashtags |
+| Analytics | Tracking, insights, reports |
 
 ## Publishing flow
 
 ```mermaid
 sequenceDiagram
-    participant App as Application
-    participant Pub as Publisher
-    participant Reg as PlatformRegistry
-    participant Fmt as Formatter
-    participant Plat as Platform
-    participant HTTP as HttpClient
-    participant API as External API
-    participant Evt as EventDispatcher
+    participant User as Your App
+    participant SDK as OwlStack SDK
+    participant Cloud as api.owlstack.dev
+    participant Platform as Twitter / LinkedIn / etc.
 
-    App->>Pub: publish(Post, "telegram")
-    Pub->>Reg: get("telegram")
-    Reg-->>Pub: TelegramPlatform
-    Pub->>Plat: publish(Post, options)
-    Plat->>Fmt: format(Post)
-    Fmt-->>Plat: Formatted text
-    Plat->>HTTP: post(apiUrl, payload)
-    HTTP->>API: HTTP Request
-    API-->>HTTP: Response
-    HTTP-->>Plat: Response array
-    Plat-->>Pub: PlatformResponse
+    User->>SDK: OwlStackClient(apiKey)
+    SDK->>Cloud: POST /publish (API key + post data)
+    Cloud->>Cloud: Validate API key and plan limits
+    Cloud->>Cloud: Format content per platform
+    Cloud->>Platform: Publish via platform API
+    Platform-->>Cloud: Success / Error
+    Cloud-->>SDK: DeliveryResult[]
+    SDK-->>User: Results with status, URLs, errors
+```
 
-    alt Success
-        Pub->>Evt: dispatch(PostPublished)
-        Pub-->>App: PublishResult ✓
-    else Failure
-        Pub->>Evt: dispatch(PostFailed)
-        Pub-->>App: PublishResult ✗
-    end
+## Packages
+
+| Package | Purpose | License |
+|:--------|:--------|:--------|
+| `owlstack/core` | Interfaces, value objects, enums | MIT |
+| `owlstack/cloud` | API client for `api.owlstack.dev` | Proprietary |
+| `owlstack/laravel` | Laravel service provider + facade | MIT |
+| `owlstack/wordpress` | WordPress plugin with admin UI | MIT |
+
+## Platform credentials
+
+You have two options for managing platform credentials:
+
+### Option A: Managed OAuth (recommended)
+
+Connect platforms through the [OwlStack dashboard](https://app.owlstack.dev). We store and refresh tokens automatically. You never handle platform API keys in your code.
+
+### Option B: Pass-per-request
+
+Send your own platform credentials with each API call. OwlStack uses them for that request only and never stores them.
+
+```php
+// Option A -- tokens managed by OwlStack
+$client->publish($post, [Platform::Twitter]);
+
+// Option B -- you pass credentials per request
+$client->publish($post, [
+    Platform::Twitter->withCredentials([
+        'api_key' => env('TWITTER_API_KEY'),
+        'api_secret' => env('TWITTER_API_SECRET'),
+        'access_token' => env('TWITTER_ACCESS_TOKEN'),
+        'access_secret' => env('TWITTER_ACCESS_SECRET'),
+    ]),
+]);
 ```
 
 ## Key design principles
-
-### Contract-driven
-
-Every infrastructure concern is defined as an interface:
-
-- `PlatformInterface` — Platform publishing contract
-- `FormatterInterface` — Content formatting contract
-- `HttpClientInterface` — HTTP communication contract
-- `EventDispatcherInterface` — Event dispatch contract
-- `TokenStoreInterface` — Token persistence contract
-- `OAuthProviderInterface` — OAuth flow contract
-
-This means you can swap any implementation — use Guzzle instead of cURL, Redis instead of database for tokens, or any custom event system.
 
 ### Immutable value objects
 
 All data objects are readonly:
 
 ```php
-$post = new Post(title: 'Hello', body: 'World');
-// $post->title = 'Changed'; // ❌ Cannot modify readonly property
+$post = Post::create('Hello world');
+// $post->body = 'Changed'; // Cannot modify readonly property
 ```
-
-This eliminates bugs from accidental mutation during the publishing pipeline.
 
 ### Exception-safe publishing
 
-The `Publisher` wraps all platform calls in try/catch and always returns a `PublishResult`:
+The client wraps all API calls and always returns a `DeliveryResult`:
 
 ```php
-$result = $publisher->publish($post, 'twitter');
-// Never throws — always check $result->success
+$result = $client->publish($post, [Platform::Twitter]);
+// Never throws -- always check $result->isSuccessful()
 ```
 
-Individual platform classes **do** throw typed exceptions (`RateLimitException`, `ContentTooLongException`, etc.) for direct usage.
+### Open interfaces, cloud implementation
 
-### Source directory structure
-
-| Directory | Purpose |
-|:----------|:--------|
-| `Auth/` | OAuth handler, access tokens, token store contracts |
-| `Config/` | `PlatformCredentials`, `OwlstackConfig`, `ConfigValidator` |
-| `Content/` | `Post`, `Media`, `MediaCollection`, `CanonicalLink` |
-| `Delivery/` | `DeliveryStatus` enum |
-| `Events/` | `EventDispatcherInterface`, `PostPublished`, `PostFailed` |
-| `Exceptions/` | `OwlstackException` hierarchy |
-| `Formatting/` | Per-platform formatters, `CharacterTruncator`, `HashtagExtractor` |
-| `Http/` | cURL `HttpClient`, `HttpClientInterface` |
-| `Platforms/` | 11 platform implementations + `PlatformRegistry` + contracts |
-| `Publishing/` | `Publisher`, `PublishResult` |
-| `Support/` | `Arr`, `Str`, `Clock` utilities |
+`owlstack/core` defines contracts like `PublisherInterface`, `FormatterInterface`, and `EventDispatcherInterface`. The cloud service implements all of them server-side. Your code depends only on the open-source interfaces.

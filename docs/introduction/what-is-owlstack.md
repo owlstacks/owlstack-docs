@@ -1,77 +1,76 @@
 ---
 sidebar_position: 1
 title: What is OwlStack?
-description: Learn what OwlStack is and how it helps you publish content to social media platforms.
+description: OwlStack is a cloud-powered social media publishing service with PHP, Laravel, and WordPress SDKs.
+slug: /introduction/what-is-owlstack
 ---
 
 # What is OwlStack?
 
-**OwlStack** is a unified social media publishing SDK that lets you publish content to **11 social media platforms** through a single, consistent PHP API.
+**OwlStack** is a cloud-powered social media publishing service that lets you publish content to 11+ platforms through a single API. It comes with official SDKs for PHP, Laravel, and WordPress.
 
-Instead of learning 11 different APIs, SDKs, and authentication flows, you write one piece of code and OwlStack handles the rest — formatting, character limits, media constraints, and platform quirks.
+```php
+use OwlStack\Post;
+use OwlStack\Enums\Platform;
+use OwlStack\Cloud\OwlStackClient;
 
-## Who is it for?
+$client = new OwlStackClient(apiKey: env('OWLSTACK_API_KEY'));
 
-- **PHP developers** building applications that need to publish to social media
-- **Laravel developers** who want a clean, integrated publishing experience
-- **WordPress site owners** who want to auto-publish posts to social channels
-- **Agencies** managing multi-platform social media for clients
-- **SaaS builders** adding social publishing to their products
+$post = Post::create('Launching our new product!')
+    ->withMedia(Media::image('/path/to/photo.jpg'))
+    ->withHashtags(['launch', 'startup']);
+
+$results = $client->publish($post, [
+    Platform::Twitter,
+    Platform::LinkedIn,
+    Platform::Telegram,
+]);
+```
 
 ## How it works
 
-```mermaid
-graph LR
-    A[Your App] --> B[OwlStack Publisher]
-    B --> C[Telegram]
-    B --> D[Twitter/X]
-    B --> E[Facebook]
-    B --> F[LinkedIn]
-    B --> G[Discord]
-    B --> H[Instagram]
-    B --> I[Pinterest]
-    B --> J[Reddit]
-    B --> K[Slack]
-    B --> L[Tumblr]
-    B --> M[WhatsApp]
-```
+1. **You write content** using OwlStack's clean PHP SDK (Post, Media, etc.)
+2. **OwlStack's cloud** handles all platform APIs, formatting, rate limiting, and delivery
+3. **You get results** back with delivery status, external URLs, and error details
 
-You create a `Post` object with your content, choose a platform, and call `publish()`. OwlStack:
+You never interact with Twitter's API, Telegram's Bot API, or LinkedIn's Graph API directly. OwlStack handles all of that on the server side, so you don't have to maintain 11 different API integrations.
 
-1. **Formats** your content for the target platform (character limits, markup syntax, hashtags)
-2. **Validates** media against platform constraints (file types, sizes, dimensions)
-3. **Authenticates** with the platform API using your credentials
-4. **Publishes** the content and returns a result with the external ID and URL
-5. **Dispatches events** so you can react to success or failure
+## Supported platforms
 
-## Packages
+| Platform | Features |
+|:---------|:---------|
+| Telegram | Channels, groups, media groups, inline keyboards |
+| Twitter/X | Threads, polls, quote tweets |
+| Facebook | Pages, scheduled publishing |
+| LinkedIn | Personal profiles, company pages |
+| Discord | Rich embeds, file attachments |
+| Instagram | Carousels, Reels, Stories |
+| Pinterest | Board and section targeting |
+| Reddit | Self posts, link posts, flair |
+| Slack | Block Kit messages |
+| Tumblr | NPF content blocks |
+| WhatsApp | Template messages, documents |
 
-| Package | Purpose | Framework |
-|:--------|:--------|:----------|
-| `owlstack/owlstack-core` | Core engine — all platforms, formatting, HTTP, auth | None (standalone PHP) |
-| `owlstack/owlstack-laravel` | Laravel integration — service provider, facade, config | Laravel 10/11/12 |
-| `owlstack/owlstack-wordpress` | WordPress plugin — admin UI, meta boxes, REST API | WordPress 6.4+ |
-| `owlstack/owlstack-pro-core` | Pro features — batch, scheduling, AI, analytics | None (standalone PHP) |
-| `owlstack/owlstack-pro-laravel` | Pro Laravel — queue jobs, Eloquent models, commands | Laravel 10/11/12 |
+## What you install
 
-## Quick example
+OwlStack provides lightweight SDK packages that communicate with the cloud service:
 
-```php
-use Owlstack\Core\Content\Post;
-use Owlstack\Core\Publishing\Publisher;
+| Package | Purpose |
+|:--------|:--------|
+| `owlstack/core` | Interfaces, value objects, enums (open source, MIT) |
+| `owlstack/cloud` | API client that talks to `api.owlstack.dev` |
+| `owlstack/laravel` | Laravel service provider, facade, events |
+| `owlstack/wordpress` | WordPress plugin with admin panel and meta boxes |
 
-$post = new Post(
-    title: 'Hello World',
-    body: 'My first post via OwlStack!',
-    url: 'https://example.com/hello-world',
-    tags: ['opensource', 'php'],
-);
+The SDKs are thin clients. All the heavy lifting (platform API calls, formatting, retries, AI) happens on OwlStack's servers.
 
-$result = $publisher->publish($post, 'telegram');
+## Plans
 
-if ($result->success) {
-    echo "Published! URL: {$result->externalUrl}";
-}
-```
+| Plan | Platforms | Posts/mo | Key features |
+|:-----|:----------|:---------|:-------------|
+| **Starter** | 3 | 100 | Basic publishing, 1 team member |
+| **Pro** | All 11 | 1,000 | Batch, scheduling, logging, templates, analytics |
+| **Pro + AI** | All 11 | 1,000 | Everything in Pro + AI content generation, optimization |
+| **Enterprise** | All 11 | Unlimited | Custom integrations, SLA, dedicated support |
 
-That's it. The same code structure works for all 11 platforms.
+[View pricing details](/plans/overview)

@@ -1,69 +1,76 @@
 ---
 sidebar_position: 2
 title: Why OwlStack?
-description: The problems OwlStack solves and why you should use it.
+description: Why use OwlStack instead of building integrations yourself or using other tools.
 ---
 
 # Why OwlStack?
 
 ## The problem
 
-Publishing to social media from code means dealing with:
+Every social media platform has its own API, authentication flow, rate limits, media constraints, and content format. Building integrations means:
 
-- **11 different APIs** with different auth methods, endpoints, and SDKs
-- **Different character limits** — 280 for Twitter, 63,206 for Facebook, 4,096 for Telegram
-- **Different media constraints** — Instagram requires hosted URLs, Twitter needs chunked uploads, Discord supports webhooks
-- **Different markup formats** — HTML for Telegram, Markdown for Discord, mrkdwn for Slack
-- **OAuth complexity** — Token refresh, scopes, 1.0a vs 2.0
-- **Rate limiting** — Each platform has different limits and retry strategies
-- **Error handling** — Inconsistent error responses across platforms
+- Writing platform-specific code for every network
+- Managing OAuth tokens, bot tokens, and API keys for each
+- Handling rate limits, retries, and error responses differently
+- Resizing media, enforcing character limits, converting markup
+- Maintaining all of this as APIs change
 
-## The solution
+## How OwlStack solves it
 
-OwlStack provides:
-
-### One API for everything
+### One SDK, 11 platforms
 
 ```php
-// Same pattern for all 11 platforms
-$result = $publisher->publish($post, 'telegram');
-$result = $publisher->publish($post, 'twitter');
-$result = $publisher->publish($post, 'discord');
+// One call publishes everywhere
+$results = $client->publish($post, [
+    Platform::Twitter,
+    Platform::LinkedIn,
+    Platform::Telegram,
+    Platform::Discord,
+]);
 ```
 
-### Zero dependencies
+### Cloud-powered
 
-Pure PHP 8.1+. Only `ext-curl` and `ext-json` required. No bloated SDKs, no framework lock-in.
+OwlStack's servers handle all platform API communication. Your application never makes direct API calls to Twitter, Facebook, or any other platform.
 
-### Contract-driven architecture
+- **No API credentials in your code** -- connect platforms via OAuth through the OwlStack dashboard
+- **No maintenance burden** -- when Twitter changes their API, OwlStack updates the server. Your code stays the same.
+- **Instant platform support** -- new platforms are added server-side. No SDK update required.
 
-Every concern (HTTP, storage, events, auth) is backed by an interface. Swap implementations without changing your code.
+### Clean PHP SDK
 
-### Exception-safe publishing
+```php
+// Immutable, type-safe value objects
+$post = Post::create('Hello world')
+    ->withMedia(Media::image('/path/to/photo.jpg'))
+    ->withHashtags(['php', 'opensource']);
 
-`Publisher::publish()` **never throws**. It always returns a `PublishResult` with success/failure status, error messages, and platform details.
+// Post is readonly -- safe to pass around
+```
 
-### Immutable value objects
+### Framework integrations
 
-`Post`, `Media`, `MediaCollection`, and `AccessToken` are all readonly. No surprises, no side effects.
+**Laravel:**
+```php
+use OwlStack\Laravel\Facades\OwlStack;
 
-### Platform-aware formatting
+OwlStack::to('twitter', 'linkedin')->publish($post);
+```
 
-Each platform has its own formatter that automatically handles character limits, markup conversion, hashtag injection, and URL formatting.
+**WordPress:**
+Publish directly from the post editor. No code required.
 
-### Built for integration
+## OwlStack vs. alternatives
 
-OwlStack is the engine. Laravel and WordPress packages are thin wrappers that wire it into your framework's conventions — config files, facades, service providers, hooks, and admin panels.
-
-## Comparison
-
-| Feature | OwlStack | Raw API calls | Other SDKs |
-|:--------|:---------|:-------------|:-----------|
-| Platforms supported | 11 | 1 per SDK | Varies |
-| Dependencies | 0 | Many per SDK | Heavy |
-| Unified API | ✅ | ❌ | Partial |
-| Exception-safe | ✅ | ❌ | Varies |
-| Auto-formatting | ✅ | ❌ | ❌ |
-| Framework support | Laravel, WordPress | Manual | Varies |
-| Media validation | ✅ | Manual | Partial |
-| OAuth management | ✅ | Manual | Partial |
+| Feature | OwlStack | Build it yourself | Buffer / Hootsuite |
+|:--------|:---------|:-----------------|:-------------------|
+| Developer-focused | Yes, PHP SDK | Yes | No, UI only |
+| Platforms | 11 | As many as you build | Varies |
+| Maintenance | OwlStack handles it | You maintain everything | They handle it |
+| Framework support | Laravel, WordPress | DIY | None |
+| AI features | Pro+AI plan | DIY | Limited |
+| Scheduling | Built-in | Build your own | Built-in |
+| Open source SDK | Core is MIT | N/A | Closed |
+| Self-hosted option | Enterprise plan | Yes | No |
+| Pricing | From $19/mo | Free (but your time) | From $15/mo |
