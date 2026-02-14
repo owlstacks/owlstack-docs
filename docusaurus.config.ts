@@ -59,9 +59,14 @@ const config: Config = {
           editUrl: 'https://github.com/owlstacks/owlstack-docs/tree/main/',
           showLastUpdateTime: true,
           showLastUpdateAuthor: true,
+          lastVersion: '1.0',
           versions: {
             current: {
-              label: '1.x',
+              label: 'Next 🚧',
+              path: 'next',
+            },
+            '1.0': {
+              label: '1.0',
               path: '',
             },
           },
@@ -115,7 +120,8 @@ const config: Config = {
       title: 'OwlStack',
       logo: {
         alt: 'OwlStack Logo',
-        src: 'img/logo.jpg',
+        src: 'img/logo-light-transparent.png',
+        srcDark: 'img/logo-dark-transparent.png',
       },
       items: [
         {
