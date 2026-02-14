@@ -1,12 +1,22 @@
 .features {
   display: flex;
   align-items: center;
-  padding: 2rem 0;
+  padding: 3rem 0;
   width: 100%;
 }
 
 .featureIcon {
-  font-size: 3rem;
-  display: block;
-  margin-bottom: 0.5rem;
+  font-size: 2.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin: 0 auto 0.75rem;
+  background: var(--ifm-color-primary-lightest);
+  border-radius: 1rem;
+}
+
+[data-theme='dark'] .featureIcon {
+  background: rgba(157, 111, 232, 0.15);
 }

@@ -18,9 +18,10 @@
 
 .heroDescription {
   font-size: 1.2rem;
-  max-width: 600px;
-  margin: 0 auto 2rem;
-  opacity: 0.9;
+  max-width: 620px;
+  margin: 0.5rem auto 2rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
 }
 
 .buttons {

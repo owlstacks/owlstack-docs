@@ -69,13 +69,12 @@ function HomepageHeader() {
         </p>
         <div className={styles.buttons}>
           <Link
-            className="button button--secondary button--lg"
+            className="button button--primary button--lg"
             to="/getting-started/installation">
             Get Started →
           </Link>
           <Link
-            className="button button--outline button--lg button--secondary"
-            style={{marginLeft: '1rem'}}
+            className="button button--outline button--lg"
             href="https://github.com/owlstacks">
             GitHub
           </Link>
