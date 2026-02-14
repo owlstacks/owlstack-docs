@@ -1,0 +1,105 @@
+---
+sidebar_position: 1
+title: Content Generation
+description: AI-powered content generation for social media posts.
+---
+
+# AI Content Generation
+
+import ProBadge from '@site/src/components/ProBadge';
+
+<ProBadge plan="Pro+AI" />
+
+Generate platform-optimized social media posts using AI. Available on the **Pro+AI** plan.
+
+## Generate from a prompt
+
+```php
+use OwlStack\Cloud\OwlStackClient;
+use OwlStack\Enums\Platform;
+
+$client = new OwlStackClient('your-api-key');
+
+$posts = $client->ai()->generate(
+    prompt: 'Announce our new PHP SDK v2.0 with improved performance',
+    platforms: [Platform::Twitter, Platform::LinkedIn],
+);
+```
+
+Each platform gets optimized content:
+
+```php
+foreach ($posts as $generated) {
+    echo "--- {$generated->platform->value} ---\n";
+    echo $generated->body . "\n";
+    echo "Hashtags: " . implode(', ', $generated->hashtags) . "\n\n";
+}
+```
+
+**Twitter output:**
+> Excited to announce PHP SDK v2.0! Faster, leaner, and more powerful than ever. Upgrade today. #php #sdk #devtools
+
+**LinkedIn output:**
+> We're thrilled to announce the release of our PHP SDK v2.0.
+>
+> Key improvements:
+> - 3x faster publishing
+> - Reduced memory footprint
+> - New batch publishing API
+>
+> Upgrade guide: [link]
+
+## Generate from a URL
+
+Extract content from a blog post or article and generate social posts:
+
+```php
+$posts = $client->ai()->generate(
+    url: 'https://example.com/blog/php-sdk-v2',
+    platforms: [Platform::Twitter, Platform::LinkedIn, Platform::Facebook],
+);
+```
+
+## Generate and publish
+
+Skip the intermediate step and publish directly:
+
+```php
+$results = $client->ai()->generateAndPublish(
+    prompt: 'Share our latest product update',
+    url: 'https://example.com/updates/march-2026',
+    platforms: [Platform::Twitter, Platform::LinkedIn],
+);
+
+foreach ($results as $result) {
+    if ($result->isSuccessful()) {
+        echo "Published: {$result->externalUrl()}\n";
+    }
+}
+```
+
+## Options
+
+```php
+$posts = $client->ai()->generate(
+    prompt: 'Announce our new feature',
+    platforms: [Platform::Twitter],
+    options: [
+        'tone' => 'professional',    // casual, professional, humorous, formal
+        'language' => 'en',           // ISO language code
+        'max_variants' => 3,          // Generate multiple options
+        'include_emoji' => true,
+        'include_cta' => true,        // Include call-to-action
+    ],
+);
+```
+
+## Tone options
+
+| Tone | Description |
+|:-----|:------------|
+| `casual` | Friendly, conversational |
+| `professional` | Business-appropriate |
+| `humorous` | Light-hearted, witty |
+| `formal` | Official announcements |
+| `informative` | Educational, factual |

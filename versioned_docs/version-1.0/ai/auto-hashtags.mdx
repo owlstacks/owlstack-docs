@@ -1,0 +1,88 @@
+---
+sidebar_position: 3
+title: Auto-Hashtags
+description: AI-suggested hashtags based on content and trends.
+---
+
+# Auto-Hashtags
+
+import ProBadge from '@site/src/components/ProBadge';
+
+<ProBadge plan="Pro+AI" />
+
+AI analyzes your content and suggests relevant, trending hashtags for each platform. Available on the **Pro+AI** plan.
+
+## Suggest hashtags
+
+```php
+use OwlStack\Cloud\OwlStackClient;
+use OwlStack\Enums\Platform;
+
+$client = new OwlStackClient('your-api-key');
+
+$suggestions = $client->ai()->suggestHashtags(
+    content: 'We just released OwlStack 2.0 with AI-powered content generation',
+    platform: Platform::Twitter,
+    count: 5,
+);
+
+// Returns: ['owlstack', 'ai', 'contentcreation', 'socialmedia', 'devtools']
+```
+
+## Platform-specific suggestions
+
+Different platforms have different hashtag cultures:
+
+```php
+// Twitter: trending, concise hashtags
+$twitterTags = $client->ai()->suggestHashtags(
+    content: $content,
+    platform: Platform::Twitter,
+    count: 3,
+);
+// ['ai', 'saas', 'buildinpublic']
+
+// Instagram: high-reach, community hashtags
+$instagramTags = $client->ai()->suggestHashtags(
+    content: $content,
+    platform: Platform::Instagram,
+    count: 15,
+);
+// ['ai', 'saas', 'startup', 'tech', 'developer', 'coding', ...]
+
+// LinkedIn: professional, industry hashtags
+$linkedinTags = $client->ai()->suggestHashtags(
+    content: $content,
+    platform: Platform::LinkedIn,
+    count: 5,
+);
+// ['artificialintelligence', 'saas', 'productlaunch', 'technology', 'innovation']
+```
+
+## Auto-apply hashtags
+
+Add AI-suggested hashtags to a post automatically:
+
+```php
+use OwlStack\Post;
+
+$post = Post::create('Check out our new AI features!');
+
+// AI adds hashtags before publishing
+$results = $client->publish($post, [Platform::Twitter], [
+    'auto_hashtags' => true,
+    'max_hashtags' => 3,
+]);
+```
+
+## Hashtag analysis
+
+Get insights about hashtag performance:
+
+```php
+$analysis = $client->ai()->analyzeHashtags(['owlstack', 'socialmedia', 'php']);
+
+foreach ($analysis as $tag) {
+    echo "#{$tag->name}: {$tag->reachScore}/100, trending: {$tag->trending}\n";
+}
+```

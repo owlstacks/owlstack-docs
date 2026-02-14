@@ -1,0 +1,70 @@
+---
+sidebar_position: 2
+title: Post Optimization
+description: AI-powered post optimization for each platform.
+---
+
+# Post Optimization
+
+import ProBadge from '@site/src/components/ProBadge';
+
+<ProBadge plan="Pro+AI" />
+
+Let AI rewrite your content to match each platform's best practices. Available on the **Pro+AI** plan.
+
+## Optimize a post
+
+```php
+use OwlStack\Cloud\OwlStackClient;
+use OwlStack\Post;
+use OwlStack\Enums\Platform;
+
+$client = new OwlStackClient('your-api-key');
+
+$post = Post::create('We just launched our new API. Check it out at https://example.com/api');
+
+$optimized = $client->ai()->optimize($post, [
+    Platform::Twitter,
+    Platform::LinkedIn,
+    Platform::Telegram,
+]);
+
+foreach ($optimized as $version) {
+    echo "--- {$version->platform->value} ---\n";
+    echo $version->body . "\n\n";
+}
+```
+
+## What gets optimized
+
+| Aspect | How AI helps |
+|:-------|:-------------|
+| **Length** | Adjusts to platform character limits |
+| **Tone** | Matches platform culture (casual on Twitter, professional on LinkedIn) |
+| **Hashtags** | Adds relevant, trending hashtags per platform |
+| **Formatting** | Uses platform-native formatting (Markdown for Telegram, plain for Twitter) |
+| **CTAs** | Adds platform-appropriate calls-to-action |
+| **Emoji** | Adds tasteful emoji where appropriate |
+
+## Optimize and publish
+
+```php
+$results = $client->ai()->optimizeAndPublish($post, [
+    Platform::Twitter,
+    Platform::LinkedIn,
+]);
+```
+
+## Preview before publishing
+
+```php
+$optimized = $client->ai()->optimize($post, [Platform::Twitter]);
+
+// Review the AI's suggestion
+echo $optimized[0]->body;
+
+// Publish if you approve
+if ($approved) {
+    $client->publish($optimized[0], [Platform::Twitter]);
+}
+```

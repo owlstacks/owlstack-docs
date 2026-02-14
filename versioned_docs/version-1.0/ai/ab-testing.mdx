@@ -1,0 +1,87 @@
+---
+sidebar_position: 5
+title: A/B Testing
+description: Test content variants and track performance.
+---
+
+# A/B Testing
+
+import ProBadge from '@site/src/components/ProBadge';
+
+<ProBadge plan="Pro+AI" />
+
+Create content variants and let AI determine which performs best. Available on the **Pro+AI** plan.
+
+## Create an A/B test
+
+```php
+use OwlStack\Cloud\OwlStackClient;
+use OwlStack\Enums\Platform;
+
+$client = new OwlStackClient('your-api-key');
+
+$test = $client->ai()->abTest(
+    variants: [
+        'Exciting news: OwlStack 2.0 is here!',
+        'We just shipped OwlStack 2.0 -- check it out',
+        'OwlStack 2.0: AI-powered social media publishing',
+    ],
+    platforms: [Platform::Twitter],
+    duration_hours: 24,
+);
+
+echo "Test ID: {$test->id}\n";
+echo "Status: {$test->status}\n";
+```
+
+## How it works
+
+1. **Create variants** -- Provide 2-5 different versions of your post
+2. **AI publishes** -- Each variant is sent to a portion of your audience
+3. **Track engagement** -- OwlStack monitors likes, clicks, shares per variant
+4. **Winner selected** -- After the test period, AI picks the best performer
+5. **Scale up** -- Optionally auto-publish the winner to remaining platforms
+
+## Check results
+
+```php
+$results = $client->ai()->abTestResults($test->id);
+
+echo "Winner: Variant {$results->winnerIndex}\n";
+echo "Winning text: {$results->winner->body}\n\n";
+
+foreach ($results->variants as $i => $variant) {
+    echo "Variant {$i}: {$variant->engagement->likes} likes, ";
+    echo "{$variant->engagement->clicks} clicks, ";
+    echo "{$variant->engagement->shares} shares\n";
+}
+```
+
+## Auto-publish winner
+
+Let OwlStack automatically publish the winning variant to additional platforms:
+
+```php
+$test = $client->ai()->abTest(
+    variants: ['Version A', 'Version B', 'Version C'],
+    platforms: [Platform::Twitter],
+    duration_hours: 12,
+    options: [
+        'auto_publish_winner' => true,
+        'winner_platforms' => [Platform::LinkedIn, Platform::Facebook],
+    ],
+);
+```
+
+## AI-generated variants
+
+Let AI create the variants for you:
+
+```php
+$test = $client->ai()->abTestWithGeneration(
+    prompt: 'Announce our new AI features',
+    platforms: [Platform::Twitter],
+    variant_count: 3,
+    duration_hours: 24,
+);
+```

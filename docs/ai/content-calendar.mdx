@@ -1,0 +1,72 @@
+---
+sidebar_position: 4
+title: Content Calendar
+description: AI-suggested optimal posting times and content planning.
+---
+
+# Content Calendar
+
+import ProBadge from '@site/src/components/ProBadge';
+
+<ProBadge plan="Pro+AI" />
+
+AI suggests optimal posting times based on your audience and platform engagement patterns. Available on the **Pro+AI** plan.
+
+## Get optimal times
+
+```php
+use OwlStack\Cloud\OwlStackClient;
+use OwlStack\Enums\Platform;
+
+$client = new OwlStackClient('your-api-key');
+
+$times = $client->ai()->optimalTimes(
+    platform: Platform::Twitter,
+    timezone: 'America/New_York',
+);
+
+foreach ($times as $slot) {
+    echo "{$slot->day} at {$slot->time}: {$slot->score}/100 engagement score\n";
+}
+```
+
+## Schedule at optimal times
+
+Combine with scheduling to publish at the best times:
+
+```php
+use OwlStack\Post;
+
+$post = Post::create('Content scheduled at the perfect time!');
+
+// Let AI pick the best time in the next 24 hours
+$client->schedule($post, [Platform::Twitter], [
+    'optimal_time' => true,
+    'timezone' => 'America/New_York',
+]);
+```
+
+## Weekly plan
+
+Generate a content plan for the week:
+
+```php
+$plan = $client->ai()->weeklyPlan(
+    platforms: [Platform::Twitter, Platform::LinkedIn],
+    timezone: 'America/New_York',
+    posts_per_day: 2,
+);
+
+foreach ($plan->slots as $slot) {
+    echo "{$slot->datetime} | {$slot->platform->value} | Suggested topic: {$slot->topicSuggestion}\n";
+}
+```
+
+## Dashboard
+
+The [OwlStack dashboard](https://app.owlstack.dev) provides a visual content calendar where you can:
+
+- View scheduled posts on a calendar
+- Drag-and-drop to reschedule
+- See AI-suggested posting times highlighted
+- Plan content weeks in advance
