@@ -18,7 +18,7 @@ $publisher = new Publisher($registry, $eventDispatcher); // dispatcher is option
 $result = $publisher->publish($post, 'telegram', ['chat_id' => '@channel']);
 ```
 
-The third parameter (`$options`) is passed directly to the platform. Each platform supports different options — see the [Platforms](../platforms/overview.md) section.
+The third parameter (`$options`) is passed directly to the platform. Each platform supports different options — see the [Platforms](../platforms/overview.mdx) section.
 
 ## PublishResult
 

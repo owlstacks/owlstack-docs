@@ -140,5 +140,5 @@ echo $result->success
 ## Next steps
 
 - [Core Concepts](../core-concepts/posts-and-content.md) — Learn about Posts, Media, and the content model
-- [Platforms](../platforms/overview.md) — See all 11 supported platforms and their credentials
+- [Platforms](../platforms/overview.mdx) — See all 11 supported platforms and their credentials
 - [Formatting](../formatting/platform-formatters.md) — Understand how content is formatted per platform
