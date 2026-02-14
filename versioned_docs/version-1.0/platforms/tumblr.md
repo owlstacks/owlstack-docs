@@ -1,25 +1,28 @@
 ---
 sidebar_position: 11
 title: Tumblr
-description: Publishing to Tumblr blogs with NPF content blocks.
+description: Publishing to Tumblr blogs.
 ---
 
 # Tumblr
 
 Publish to Tumblr blogs using NPF (Neue Post Format) content blocks with support for draft, queue, and private states.
 
-## Credentials
+## Connect
 
-| Key | Required | Description |
-|:----|:---------|:------------|
-| `access_token` | ✅ | Tumblr API access token |
-| `blog_identifier` | ✅ | Blog identifier (e.g., `myblog.tumblr.com`) |
+Connect Tumblr in the [OwlStack dashboard](https://app.owlstack.dev):
+
+1. Go to **Project Settings > Platforms > Tumblr**
+2. Click **Connect with Tumblr**
+3. Authorize OwlStack via OAuth
+4. Select the target blog
+
+## Publishing
 
 ```php
-$credentials = new PlatformCredentials('tumblr', [
-    'access_token' => '...',
-    'blog_identifier' => 'myblog.tumblr.com',
-]);
+use OwlStack\Enums\Platform;
+
+$result = $client->publish($post, [Platform::Tumblr]);
 ```
 
 ## Options
@@ -31,7 +34,7 @@ $credentials = new PlatformCredentials('tumblr', [
 | `slug` | `string` | URL slug for the post |
 
 ```php
-$result = $publisher->publish($post, 'tumblr', [
+$result = $client->publish($post, [Platform::Tumblr], [
     'post_type' => 'text',
     'state' => 'published',
     'slug' => 'my-post-slug',
@@ -44,4 +47,3 @@ $result = $publisher->publish($post, 'tumblr', [
 |:-----------|:------|
 | Max text length | 4,096 characters |
 | Content format | NPF content blocks |
-| API | Tumblr API v2 |

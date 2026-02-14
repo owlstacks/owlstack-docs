@@ -6,34 +6,28 @@ description: Publishing to Discord channels via bot or webhook.
 
 # Discord
 
-Discord supports two modes — **bot** and **webhook** — with rich embed support.
+Discord supports two modes -- **bot** and **webhook** -- with rich embed support.
 
-## Credentials
+## Connect
+
+Connect Discord in the [OwlStack dashboard](https://app.owlstack.dev):
 
 **Bot mode:**
-
-| Key | Required | Description |
-|:----|:---------|:------------|
-| `bot_token` | ✅ | Discord bot token |
-| `channel_id` | ✅ | Target channel ID |
+1. Go to **Project Settings > Platforms > Discord**
+2. Enter your bot token and target channel ID
+3. Click **Connect**
 
 **Webhook mode:**
+1. In your Discord server, go to **Channel Settings > Integrations > Webhooks**
+2. Create a webhook and copy the URL
+3. Paste the webhook URL in the OwlStack dashboard
 
-| Key | Required | Description |
-|:----|:---------|:------------|
-| `webhook_url` | ✅ | Discord webhook URL |
+## Publishing
 
 ```php
-// Bot mode
-$credentials = new PlatformCredentials('discord', [
-    'bot_token' => '...',
-    'channel_id' => '...',
-]);
+use OwlStack\Enums\Platform;
 
-// Webhook mode
-$credentials = new PlatformCredentials('discord', [
-    'webhook_url' => 'https://discord.com/api/webhooks/...',
-]);
+$result = $client->publish($post, [Platform::Discord]);
 ```
 
 ## Options
@@ -46,11 +40,10 @@ $credentials = new PlatformCredentials('discord', [
 | `tts` | `bool` | Text-to-speech |
 
 ```php
-$result = $publisher->publish($post, 'discord', [
+$result = $client->publish($post, [Platform::Discord], [
     'embed' => true,
     'color' => 0x5865F2,
     'thread_id' => '...',
-    'tts' => false,
 ]);
 ```
 

@@ -1,26 +1,21 @@
 ---
 sidebar_position: 2
 title: Telegram
-description: Publishing to Telegram channels and groups via Bot API.
+description: Publishing to Telegram channels and groups.
 ---
 
 # Telegram
 
 Telegram is one of the most feature-rich platforms in OwlStack, supporting text, media, media groups, inline keyboards, locations, contacts, and venues.
 
-## Credentials
+## Connect
 
-| Key | Required | Description |
-|:----|:---------|:------------|
-| `api_token` | ✅ | Bot API token from @BotFather |
-| `channel_username` | Optional | Default channel (e.g., `@mychannel`) |
+Connect Telegram in the [OwlStack dashboard](https://app.owlstack.dev):
 
-```php
-$credentials = new PlatformCredentials('telegram', [
-    'api_token' => 'your-bot-token',
-    'channel_username' => '@your-channel',
-]);
-```
+1. Go to **Project Settings > Platforms > Telegram**
+2. Enter your Bot API token (from [@BotFather](https://t.me/BotFather))
+3. Select the target channel or group
+4. Click **Connect**
 
 :::tip Getting a Bot Token
 1. Open Telegram and search for **@BotFather**
@@ -29,10 +24,12 @@ $credentials = new PlatformCredentials('telegram', [
 4. Add your bot as an **admin** to your channel/group
 :::
 
-## Basic publishing
+## Publishing
 
 ```php
-$result = $publisher->publish($post, 'telegram');
+use OwlStack\Enums\Platform;
+
+$result = $client->publish($post, [Platform::Telegram]);
 ```
 
 ## Options
@@ -45,7 +42,7 @@ $result = $publisher->publish($post, 'telegram');
 | `inline_keyboard` | `array` | Inline keyboard buttons |
 
 ```php
-$result = $publisher->publish($post, 'telegram', [
+$result = $client->publish($post, [Platform::Telegram], [
     'chat_id' => '@specific-channel',
     'parse_mode' => 'HTML',
     'disable_notification' => true,
@@ -53,17 +50,6 @@ $result = $publisher->publish($post, 'telegram', [
         [['text' => 'Visit Site', 'url' => 'https://example.com']],
     ],
 ]);
-```
-
-## Extended methods
-
-The Telegram platform exposes additional methods beyond standard publishing:
-
-```php
-$platform->sendLocation($chatId, 40.7128, -74.0060);
-$platform->sendVenue($chatId, 40.7128, -74.0060, 'NYC Office', '123 Main St');
-$platform->sendContact($chatId, '+1234567890', 'John');
-$platform->pinMessage($chatId, $messageId);
 ```
 
 ## Constraints

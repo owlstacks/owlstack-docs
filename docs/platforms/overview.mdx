@@ -8,63 +8,56 @@ import PlatformTable from '@site/src/components/PlatformTable';
 
 # Platform Overview
 
-OwlStack supports **11 social media platforms** through a unified API. Each platform has its own formatter, constraints, and features — but your code stays the same.
+OwlStack supports **11 social media platforms** through a single API. Connect your accounts via OAuth in the [OwlStack dashboard](https://app.owlstack.dev), then publish from your code.
 
 ## Comparison table
 
 <PlatformTable />
 
-## How platforms work
-
-Every platform implements `PlatformInterface`:
+## How publishing works
 
 ```php
-interface PlatformInterface
-{
-    public function name(): string;
-    public function publish(Post $post, array $options = []): PlatformResponseInterface;
-    public function delete(string $externalId): bool;
-    public function validateCredentials(): bool;
-    public function constraints(): array;
-}
-```
+use OwlStack\Cloud\OwlStackClient;
+use OwlStack\Post;
+use OwlStack\Enums\Platform;
 
-## Platform setup pattern
+$client = new OwlStackClient(apiKey: env('OWLSTACK_API_KEY'));
 
-All platforms follow the same setup pattern:
+$post = Post::create('Hello from OwlStack!')
+    ->withHashtags(['php', 'opensource']);
 
-```php
-use Owlstack\Core\Config\PlatformCredentials;
-use Owlstack\Core\Http\HttpClient;
-
-// 1. Create credentials
-$credentials = new PlatformCredentials('platform-name', [
-    'key' => 'value',
-    // ... platform-specific credentials
+// Publish to any connected platform
+$results = $client->publish($post, [
+    Platform::Telegram,
+    Platform::Twitter,
+    Platform::LinkedIn,
 ]);
-
-// 2. Create platform with HTTP client and formatter
-$platform = new PlatformClass($credentials, new HttpClient(), new PlatformFormatter());
-
-// 3. Register with the platform registry
-$registry->register($platform);
-
-// 4. Publish through the publisher
-$result = $publisher->publish($post, 'platform-name', $options);
 ```
+
+OwlStack's cloud handles all platform API communication, formatting, media processing, and authentication for you.
+
+## Platform availability by plan
+
+| Plan | Platforms |
+|:-----|:----------|
+| Free tier | 1 |
+| Starter ($19/mo) | Up to 3 |
+| Pro ($49/mo) | All 11 |
+| Pro + AI ($89/mo) | All 11 |
+| Enterprise | All 11 |
 
 ## Platform-specific docs
 
-Each platform has a dedicated page with setup instructions, credential requirements, code examples, and platform-specific options:
+Each platform has a dedicated page with features, options, and constraints:
 
-- [Telegram](./telegram.md) — Bot API, media groups, inline keyboards
-- [Twitter/X](./twitter.md) — OAuth 1.0a, polls, quote tweets
-- [Facebook](./facebook.md) — Graph API, scheduled publishing
-- [LinkedIn](./linkedin.md) — Personal profiles & company pages
-- [Discord](./discord.md) — Bot & webhook modes, rich embeds
-- [Instagram](./instagram.md) — Carousels, Reels, Stories
-- [Pinterest](./pinterest.md) — Board & section targeting
-- [Reddit](./reddit.md) — Self & link posts, flair support
-- [Slack](./slack.md) — Block Kit, bot & webhook modes
-- [Tumblr](./tumblr.md) — NPF content blocks
-- [WhatsApp](./whatsapp.md) — Template messages, documents
+- [Telegram](./telegram.md) -- Channels, groups, media groups, inline keyboards
+- [Twitter/X](./twitter.md) -- Threads, polls, quote tweets
+- [Facebook](./facebook.md) -- Pages, scheduled publishing
+- [LinkedIn](./linkedin.md) -- Personal profiles and company pages
+- [Discord](./discord.md) -- Bot and webhook modes, rich embeds
+- [Instagram](./instagram.md) -- Carousels, Reels, Stories
+- [Pinterest](./pinterest.md) -- Board and section targeting
+- [Reddit](./reddit.md) -- Self and link posts, flair support
+- [Slack](./slack.md) -- Block Kit, bot and webhook modes
+- [Tumblr](./tumblr.md) -- NPF content blocks
+- [WhatsApp](./whatsapp.md) -- Template messages, documents

@@ -8,22 +8,21 @@ description: Publishing self and link posts to subreddits.
 
 Post to subreddits with flair, NSFW, and spoiler support.
 
-## Credentials
+## Connect
 
-| Key | Required | Description |
-|:----|:---------|:------------|
-| `client_id` | ✅ | Reddit app client ID |
-| `client_secret` | ✅ | Reddit app client secret |
-| `access_token` | ✅ | OAuth access token |
-| `username` | ✅ | Reddit username |
+Connect Reddit in the [OwlStack dashboard](https://app.owlstack.dev):
+
+1. Go to **Project Settings > Platforms > Reddit**
+2. Click **Connect with Reddit**
+3. Authorize OwlStack via OAuth
+4. Your Reddit account appears as connected
+
+## Publishing
 
 ```php
-$credentials = new PlatformCredentials('reddit', [
-    'client_id' => '...',
-    'client_secret' => '...',
-    'access_token' => '...',
-    'username' => 'your_username',
-]);
+use OwlStack\Enums\Platform;
+
+$result = $client->publish($post, [Platform::Reddit]);
 ```
 
 ## Options
@@ -37,12 +36,10 @@ $credentials = new PlatformCredentials('reddit', [
 | `spoiler` | `bool` | Mark as spoiler |
 
 ```php
-$result = $publisher->publish($post, 'reddit', [
+$result = $client->publish($post, [Platform::Reddit], [
     'subreddit' => 'php',
     'kind' => 'self',
     'flair_id' => '...',
-    'nsfw' => false,
-    'spoiler' => false,
 ]);
 ```
 

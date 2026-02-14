@@ -1,39 +1,33 @@
 ---
 sidebar_position: 10
 title: Slack
-description: Publishing messages to Slack channels via bot or webhook.
+description: Publishing messages to Slack channels.
 ---
 
 # Slack
 
-Slack supports two modes — **bot token** and **webhook** — with Block Kit layout support.
+Slack supports two modes -- **bot token** and **webhook** -- with Block Kit layout support.
 
-## Credentials
+## Connect
+
+Connect Slack in the [OwlStack dashboard](https://app.owlstack.dev):
 
 **Bot token mode:**
-
-| Key | Required | Description |
-|:----|:---------|:------------|
-| `bot_token` | ✅ | Slack bot token (`xoxb-...`) |
-| `channel` | ✅ | Target channel (`#general`) |
+1. Go to **Project Settings > Platforms > Slack**
+2. Click **Connect with Slack**
+3. Authorize OwlStack and select a workspace
+4. Choose the target channel
 
 **Webhook mode:**
+1. In your Slack workspace, create an incoming webhook
+2. Paste the webhook URL in the OwlStack dashboard
 
-| Key | Required | Description |
-|:----|:---------|:------------|
-| `webhook_url` | ✅ | Slack webhook URL |
+## Publishing
 
 ```php
-// Bot token
-$credentials = new PlatformCredentials('slack', [
-    'bot_token' => 'xoxb-...',
-    'channel' => '#general',
-]);
+use OwlStack\Enums\Platform;
 
-// Webhook
-$credentials = new PlatformCredentials('slack', [
-    'webhook_url' => 'https://hooks.slack.com/services/...',
-]);
+$result = $client->publish($post, [Platform::Slack]);
 ```
 
 ## Options
@@ -45,9 +39,8 @@ $credentials = new PlatformCredentials('slack', [
 | `unfurl_links` | `bool` | Unfurl URLs |
 
 ```php
-$result = $publisher->publish($post, 'slack', [
+$result = $client->publish($post, [Platform::Slack], [
     'blocks' => true,
-    'thread_ts' => '...',
     'unfurl_links' => true,
 ]);
 ```
@@ -58,4 +51,3 @@ $result = $publisher->publish($post, 'slack', [
 |:-----------|:------|
 | Max text length | 40,000 characters |
 | Formatter markup | mrkdwn |
-| URL format | `<url\|text>` |

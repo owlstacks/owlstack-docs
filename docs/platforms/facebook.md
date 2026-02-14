@@ -1,35 +1,28 @@
 ---
 sidebar_position: 4
 title: Facebook
-description: Publishing to Facebook Pages via Graph API.
+description: Publishing to Facebook Pages.
 ---
 
 # Facebook
 
-Publish to Facebook Pages via the Graph API with support for scheduled publishing and privacy targeting.
+Publish to Facebook Pages with support for scheduled publishing and privacy targeting.
 
-## Credentials
+## Connect
 
-| Key | Required | Description |
-|:----|:---------|:------------|
-| `app_id` | ✅ | Facebook App ID |
-| `app_secret` | ✅ | Facebook App Secret |
-| `page_access_token` | ✅ | Page Access Token |
-| `page_id` | ✅ | Facebook Page ID |
+Connect Facebook in the [OwlStack dashboard](https://app.owlstack.dev):
 
-```php
-$credentials = new PlatformCredentials('facebook', [
-    'app_id' => '...',
-    'app_secret' => '...',
-    'page_access_token' => '...',
-    'page_id' => '...',
-]);
-```
+1. Go to **Project Settings > Platforms > Facebook**
+2. Click **Connect with Facebook**
+3. Authorize OwlStack and select the Pages you manage
+4. Your Pages appear as connected
 
 ## Publishing
 
 ```php
-$result = $publisher->publish($post, 'facebook');
+use OwlStack\Enums\Platform;
+
+$result = $client->publish($post, [Platform::Facebook]);
 ```
 
 ## Options
@@ -37,12 +30,11 @@ $result = $publisher->publish($post, 'facebook');
 | Option | Type | Description |
 |:-------|:-----|:------------|
 | `privacy` | `array` | Privacy setting (e.g., `['value' => 'EVERYONE']`) |
-| `scheduled_publish_time` | `int` | Unix timestamp for scheduled publishing |
+| `scheduled_publish_time` | `int` | Unix timestamp for scheduled publishing (Pro plan) |
 
 ```php
-$result = $publisher->publish($post, 'facebook', [
+$result = $client->publish($post, [Platform::Facebook], [
     'privacy' => ['value' => 'EVERYONE'],
-    'scheduled_publish_time' => time() + 3600,
 ]);
 ```
 
@@ -53,4 +45,3 @@ $result = $publisher->publish($post, 'facebook', [
 | Max text length | 63,206 characters |
 | Max media | 1 |
 | Supported media types | JPEG, PNG, GIF, BMP, MP4, AVI |
-| API | Graph API |

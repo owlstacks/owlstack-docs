@@ -1,35 +1,28 @@
 ---
 sidebar_position: 3
 title: Twitter / X
-description: Publishing tweets via Twitter API v2 with OAuth 1.0a.
+description: Publishing tweets via OwlStack.
 ---
 
 # Twitter / X
 
-OwlStack supports Twitter API v2 with OAuth 1.0a authentication, including polls, quote tweets, and automatic `t.co` URL handling.
+OwlStack supports Twitter API v2, including polls, quote tweets, threads, and automatic `t.co` URL handling.
 
-## Credentials
+## Connect
 
-| Key | Required | Description |
-|:----|:---------|:------------|
-| `consumer_key` | ✅ | API Key |
-| `consumer_secret` | ✅ | API Key Secret |
-| `access_token` | ✅ | Access Token |
-| `access_token_secret` | ✅ | Access Token Secret |
+Connect Twitter in the [OwlStack dashboard](https://app.owlstack.dev):
 
-```php
-$credentials = new PlatformCredentials('twitter', [
-    'consumer_key' => '...',
-    'consumer_secret' => '...',
-    'access_token' => '...',
-    'access_token_secret' => '...',
-]);
-```
+1. Go to **Project Settings > Platforms > Twitter/X**
+2. Click **Connect with Twitter**
+3. Authorize OwlStack via OAuth
+4. Your account appears as connected
 
 ## Publishing
 
 ```php
-$result = $publisher->publish($post, 'twitter');
+use OwlStack\Enums\Platform;
+
+$result = $client->publish($post, [Platform::Twitter]);
 ```
 
 ## Options
@@ -38,21 +31,22 @@ $result = $publisher->publish($post, 'twitter');
 |:-------|:-----|:------------|
 | `reply_to` | `string` | Tweet ID to reply to |
 | `quote_tweet_id` | `string` | Tweet ID to quote |
+| `thread` | `bool` | Create a thread from long content |
 | `poll` | `array` | Poll options and duration |
 
 ```php
 // Reply to a tweet
-$result = $publisher->publish($post, 'twitter', [
+$result = $client->publish($post, [Platform::Twitter], [
     'reply_to' => '1234567890',
 ]);
 
 // Quote tweet
-$result = $publisher->publish($post, 'twitter', [
+$result = $client->publish($post, [Platform::Twitter], [
     'quote_tweet_id' => '9876543210',
 ]);
 
 // Create a poll
-$result = $publisher->publish($post, 'twitter', [
+$result = $client->publish($post, [Platform::Twitter], [
     'poll' => [
         'options' => ['Yes', 'No', 'Maybe'],
         'duration_minutes' => 1440,
@@ -61,7 +55,7 @@ $result = $publisher->publish($post, 'twitter', [
 ```
 
 :::info URL handling
-Twitter automatically wraps URLs to 23 characters (`t.co`). The formatter accounts for this in the 280-character budget, so you don't need to worry about URL length.
+Twitter automatically wraps URLs to 23 characters (`t.co`). OwlStack accounts for this in the 280-character budget, so you don't need to worry about URL length.
 :::
 
 ## Constraints
@@ -71,5 +65,3 @@ Twitter automatically wraps URLs to 23 characters (`t.co`). The formatter accoun
 | Max text length | 280 characters |
 | Max media | 4 |
 | Supported media types | JPEG, PNG, GIF, MP4 |
-| Auth method | OAuth 1.0a |
-| Retry strategy | Exponential backoff |

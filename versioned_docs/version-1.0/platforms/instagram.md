@@ -6,20 +6,23 @@ description: Publishing photos, carousels, Reels, and Stories to Instagram.
 
 # Instagram
 
-Instagram uses a two-step container publishing flow via the Content Publishing API. OwlStack handles this automatically.
+Instagram uses a two-step container publishing flow. OwlStack handles this automatically on the server.
 
-## Credentials
+## Connect
 
-| Key | Required | Description |
-|:----|:---------|:------------|
-| `access_token` | ✅ | Instagram Graph API token |
-| `instagram_account_id` | ✅ | Instagram Business Account ID |
+Connect Instagram in the [OwlStack dashboard](https://app.owlstack.dev):
+
+1. Go to **Project Settings > Platforms > Instagram**
+2. Click **Connect with Instagram**
+3. Authorize via Facebook Business (Instagram requires a Facebook Business account)
+4. Select the Instagram Business account to connect
+
+## Publishing
 
 ```php
-$credentials = new PlatformCredentials('instagram', [
-    'access_token' => '...',
-    'instagram_account_id' => '...',
-]);
+use OwlStack\Enums\Platform;
+
+$result = $client->publish($post, [Platform::Instagram]);
 ```
 
 ## Options
@@ -27,30 +30,30 @@ $credentials = new PlatformCredentials('instagram', [
 | Option | Type | Description |
 |:-------|:-----|:------------|
 | `media_type` | `string` | `IMAGE`, `REELS`, or `STORIES` |
-| `image_url` | `string` | Publicly accessible image URL |
 | `location_id` | `string` | Facebook location ID |
 | `alt_text` | `string` | Alt text for accessibility |
-| `carousel` | `array` | Array of carousel items |
 
 ```php
 // Single image
-$result = $publisher->publish($post, 'instagram', [
-    'media_type' => 'IMAGE',
-    'image_url' => 'https://example.com/photo.jpg',
+$post = Post::create('Check out this photo!')
+    ->withMedia(Media::image('/path/to/photo.jpg'));
+
+$result = $client->publish($post, [Platform::Instagram], [
     'alt_text' => 'Photo description',
 ]);
 
 // Carousel
-$result = $publisher->publish($post, 'instagram', [
-    'carousel' => [
-        ['image_url' => 'https://example.com/1.jpg'],
-        ['image_url' => 'https://example.com/2.jpg'],
-    ],
-]);
+$post = Post::create('My gallery')
+    ->withMediaCollection(new MediaCollection([
+        Media::image('/path/to/1.jpg'),
+        Media::image('/path/to/2.jpg'),
+    ]));
+
+$result = $client->publish($post, [Platform::Instagram]);
 ```
 
-:::warning
-Instagram requires media to be hosted at **publicly accessible URLs**. Local file paths are not supported.
+:::info
+OwlStack uploads your media to the server before publishing to Instagram. You don't need to host images at publicly accessible URLs.
 :::
 
 ## Constraints
@@ -60,4 +63,3 @@ Instagram requires media to be hosted at **publicly accessible URLs**. Local fil
 | Max text length | 2,200 characters |
 | Max media (carousel) | 10 |
 | Supported media types | JPEG, MP4 |
-| Publishing method | Two-step container |

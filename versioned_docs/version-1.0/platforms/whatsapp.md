@@ -1,24 +1,33 @@
 ---
 sidebar_position: 12
 title: WhatsApp
-description: Sending messages via WhatsApp Cloud API.
+description: Sending messages via WhatsApp Business.
 ---
 
 # WhatsApp
 
 Send text messages, media, documents, and template messages via the WhatsApp Cloud API.
 
-## Credentials
+## Connect
 
-| Key | Required | Description |
-|:----|:---------|:------------|
-| `access_token` | ✅ | WhatsApp Cloud API access token |
-| `phone_number_id` | ✅ | WhatsApp Business phone number ID |
+Connect WhatsApp in the [OwlStack dashboard](https://app.owlstack.dev):
+
+1. Go to **Project Settings > Platforms > WhatsApp**
+2. Enter your WhatsApp Business API credentials
+3. Verify your phone number
+4. Click **Connect**
+
+:::info
+WhatsApp requires a [WhatsApp Business account](https://business.whatsapp.com/) and a verified phone number.
+:::
+
+## Publishing
 
 ```php
-$credentials = new PlatformCredentials('whatsapp', [
-    'access_token' => '...',
-    'phone_number_id' => '...',
+use OwlStack\Enums\Platform;
+
+$result = $client->publish($post, [Platform::WhatsApp], [
+    'to' => '+1234567890',
 ]);
 ```
 
@@ -34,14 +43,14 @@ $credentials = new PlatformCredentials('whatsapp', [
 
 ```php
 // Text message
-$result = $publisher->publish($post, 'whatsapp', [
+$result = $client->publish($post, [Platform::WhatsApp], [
     'to' => '+1234567890',
     'message_type' => 'text',
     'preview_url' => true,
 ]);
 
 // Template message
-$result = $publisher->publish($post, 'whatsapp', [
+$result = $client->publish($post, [Platform::WhatsApp], [
     'to' => '+1234567890',
     'message_type' => 'template',
     'template_name' => 'hello_world',
@@ -55,4 +64,3 @@ $result = $publisher->publish($post, 'whatsapp', [
 |:-----------|:------|
 | Max text length | 4,096 characters |
 | Supported media types | JPEG, PNG, MP4, PDF, DOCX |
-| API | WhatsApp Cloud API |

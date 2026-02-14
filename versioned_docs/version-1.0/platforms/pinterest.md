@@ -6,37 +6,41 @@ description: Creating pins with board and section targeting.
 
 # Pinterest
 
-Create pins with board and section targeting via Pinterest API v5.
+Create pins with board and section targeting via the Pinterest API.
 
-## Credentials
+## Connect
 
-| Key | Required | Description |
-|:----|:---------|:------------|
-| `access_token` | ✅ | Pinterest API access token |
-| `board_id` | ✅ | Target board ID |
+Connect Pinterest in the [OwlStack dashboard](https://app.owlstack.dev):
+
+1. Go to **Project Settings > Platforms > Pinterest**
+2. Click **Connect with Pinterest**
+3. Authorize OwlStack via OAuth
+4. Select your target board
+
+## Publishing
 
 ```php
-$credentials = new PlatformCredentials('pinterest', [
-    'access_token' => '...',
-    'board_id' => '...',
-]);
+use OwlStack\Enums\Platform;
+
+$result = $client->publish($post, [Platform::Pinterest]);
 ```
 
 ## Options
 
 | Option | Type | Description |
 |:-------|:-----|:------------|
+| `board_id` | `string` | Override target board |
 | `board_section_id` | `string` | Target section within the board |
-| `image_url` | `string` | Pin image URL |
 | `alt_text` | `string` | Alt text for accessibility |
-| `dominant_color` | `string` | Hex color code |
 
 ```php
-$result = $publisher->publish($post, 'pinterest', [
+$post = Post::create('Beautiful sunset photo')
+    ->withMedia(Media::image('/path/to/sunset.jpg'))
+    ->withUrl('https://example.com/sunset');
+
+$result = $client->publish($post, [Platform::Pinterest], [
     'board_section_id' => '...',
-    'image_url' => 'https://example.com/pin.jpg',
-    'alt_text' => 'Pin description',
-    'dominant_color' => '#FF5733',
+    'alt_text' => 'Sunset over the ocean',
 ]);
 ```
 
@@ -46,4 +50,3 @@ $result = $publisher->publish($post, 'pinterest', [
 |:-----------|:------|
 | Max text length | 800 characters |
 | Supported media types | JPEG, PNG, GIF, WebP, MP4 |
-| API | Pinterest API v5 |

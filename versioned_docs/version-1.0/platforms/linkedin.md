@@ -6,36 +6,23 @@ description: Publishing to LinkedIn personal profiles and company pages.
 
 # LinkedIn
 
-Publish to personal profiles or company pages on LinkedIn with multi-step image upload support.
+Publish to personal profiles or company pages on LinkedIn.
 
-## Credentials
+## Connect
 
-For **personal profiles**:
+Connect LinkedIn in the [OwlStack dashboard](https://app.owlstack.dev):
 
-| Key | Required | Description |
-|:----|:---------|:------------|
-| `access_token` | ✅ | OAuth access token |
-| `person_id` | ✅ | LinkedIn person URN ID |
+1. Go to **Project Settings > Platforms > LinkedIn**
+2. Click **Connect with LinkedIn**
+3. Authorize OwlStack via OAuth
+4. Select personal profile or company page
 
-For **company pages**:
-
-| Key | Required | Description |
-|:----|:---------|:------------|
-| `access_token` | ✅ | OAuth access token |
-| `organization_id` | ✅ | LinkedIn organization URN ID |
+## Publishing
 
 ```php
-// Personal profile
-$credentials = new PlatformCredentials('linkedin', [
-    'access_token' => '...',
-    'person_id' => 'abc123',
-]);
+use OwlStack\Enums\Platform;
 
-// Company page
-$credentials = new PlatformCredentials('linkedin', [
-    'access_token' => '...',
-    'organization_id' => 'org456',
-]);
+$result = $client->publish($post, [Platform::LinkedIn]);
 ```
 
 ## Options
@@ -43,10 +30,12 @@ $credentials = new PlatformCredentials('linkedin', [
 | Option | Type | Description |
 |:-------|:-----|:------------|
 | `visibility` | `string` | `PUBLIC` or `CONNECTIONS` |
+| `target` | `string` | `personal` or `company` (if both connected) |
 
 ```php
-$result = $publisher->publish($post, 'linkedin', [
+$result = $client->publish($post, [Platform::LinkedIn], [
     'visibility' => 'PUBLIC',
+    'target' => 'company',
 ]);
 ```
 
@@ -57,4 +46,3 @@ $result = $publisher->publish($post, 'linkedin', [
 | Max text length | 3,000 characters |
 | Max media | 1 |
 | Supported media types | JPEG, PNG, GIF |
-| Image upload | Multi-step (register → upload → publish) |
