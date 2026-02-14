@@ -54,6 +54,7 @@ const config: Config = {
       'classic',
       {
         docs: {
+          routeBasePath: '/',
           sidebarPath: './sidebars.ts',
           editUrl: 'https://github.com/owlstacks/owlstack-docs/tree/main/',
           showLastUpdateTime: true,
@@ -91,7 +92,7 @@ const config: Config = {
       {
         hashed: true,
         language: ['en', 'zh', 'ja'],
-        docsRouteBasePath: '/docs',
+        docsRouteBasePath: '/',
       },
     ],
   ],
@@ -147,15 +148,15 @@ const config: Config = {
           items: [
             {
               label: 'Getting Started',
-              to: '/docs/getting-started/installation',
+              to: '/getting-started/installation',
             },
             {
               label: 'Core Concepts',
-              to: '/docs/core-concepts/posts-and-content',
+              to: '/core-concepts/posts-and-content',
             },
             {
               label: 'Platforms',
-              to: '/docs/platforms/overview',
+              to: '/platforms/overview',
             },
           ],
         },
@@ -164,11 +165,11 @@ const config: Config = {
           items: [
             {
               label: 'Laravel',
-              to: '/docs/frameworks/laravel/installation',
+              to: '/frameworks/laravel/installation',
             },
             {
               label: 'WordPress',
-              to: '/docs/frameworks/wordpress/installation',
+              to: '/frameworks/wordpress/installation',
             },
           ],
         },
@@ -204,7 +205,7 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
-      additionalLanguages: ['php', 'bash', 'json', 'diff', 'dotenv'],
+      additionalLanguages: ['php', 'bash', 'json', 'diff', 'ini'],
     },
     mermaid: {
       theme: {light: 'neutral', dark: 'dark'},

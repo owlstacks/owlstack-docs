@@ -75,5 +75,5 @@ foreach ($results as $platform => $result) {
 ```
 
 :::tip Pro Feature
-With **OwlStack Pro**, you can use `BatchPublisher` to publish to multiple platforms in a single call with built-in retry strategies and delivery logging. See [Batch Publishing](../pro/batch-publishing.md).
+With **OwlStack Pro**, you can use `BatchPublisher` to publish to multiple platforms in a single call with built-in retry strategies and delivery logging. See [Batch Publishing](../pro/batch-publishing.mdx).
 :::

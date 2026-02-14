@@ -84,4 +84,4 @@ PostFailed::class => [NotifyOnFailure::class],
 
 ## Need Help?
 
-Check out the full [migration guide](/docs/frameworks/laravel/migration-from-larasap) in our documentation.
+Check out the full [migration guide](/frameworks/laravel/migration-from-larasap) in our documentation.

@@ -57,4 +57,4 @@ Install the OwlStack plugin and publish directly from the post editor with meta 
 - **More Platforms**: We're always adding new platform support
 - **Community**: Join us on [GitHub](https://github.com/owlstacks) to contribute
 
-Get started today with our [Quick Start Guide](/docs/getting-started/quick-start).
+Get started today with our [Quick Start Guide](/getting-started/quick-start).

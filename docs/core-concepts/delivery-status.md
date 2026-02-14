@@ -47,5 +47,5 @@ $delivery->status = $result->success
 ```
 
 :::tip Pro Feature
-**OwlStack Pro** includes `DeliveryLogStore` with full attempt history, retry strategies, and persistence. See [Delivery Logging](../pro/delivery-logging.md).
+**OwlStack Pro** includes `DeliveryLogStore` with full attempt history, retry strategies, and persistence. See [Delivery Logging](../pro/delivery-logging.mdx).
 :::
