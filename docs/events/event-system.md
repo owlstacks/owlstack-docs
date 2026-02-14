@@ -1,44 +1,36 @@
 ---
 sidebar_position: 1
 title: Event System
-description: OwlStack's publish lifecycle event system.
+description: OwlStack's publishing lifecycle events.
 ---
 
 # Event System
 
-OwlStack dispatches events during the publishing lifecycle. Hook into these to log, notify, retry, or react to publishing outcomes.
+OwlStack dispatches events during the publishing lifecycle. Hook into these to log, notify, or react to publishing outcomes.
 
-## EventDispatcherInterface
+## SDK events
 
-```php
-use Owlstack\Core\Events\Contracts\EventDispatcherInterface;
-
-class MyDispatcher implements EventDispatcherInterface
-{
-    public function dispatch(object $event): void
-    {
-        match (true) {
-            $event instanceof PostPublished => $this->onPublished($event),
-            $event instanceof PostFailed    => $this->onFailed($event),
-        };
-    }
-}
-```
-
-## Wiring it up
-
-Pass your dispatcher to the Publisher:
+The OwlStack SDK fires events locally in your application after receiving results from the API:
 
 ```php
-$publisher = new Publisher($registry, new MyDispatcher());
+use OwlStack\Events\PostPublished;
+use OwlStack\Events\PostFailed;
 ```
 
-The Publisher will call `dispatch()` after every publish — passing either `PostPublished` or `PostFailed`.
-
-## Framework implementations
+These events are dispatched through your framework's event system:
 
 | Framework | Event System |
 |:----------|:------------|
-| **Laravel** | Uses Laravel's built-in `Event::dispatch()` — listen with `Event::listen()` or event listeners |
-| **WordPress** | Uses `do_action()` — listen with `add_action()` |
-| **Standalone** | Implement `EventDispatcherInterface` yourself |
+| **Laravel** | `Event::dispatch()` -- listen with `Event::listen()` or event listeners |
+| **WordPress** | `do_action()` -- listen with `add_action()` |
+| **Standalone PHP** | Implement `EventDispatcherInterface` and pass to client |
+
+## Server-side webhooks
+
+For server-side event notifications, OwlStack can send webhooks to your application. This is useful for:
+
+- Scheduled posts that publish later
+- Batch publishing results
+- Retry outcomes
+
+See [Webhooks](./webhooks.md) for setup details.

@@ -8,48 +8,52 @@ description: The two core publishing events and their properties.
 
 ## PostPublished
 
-Dispatched when a post is successfully published to a platform.
+Fired when a post is successfully published to a platform.
 
 ```php
-use Owlstack\Core\Events\PostPublished;
+use OwlStack\Events\PostPublished;
 
-// Available properties:
 $event->post;    // The Post object that was published
-$event->result;  // The PublishResult (success, externalId, externalUrl, etc.)
+$event->result;  // The DeliveryResult (platform, externalId, externalUrl)
 ```
 
 ## PostFailed
 
-Dispatched when publishing fails.
+Fired when publishing fails.
 
 ```php
-use Owlstack\Core\Events\PostFailed;
+use OwlStack\Events\PostFailed;
 
-// Available properties:
 $event->post;    // The Post object that failed
-$event->result;  // The PublishResult (error message, platform name, etc.)
+$event->result;  // The DeliveryResult (platform, error message, error code)
 ```
 
-## Example: logging
+## Laravel example
 
 ```php
-use Owlstack\Core\Events\PostPublished;
-use Owlstack\Core\Events\PostFailed;
+use OwlStack\Events\PostPublished;
+use OwlStack\Events\PostFailed;
 
-class PublishLogger implements EventDispatcherInterface
-{
-    public function dispatch(object $event): void
-    {
-        if ($event instanceof PostPublished) {
-            logger("✓ Published to {$event->result->platformName}");
-            logger("  External ID: {$event->result->externalId}");
-            logger("  URL: {$event->result->externalUrl}");
-        }
+Event::listen(PostPublished::class, function (PostPublished $event) {
+    Log::info("Published to {$event->result->platform()->value}", [
+        'external_id' => $event->result->externalId(),
+        'url' => $event->result->externalUrl(),
+    ]);
+});
 
-        if ($event instanceof PostFailed) {
-            logger("✗ Failed on {$event->result->platformName}");
-            logger("  Error: {$event->result->error}");
-        }
-    }
-}
+Event::listen(PostFailed::class, function (PostFailed $event) {
+    Log::error("Failed on {$event->result->platform()->value}: {$event->result->error()}");
+});
+```
+
+## WordPress example
+
+```php
+add_action('owlstack_post_published', function ($result) {
+    error_log("Published to {$result->platform()->value}");
+});
+
+add_action('owlstack_post_failed', function ($result) {
+    error_log("Failed: {$result->error()}");
+});
 ```
