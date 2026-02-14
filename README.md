@@ -1,21 +1,21 @@
 # OwlStack Documentation
 
-The official documentation site for [OwlStack](https://owlstack.dev) — a unified social media publishing SDK for PHP.
+The official documentation site for [OwlStack](https://owlstack.dev) - a unified social media publishing SDK for PHP.
 
 🌐 **Live site:** [docs.owlstack.dev](https://docs.owlstack.dev)
 
 ## What's Inside
 
-- **Getting Started** — Installation, quick start guides for Core, Laravel, and WordPress
-- **Core Concepts** — Posts, media, platform config, publishing, delivery status, error handling
-- **Platforms** — Guides for all 11 supported platforms (Telegram, Twitter/X, Facebook, LinkedIn, Discord, Instagram, Pinterest, Reddit, Slack, Tumblr, WhatsApp)
-- **Formatting** — Platform formatters, character limits, hashtag extraction
-- **Authentication** — OAuth flows, access tokens, token storage
-- **Events** — Event system, dispatchers, listeners
-- **Frameworks** — Laravel and WordPress integration guides
-- **Pro Features** — Batch publishing, scheduling, queues, delivery logging, templates, automation, AI, analytics
-- **Extending** — Custom platforms, formatters, and HTTP clients
-- **Blog** — Announcements and migration guides
+- **Getting Started** - Installation, quick start guides for Core, Laravel, and WordPress
+- **Core Concepts** - Posts, media, platform config, publishing, delivery status, error handling
+- **Platforms** - Guides for all 11 supported platforms (Telegram, Twitter/X, Facebook, LinkedIn, Discord, Instagram, Pinterest, Reddit, Slack, Tumblr, WhatsApp)
+- **Formatting** - Platform formatters, character limits, hashtag extraction
+- **Authentication** - OAuth flows, access tokens, token storage
+- **Events** - Event system, dispatchers, listeners
+- **Frameworks** - Laravel and WordPress integration guides
+- **Pro Features** - Batch publishing, scheduling, queues, delivery logging, templates, automation, AI, analytics
+- **Extending** - Custom platforms, formatters, and HTTP clients
+- **Blog** - Announcements and migration guides
 
 ## Setup
 
