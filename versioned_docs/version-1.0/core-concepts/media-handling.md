@@ -1,25 +1,27 @@
 ---
 sidebar_position: 2
 title: Media Handling
-description: Working with Media and MediaCollection for images, videos, and documents.
+description: Working with Media for images, videos, and documents.
 ---
 
 # Media Handling
 
 ## Media
 
-A single media attachment — image, video, audio, or document.
+A single media attachment -- image, video, audio, or document.
 
 ```php
-use Owlstack\Core\Content\Media;
+use OwlStack\Media;
 
-$image = new Media(
+// Quick factory methods
+$image = Media::image('/path/to/photo.jpg');
+$video = Media::video('/path/to/clip.mp4');
+
+// Full constructor
+$image = Media::create(
     path: '/path/to/photo.jpg',
     mimeType: 'image/jpeg',
     altText: 'A sunset over the ocean',
-    width: 1920,
-    height: 1080,
-    fileSize: 245_000,
 );
 ```
 
@@ -37,7 +39,7 @@ $image->isDocument(); // false
 An immutable, typed collection. Adding items returns a **new** instance.
 
 ```php
-use Owlstack\Core\Content\MediaCollection;
+use OwlStack\MediaCollection;
 
 $collection = new MediaCollection();
 $collection = $collection->add($image1);
@@ -52,32 +54,23 @@ $collection->isEmpty();  // false
 $collection->all();      // Media[]
 ```
 
-### Iterating
-
-```php
-foreach ($collection as $media) {
-    echo $media->path;
-}
-```
-
 ### Attaching to a Post
 
 ```php
-use Owlstack\Core\Content\Post;
+use OwlStack\Post;
+use OwlStack\Media;
+use OwlStack\MediaCollection;
 
-$post = new Post(
-    title: 'Photo Gallery',
-    body: 'Check out these photos!',
-    media: new MediaCollection([
-        new Media('/path/to/img1.jpg', 'image/jpeg'),
-        new Media('/path/to/img2.jpg', 'image/jpeg'),
-    ]),
-);
+$post = Post::create('Check out these photos!')
+    ->withMediaCollection(new MediaCollection([
+        Media::image('/path/to/img1.jpg'),
+        Media::image('/path/to/img2.jpg'),
+    ]));
 ```
 
 ## Platform media constraints
 
-Each platform has different media limits. OwlStack validates media against these automatically:
+Each platform has different media requirements. OwlStack handles validation and processing on the server:
 
 | Platform | Max Media | Supported Types |
 |:---------|:----------|:---------------|
@@ -87,7 +80,11 @@ Each platform has different media limits. OwlStack validates media against these
 | LinkedIn | 1 | JPEG, PNG, GIF |
 | Discord | 10 | JPEG, PNG, GIF, WebP, MP4 |
 | Instagram | 10 | JPEG, MP4 |
-| Pinterest | — | JPEG, PNG, GIF, WebP, MP4 |
+| Pinterest | 1 | JPEG, PNG, GIF, WebP, MP4 |
 | Reddit | 1 | JPEG, PNG, GIF |
 
-If you attach unsupported media, a `MediaValidationException` is thrown with details about what went wrong.
+When you publish with media, OwlStack's cloud:
+- Validates the file type against the target platform
+- Resizes images if they exceed platform limits
+- Converts formats as needed (e.g., PNG to JPEG for Instagram)
+- Uploads the media to the platform's API

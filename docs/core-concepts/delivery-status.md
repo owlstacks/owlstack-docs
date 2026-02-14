@@ -6,10 +6,10 @@ description: Tracking publishing lifecycle with the DeliveryStatus enum.
 
 # Delivery Status
 
-A PHP 8.1 backed enum for tracking the delivery lifecycle in your storage layer.
+A PHP 8.1 backed enum for tracking the delivery lifecycle.
 
 ```php
-use Owlstack\Core\Delivery\DeliveryStatus;
+use OwlStack\Enums\DeliveryStatus;
 
 $status = DeliveryStatus::Pending;     // 'pending'
 $status = DeliveryStatus::Publishing;  // 'publishing'
@@ -28,7 +28,9 @@ stateDiagram-v2
     Failed --> Publishing : retry
 ```
 
-## Usage example
+## Usage in your application
+
+The `DeliveryStatus` enum helps you track publishing state in your own database:
 
 ```php
 // Store initial state
@@ -37,15 +39,12 @@ $delivery = new DeliveryRecord(
     status: DeliveryStatus::Pending,
 );
 
-// Update on publish
-$delivery->status = DeliveryStatus::Publishing;
-
 // Update on result
-$delivery->status = $result->success
+$delivery->status = $result->isSuccessful()
     ? DeliveryStatus::Published
     : DeliveryStatus::Failed;
 ```
 
-:::tip Pro Feature
-**OwlStack Pro** includes `DeliveryLogStore` with full attempt history, retry strategies, and persistence. See [Delivery Logging](../pro/delivery-logging.mdx).
-:::
+## Cloud-side tracking
+
+OwlStack also tracks delivery status on the server. With the **Pro plan**, you get full delivery logging with attempt history, retry details, and analytics. See [Delivery Logging](../pro/delivery-logging.mdx).

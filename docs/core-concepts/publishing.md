@@ -1,79 +1,89 @@
 ---
 sidebar_position: 4
 title: Publishing
-description: The Publisher and PublishResult — OwlStack's core publishing flow.
+description: How OwlStack's cloud publishing works.
 ---
 
 # Publishing
 
-## Publisher
+## OwlStackClient
 
-The main orchestrator. It resolves the platform from the registry, publishes, dispatches events, and returns a result — **never throws exceptions**.
+The main entry point. It sends your content to the OwlStack cloud API, which handles formatting, platform API calls, and delivery.
 
 ```php
-use Owlstack\Core\Publishing\Publisher;
+use OwlStack\Cloud\OwlStackClient;
+use OwlStack\Post;
+use OwlStack\Enums\Platform;
 
-$publisher = new Publisher($registry, $eventDispatcher); // dispatcher is optional
+$client = new OwlStackClient(apiKey: env('OWLSTACK_API_KEY'));
 
-$result = $publisher->publish($post, 'telegram', ['chat_id' => '@channel']);
+$post = Post::create('Hello world!')
+    ->withHashtags(['php', 'opensource']);
+
+$result = $client->publish($post, [Platform::Telegram]);
 ```
 
-The third parameter (`$options`) is passed directly to the platform. Each platform supports different options — see the [Platforms](../platforms/overview.mdx) section.
+## DeliveryResult
 
-## PublishResult
-
-An immutable result object returned from every publish call.
+An immutable result object returned after every publish call.
 
 ```php
-$result->success;       // bool
-$result->failed();      // bool (inverse of success)
-$result->platformName;  // 'telegram'
-$result->externalId;    // '12345' or null
-$result->externalUrl;   // 'https://t.me/channel/12345' or null
-$result->error;         // 'Rate limit exceeded' or null
-$result->timestamp;     // DateTimeImmutable
+$result->isSuccessful();  // bool
+$result->isFailed();      // bool
+$result->platform();      // Platform enum
+$result->externalId();    // '12345' or null
+$result->externalUrl();   // 'https://t.me/channel/12345' or null
+$result->error();         // 'Rate limit exceeded' or null
+$result->timestamp();     // DateTimeImmutable
 ```
 
-### Example: handling the result
+### Handling results
 
 ```php
-$result = $publisher->publish($post, 'twitter');
+$results = $client->publish($post, [
+    Platform::Twitter,
+    Platform::LinkedIn,
+    Platform::Telegram,
+]);
 
-if ($result->success) {
-    // Store the external reference
-    saveToDatabase($result->platformName, $result->externalId, $result->externalUrl);
-    echo "Published: {$result->externalUrl}";
-} else {
-    // Log the error
-    logError($result->platformName, $result->error);
-    echo "Failed: {$result->error}";
+foreach ($results as $result) {
+    if ($result->isSuccessful()) {
+        echo "{$result->platform()->value}: {$result->externalUrl()}\n";
+    } else {
+        echo "{$result->platform()->value}: {$result->error()}\n";
+    }
 }
 ```
 
-## Multi-platform publishing
+## Publishing options
+
+Pass platform-specific options as the third parameter:
 
 ```php
-$post = new Post(
-    title: 'New Release: v2.0',
-    body: 'We are excited to announce version 2.0!',
-    url: 'https://example.com/releases/v2',
-    tags: ['release', 'opensource'],
-);
+// Telegram: specify chat ID
+$client->publish($post, [Platform::Telegram], [
+    'chat_id' => '@my_channel',
+]);
 
-// Publish to all registered platforms
-$results = [];
-foreach ($registry->names() as $name) {
-    $results[$name] = $publisher->publish($post, $name);
-}
-
-// Check results
-foreach ($results as $platform => $result) {
-    echo $result->success
-        ? "✓ {$platform}: {$result->externalUrl}\n"
-        : "✗ {$platform}: {$result->error}\n";
-}
+// Twitter: create a thread
+$client->publish($post, [Platform::Twitter], [
+    'thread' => true,
+]);
 ```
+
+See each platform's documentation for available options.
+
+## What happens on the server
+
+When you call `publish()`, the OwlStack cloud:
+
+1. **Validates** your API key and checks plan limits
+2. **Formats** content for each target platform (character limits, markup, hashtags)
+3. **Validates** media against platform constraints
+4. **Publishes** to each platform's API using stored OAuth credentials
+5. **Retries** automatically on transient failures
+6. **Returns** results with delivery status, external IDs, and URLs
 
 :::tip Pro Feature
-With **OwlStack Pro**, you can use `BatchPublisher` to publish to multiple platforms in a single call with built-in retry strategies and delivery logging. See [Batch Publishing](../pro/batch-publishing.mdx).
+With the **Pro plan**, you can use batch publishing, scheduled publishing, and delivery logging. See [Batch Publishing](../pro/batch-publishing.mdx) and [Scheduling](../pro/scheduling.mdx).
 :::

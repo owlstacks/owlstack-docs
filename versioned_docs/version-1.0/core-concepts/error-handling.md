@@ -1,81 +1,54 @@
 ---
 sidebar_position: 6
 title: Error Handling
-description: OwlStack's structured exception hierarchy.
+description: How OwlStack handles errors and exceptions.
 ---
 
 # Error Handling
 
-OwlStack uses a structured exception hierarchy. The `Publisher` catches all exceptions internally (returning `PublishResult` with errors), but you can handle them directly when using platform classes.
+OwlStack uses an exception-safe approach. The `OwlStackClient` catches all API errors internally and returns `DeliveryResult` objects with error details. It **never throws exceptions**.
 
-## Exception hierarchy
-
-```mermaid
-classDiagram
-    RuntimeException <|-- OwlstackException
-    OwlstackException <|-- AuthenticationException
-    OwlstackException <|-- ContentTooLongException
-    OwlstackException <|-- MediaValidationException
-    OwlstackException <|-- PlatformException
-    PlatformException <|-- RateLimitException
-
-    class OwlstackException {
-        Base exception for all OwlStack errors
-    }
-    class AuthenticationException {
-        Invalid or expired credentials
-    }
-    class ContentTooLongException {
-        +string platformName
-        +int maxLength
-        +int actualLength
-    }
-    class MediaValidationException {
-        +string platformName
-        +string mimeType
-        +?int fileSize
-    }
-    class PlatformException {
-        +string platformName
-        +?int httpStatusCode
-        +?string apiErrorCode
-        +?array rawResponse
-    }
-    class RateLimitException {
-        +?DateTimeImmutable retryAfter
-        +retryAfterSeconds() ?int
-    }
-```
-
-## Catching specific exceptions
+## Checking for errors
 
 ```php
-use Owlstack\Core\Exceptions\RateLimitException;
-use Owlstack\Core\Exceptions\ContentTooLongException;
-use Owlstack\Core\Exceptions\MediaValidationException;
-use Owlstack\Core\Exceptions\AuthenticationException;
+$results = $client->publish($post, [Platform::Twitter]);
 
-try {
-    $response = $platform->publish($post);
-} catch (RateLimitException $e) {
-    $seconds = $e->retryAfterSeconds();
-    echo "Rate limited. Retry after {$seconds} seconds.";
-    sleep($seconds ?? 60);
-    // retry...
-} catch (ContentTooLongException $e) {
-    echo "Content is {$e->actualLength} chars, max is {$e->maxLength} for {$e->platformName}";
-} catch (MediaValidationException $e) {
-    echo "Invalid media: {$e->mimeType} not supported on {$e->platformName}";
-} catch (AuthenticationException $e) {
-    echo "Auth failed — check your credentials";
+foreach ($results as $result) {
+    if ($result->isFailed()) {
+        echo "Failed on {$result->platform()->value}: {$result->error()}\n";
+        echo "Error code: {$result->errorCode()}\n";
+    }
 }
 ```
 
-## Publisher vs Platform
+## Error codes
 
-| Approach | Throws? | Returns |
-|:---------|:--------|:--------|
-| `$publisher->publish()` | **Never** | `PublishResult` with `->success` / `->error` |
-| `$platform->publish()` | **Yes** | `PlatformResponseInterface` or throws |
+| Code | Description |
+|:-----|:------------|
+| `rate_limited` | Platform rate limit hit. OwlStack retries automatically. |
+| `content_too_long` | Content exceeds platform character limit after formatting. |
+| `media_invalid` | Media type or size not supported by the platform. |
+| `auth_failed` | Platform credentials are invalid or expired. |
+| `platform_error` | Unexpected error from the platform API. |
+| `plan_limit` | Your plan's monthly post limit has been reached. |
+| `platform_not_connected` | The platform is not connected in your dashboard. |
+| `api_key_invalid` | Invalid or revoked API key. |
 
-Use `Publisher` for production code (exception-safe). Use platform classes directly when you need fine-grained exception handling.
+## Exception hierarchy (owlstack/core)
+
+The `owlstack/core` package defines typed exception classes you can use in your own code:
+
+```php
+use OwlStack\Exceptions\OwlStackException;
+use OwlStack\Exceptions\AuthenticationException;
+use OwlStack\Exceptions\RateLimitException;
+use OwlStack\Exceptions\ContentTooLongException;
+use OwlStack\Exceptions\MediaValidationException;
+use OwlStack\Exceptions\PlatformException;
+```
+
+These are used internally by the cloud service. The SDK client translates API error responses into `DeliveryResult` objects, so you rarely need to catch them directly.
+
+## Retries
+
+OwlStack automatically retries transient failures (rate limits, network timeouts) on the server side with exponential backoff. You don't need to implement retry logic in your application.
