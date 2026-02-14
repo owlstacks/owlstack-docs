@@ -112,7 +112,7 @@ const config: Config = {
       id: 'launch',
       content:
         '🦉 OwlStack is now available! <a href="/blog/introducing-owlstack">Read the announcement</a>.',
-      backgroundColor: '#6C3FC5',
+      backgroundColor: '#1E3A5F',
       textColor: '#ffffff',
       isCloseable: true,
     },

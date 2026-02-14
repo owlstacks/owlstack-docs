@@ -1,78 +1,85 @@
 /**
- * OwlStack brand colors and global styles.
+ * OwlStack brand colors — owl-inspired palette.
+ * Night navy (primary) + amber gold (accent).
  * Infima CSS framework variables.
  */
 
 :root {
-  --ifm-color-primary: #6C3FC5;
-  --ifm-color-primary-dark: #5E33B3;
-  --ifm-color-primary-darker: #5830A9;
-  --ifm-color-primary-darkest: #48278B;
-  --ifm-color-primary-light: #7E56CF;
-  --ifm-color-primary-lighter: #8560D3;
-  --ifm-color-primary-lightest: #9D7EDD;
+  --ifm-color-primary: #1E3A5F;
+  --ifm-color-primary-dark: #1A3355;
+  --ifm-color-primary-darker: #183050;
+  --ifm-color-primary-darkest: #132742;
+  --ifm-color-primary-light: #224169;
+  --ifm-color-primary-lighter: #24446E;
+  --ifm-color-primary-lightest: #2D5382;
+  --owl-accent: #D4942A;
+  --owl-accent-light: #E8B35A;
+  --owl-accent-dark: #B87D1F;
   --ifm-code-font-size: 95%;
   --ifm-font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
-  --docusaurus-highlighted-code-line-bg: rgba(108, 63, 197, 0.1);
+  --docusaurus-highlighted-code-line-bg: rgba(30, 58, 95, 0.1);
 }
 
 [data-theme='dark'] {
-  --ifm-color-primary: #9D6FE8;
-  --ifm-color-primary-dark: #8B55E3;
-  --ifm-color-primary-darker: #8248E1;
-  --ifm-color-primary-darkest: #6922D8;
-  --ifm-color-primary-light: #AF89ED;
-  --ifm-color-primary-lighter: #B896EF;
-  --ifm-color-primary-lightest: #D0BCF5;
-  --docusaurus-highlighted-code-line-bg: rgba(157, 111, 232, 0.15);
+  --ifm-color-primary: #5B9BD5;
+  --ifm-color-primary-dark: #438DC0;
+  --ifm-color-primary-darker: #3C86B8;
+  --ifm-color-primary-darkest: #316E98;
+  --ifm-color-primary-light: #73A9DA;
+  --ifm-color-primary-lighter: #7DAFDE;
+  --ifm-color-primary-lightest: #A4C8E8;
+  --owl-accent: #E8B35A;
+  --owl-accent-light: #F0C97E;
+  --owl-accent-dark: #D4942A;
+  --docusaurus-highlighted-code-line-bg: rgba(91, 155, 213, 0.15);
 }
 
 /* Hero section */
 .hero--primary {
-  background: linear-gradient(135deg, #7B4FD0 0%, #5225A8 50%, #3A1580 100%);
+  background: linear-gradient(135deg, #1E3A5F 0%, #15294A 50%, #0D1C33 100%);
   color: #fff;
 }
 
 [data-theme='dark'] .hero--primary {
-  background: linear-gradient(135deg, #3D2175 0%, #261452 50%, #1a1a2e 100%);
+  background: linear-gradient(135deg, #142640 0%, #0D1A2E 50%, #080F1A 100%);
 }
 
 /* Hero buttons */
 .hero--primary .button--primary {
-  background-color: #fff;
-  color: #5225A8;
-  border-color: #fff;
+  background-color: var(--owl-accent);
+  color: #1a1a1a;
+  border-color: var(--owl-accent);
   font-weight: 600;
 }
 
 .hero--primary .button--primary:hover {
-  background-color: #f0e8fb;
-  color: #3A1580;
-  border-color: #f0e8fb;
+  background-color: var(--owl-accent-light);
+  color: #1a1a1a;
+  border-color: var(--owl-accent-light);
 }
 
 .hero--primary .button--outline {
   color: #fff;
-  border-color: rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(4px);
 }
 
 .hero--primary .button--outline:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.15);
   border-color: #fff;
   color: #fff;
 }
 
 [data-theme='dark'] .hero--primary .button--primary {
-  background-color: #9D6FE8;
-  color: #fff;
-  border-color: #9D6FE8;
+  background-color: var(--owl-accent);
+  color: #1a1a1a;
+  border-color: var(--owl-accent);
 }
 
 [data-theme='dark'] .hero--primary .button--primary:hover {
-  background-color: #B896EF;
-  border-color: #B896EF;
+  background-color: var(--owl-accent-light);
+  border-color: var(--owl-accent-light);
 }
 
 [data-theme='dark'] .hero--primary .button--outline {
@@ -95,7 +102,7 @@ div[class*='announcementBar'] {
 /* Sidebar Pro badge integration */
 .menu__link .pro-badge {
   display: inline-block;
-  background: linear-gradient(135deg, #6C3FC5, #9D6FE8);
+  background: linear-gradient(135deg, #D4942A, #E8B35A);
   color: #fff;
   font-size: 0.6rem;
   font-weight: 700;
