@@ -65,18 +65,18 @@ function HomepageHeader() {
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <p className={styles.heroDescription}>
           Publish content to <strong>11 social media platforms</strong> through a single,
-          unified API. Works with PHP, Laravel, and WordPress.
+          cloud-powered API. Works with PHP, Laravel, and WordPress.
         </p>
         <div className={styles.buttons}>
           <Link
             className="button button--primary button--lg"
             to="/getting-started/installation">
-            Get Started →
+            Get Started -- Free
           </Link>
           <Link
             className="button button--outline button--lg"
-            href="https://github.com/owlstacks">
-            GitHub
+            to="/plans/overview">
+            View Plans
           </Link>
         </div>
       </div>
@@ -94,8 +94,8 @@ export default function Home(): ReactNode {
 
   return (
     <Layout
-      title="Unified Social Media Publishing SDK"
-      description="Publish content to 11 social media platforms through a single, unified PHP API. Works with Laravel, WordPress, or standalone.">
+      title="Cloud-Powered Social Media Publishing"
+      description="Publish content to 11 social media platforms through a single, cloud-powered API. Works with PHP, Laravel, and WordPress.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

@@ -16,17 +16,17 @@ const FeatureList: FeatureItem[] = [
     description: (
       <>
         Telegram, Twitter/X, Facebook, LinkedIn, Discord, Instagram, Pinterest,
-        Reddit, Slack, Tumblr, and WhatsApp — all through a unified interface.
+        Reddit, Slack, Tumblr, and WhatsApp -- all through a single API call.
       </>
     ),
   },
   {
-    title: 'Zero Dependencies',
-    icon: '⚡',
+    title: 'Cloud-Powered',
+    icon: '☁️',
     description: (
       <>
-        Pure PHP 8.1+ with only ext-curl and ext-json required. No bloated
-        SDKs. Every concern is backed by clean interfaces.
+        No API tokens or platform SDKs to manage. Connect via OAuth in the
+        dashboard, publish via your API key. We handle the rest.
       </>
     ),
   },
@@ -36,37 +36,37 @@ const FeatureList: FeatureItem[] = [
     description: (
       <>
         First-class support for Laravel (10/11/12) and WordPress (6.4+).
-        Or use standalone — no framework required.
+        Or use the PHP SDK standalone -- no framework required.
       </>
     ),
   },
   {
-    title: 'Immutable & Type-Safe',
+    title: 'Type-Safe SDK',
     icon: '🛡️',
     description: (
       <>
-        Readonly value objects, PHP 8.1 enums, and strict typing throughout.
-        Publisher never throws — always returns a result.
+        PHP 8.1+ with readonly value objects, enums, and strict typing.
+        The client never throws -- always returns a result you can inspect.
       </>
     ),
   },
   {
-    title: 'Smart Formatting',
-    icon: '✨',
+    title: 'AI-Powered Content',
+    icon: '🤖',
     description: (
       <>
-        Each platform has its own formatter respecting character limits,
-        markup syntax, and media constraints automatically.
+        Generate platform-optimized posts, auto-hashtags, A/B testing, and
+        optimal posting times -- all powered by AI on the Pro+AI plan.
       </>
     ),
   },
   {
-    title: 'Pro Features',
+    title: 'Free Tier',
     icon: '🚀',
     description: (
       <>
-        Batch publishing, scheduling, automation, AI integration, analytics,
-        and delivery logging with retry strategies.
+        Start free with 1 platform and 10 posts/month. No credit card
+        required. Upgrade as you grow.
       </>
     ),
   },

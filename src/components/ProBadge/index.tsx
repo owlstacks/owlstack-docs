@@ -3,12 +3,13 @@ import styles from './styles.module.css';
 
 interface ProBadgeProps {
   children?: ReactNode;
+  plan?: string;
 }
 
-export default function ProBadge({children}: ProBadgeProps): ReactNode {
+export default function ProBadge({children, plan}: ProBadgeProps): ReactNode {
   return (
     <span className={styles.proBadge}>
-      {children || 'Pro'}
+      {children || plan || 'Pro'}
     </span>
   );
 }
