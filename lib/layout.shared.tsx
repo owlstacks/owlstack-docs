@@ -26,15 +26,19 @@ export function baseOptions(): BaseLayoutProps {
     },
     links: [
       {
+        type: 'icon',
         icon: <Globe />,
         text: 'owlstack.dev',
+        label: 'Visit owlstack.dev',
         url: 'https://owlstack.dev',
-        secondary: true,
+        external: true,
       },
       {
+        type: 'button',
         icon: <LayoutDashboard />,
         text: 'Dashboard',
         url: 'https://app.owlstack.dev',
+        external: true,
         secondary: true,
       },
     ],
