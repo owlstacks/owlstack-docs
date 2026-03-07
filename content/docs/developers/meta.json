@@ -4,6 +4,7 @@
   "root": true,
   "icon": "Code",
   "pages": [
+    "index",
     "introduction",
     "getting-started",
     "core-concepts",
