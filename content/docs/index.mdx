@@ -1,61 +1,81 @@
 ---
 title: OwlStack Documentation
-description: OwlStack is a cloud-powered social media publishing service with PHP, Laravel, and WordPress SDKs.
+description: OwlStack is a social media management platform for creators, teams, and developers.
 icon: Home
 ---
 
-# Welcome to OwlStack Documentation
+# Welcome to OwlStack
 
-**OwlStack** is a cloud-powered social media publishing service that lets you publish content to 11+ platforms through a single API. It comes with official SDKs for PHP, Laravel, and WordPress.
+**OwlStack** is a social media management platform that lets you publish, schedule, and manage content across 11+ social media platforms — all from one place.
 
-## Quick Example
+Whether you're a content creator, a business owner, or a developer building an integration, OwlStack has you covered.
 
-```php
-use OwlStack\Post;
-use OwlStack\Enums\Platform;
-use OwlStack\Cloud\OwlStackClient;
+---
 
-$client = new OwlStackClient(apiKey: env('OWLSTACK_API_KEY'));
+## For Creators & Teams
 
-$post = Post::create('Launching our new product!')
-    ->withMedia(Media::image('/path/to/photo.jpg'))
-    ->withHashtags(['launch', 'startup']);
+No coding required. Use the OwlStack dashboard to manage your social media presence.
 
-$results = $client->publish($post, [
-    Platform::Twitter,
-    Platform::LinkedIn,
-    Platform::Telegram,
-]);
-```
-
-## Get Started
+- **Publish to all your platforms at once** — write once, share everywhere
+- **Schedule posts** — plan your content calendar in advance
+- **AI-powered content** — generate captions, optimize posts, and get hashtag suggestions
+- **Track performance** — see how your posts are doing with built-in analytics
+- **Collaborate** — invite your team with unlimited team members on all plans
 
 <Cards>
-  <Card title="What is OwlStack?" href="/introduction/what-is-owlstack" />
-  <Card title="Installation" href="/getting-started/installation" />
-  <Card title="Quick Start" href="/getting-started/quick-start" />
-  <Card title="Platform Overview" href="/platforms/overview" />
+  <Card title="Get Started" href="/using-owlstack/getting-started" />
+  <Card title="Dashboard Overview" href="/using-owlstack/dashboard" />
+  <Card title="Connect Your Accounts" href="/using-owlstack/connecting-accounts" />
+  <Card title="AI Studio" href="/using-owlstack/ai-studio" />
 </Cards>
+
+---
+
+## For Developers
+
+Integrate social media publishing into your website, app, or workflow using our SDKs and REST API.
+
+- **One API, 11+ platforms** — publish to Twitter, Instagram, LinkedIn, Telegram, and more with a single call
+- **Official SDKs** — PHP, Laravel, and WordPress available now; Node.js, Python, Go, Ruby, and Rust coming soon
+- **Cloud-powered** — OwlStack handles all platform APIs, formatting, rate limits, and retries
+- **Webhooks & events** — get notified when posts are published or fail
+
+<Cards>
+  <Card title="Installation" href="/getting-started/installation" />
+  <Card title="Quick Start (PHP)" href="/getting-started/quick-start" />
+  <Card title="Quick Start (Laravel)" href="/getting-started/quick-start-laravel" />
+  <Card title="REST API Reference" href="/api/overview" />
+</Cards>
+
+---
 
 ## Supported Platforms
 
 | Platform | Features |
 |:---------|:---------|
-| Telegram | Channels, groups, media groups, inline keyboards |
-| Twitter/X | Threads, polls, quote tweets |
+| Instagram | Carousels, Reels, Stories |
+| Twitter / X | Threads, polls, quote tweets |
 | Facebook | Pages, scheduled publishing |
 | LinkedIn | Personal profiles, company pages |
+| Telegram | Channels, groups, media groups |
 | Discord | Rich embeds, file attachments |
-| Instagram | Carousels, Reels, Stories |
 | Pinterest | Board and section targeting |
 | Reddit | Self posts, link posts, flair |
 | Slack | Block Kit messages |
 | Tumblr | NPF content blocks |
 | WhatsApp | Template messages, documents |
 
-## Framework Integrations
+## SDKs & Integrations
 
-<Cards>
-  <Card title="Laravel" href="/frameworks/laravel/installation" />
-  <Card title="WordPress" href="/frameworks/wordpress/installation" />
-</Cards>
+| SDK | Status |
+|:----|:-------|
+| PHP (Core) | Available |
+| Laravel | Available |
+| WordPress | Available |
+| Node.js | Coming Soon |
+| Python | Coming Soon |
+| Go | Coming Soon |
+| Ruby | Coming Soon |
+| Rust | Coming Soon |
+
+[View all frameworks & SDKs →](/frameworks/overview)
