@@ -1,0 +1,91 @@
+---
+title: AI API
+description: API endpoints for AI-powered features.
+---
+
+# AI API
+
+**Pro + AI**
+
+## Generate content
+
+```http
+POST /v1/ai/generate
+```
+
+**Request body:**
+
+```json
+{
+  "topic": "PHP 8.3 features",
+  "platforms": ["twitter", "linkedin"],
+  "tone": "professional",
+  "max_variants": 2
+}
+```
+
+**Response:**
+
+```json
+{
+  "data": {
+    "generations": [
+      {
+        "platform": "twitter",
+        "variants": [
+          "PHP 8.3 brings typed class constants and json_validate(). Here's what matters for your next project →",
+          "Big news for PHP developers: v8.3 is packed with features. Typed constants, json_validate(), and more 🚀"
+        ]
+      },
+      {
+        "platform": "linkedin",
+        "variants": [
+          "PHP 8.3 was released with several exciting features..."
+        ]
+      }
+    ]
+  }
+}
+```
+
+## Optimize content
+
+```http
+POST /v1/ai/optimize
+```
+
+**Request body:**
+
+```json
+{
+  "content": "We released a new version of our product.",
+  "platforms": ["twitter", "linkedin"],
+  "goal": "engagement"
+}
+```
+
+## Suggest hashtags
+
+```http
+POST /v1/ai/hashtags
+```
+
+**Request body:**
+
+```json
+{
+  "content": "New blog post about microservices architecture",
+  "platform": "twitter",
+  "max_hashtags": 10
+}
+```
+
+**Response:**
+
+```json
+{
+  "data": {
+    "hashtags": ["microservices", "architecture", "webdev", "coding", "tech", "distributed", "backend", "devops"]
+  }
+}
+```

@@ -1,0 +1,61 @@
+---
+title: Analytics API
+description: API endpoints for analytics and metrics.
+---
+
+# Analytics API
+
+**Pro**
+
+## Get analytics
+
+```http
+GET /v1/analytics
+```
+
+Query parameters:
+
+| Parameter | Type | Description |
+|:----------|:-----|:------------|
+| `from` | date | Start date (YYYY-MM-DD) |
+| `to` | date | End date (YYYY-MM-DD) |
+| `platforms` | string | Comma-separated platforms |
+| `group_by` | string | `platform`, `day`, `week`, `month` |
+
+**Response:**
+
+```json
+{
+  "data": {
+    "summary": {
+      "total_published": 142,
+      "total_failed": 3,
+      "success_rate": 97.9
+    },
+    "by_platform": {
+      "twitter": {
+        "published": 48,
+        "failed": 1,
+        "impressions": 12500,
+        "engagement": 340,
+        "clicks": 89
+      },
+      "linkedin": {
+        "published": 47,
+        "failed": 1,
+        "impressions": 8900,
+        "engagement": 210,
+        "clicks": 145
+      }
+    }
+  }
+}
+```
+
+## Get delivery logs
+
+```http
+GET /v1/delivery-logs
+```
+
+Query parameters: `platform`, `status`, `from`, `to`, `page`, `per_page`.

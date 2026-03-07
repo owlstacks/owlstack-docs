@@ -1,0 +1,21 @@
+{
+  "title": "Documentation",
+  "description": "OwlStack Documentation",
+  "pages": [
+    "index",
+    "introduction",
+    "getting-started",
+    "core-concepts",
+    "platforms",
+    "formatting",
+    "authentication",
+    "events",
+    "---Laravel & WordPress---",
+    "frameworks",
+    "---Plans & Features---",
+    "plans",
+    "pro",
+    "ai",
+    "api"
+  ]
+}

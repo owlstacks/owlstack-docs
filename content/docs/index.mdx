@@ -1,0 +1,61 @@
+---
+title: OwlStack Documentation
+description: OwlStack is a cloud-powered social media publishing service with PHP, Laravel, and WordPress SDKs.
+icon: Home
+---
+
+# Welcome to OwlStack Documentation
+
+**OwlStack** is a cloud-powered social media publishing service that lets you publish content to 11+ platforms through a single API. It comes with official SDKs for PHP, Laravel, and WordPress.
+
+## Quick Example
+
+```php
+use OwlStack\Post;
+use OwlStack\Enums\Platform;
+use OwlStack\Cloud\OwlStackClient;
+
+$client = new OwlStackClient(apiKey: env('OWLSTACK_API_KEY'));
+
+$post = Post::create('Launching our new product!')
+    ->withMedia(Media::image('/path/to/photo.jpg'))
+    ->withHashtags(['launch', 'startup']);
+
+$results = $client->publish($post, [
+    Platform::Twitter,
+    Platform::LinkedIn,
+    Platform::Telegram,
+]);
+```
+
+## Get Started
+
+<Cards>
+  <Card title="What is OwlStack?" href="/introduction/what-is-owlstack" />
+  <Card title="Installation" href="/getting-started/installation" />
+  <Card title="Quick Start" href="/getting-started/quick-start" />
+  <Card title="Platform Overview" href="/platforms/overview" />
+</Cards>
+
+## Supported Platforms
+
+| Platform | Features |
+|:---------|:---------|
+| Telegram | Channels, groups, media groups, inline keyboards |
+| Twitter/X | Threads, polls, quote tweets |
+| Facebook | Pages, scheduled publishing |
+| LinkedIn | Personal profiles, company pages |
+| Discord | Rich embeds, file attachments |
+| Instagram | Carousels, Reels, Stories |
+| Pinterest | Board and section targeting |
+| Reddit | Self posts, link posts, flair |
+| Slack | Block Kit messages |
+| Tumblr | NPF content blocks |
+| WhatsApp | Template messages, documents |
+
+## Framework Integrations
+
+<Cards>
+  <Card title="Laravel" href="/frameworks/laravel/installation" />
+  <Card title="WordPress" href="/frameworks/wordpress/installation" />
+</Cards>

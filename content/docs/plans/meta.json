@@ -1,0 +1,11 @@
+{
+  "title": "Plans & Pricing",
+  "icon": "CreditCard",
+  "pages": [
+    "overview",
+    "starter",
+    "pro",
+    "pro-ai",
+    "enterprise"
+  ]
+}

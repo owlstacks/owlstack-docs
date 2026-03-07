@@ -1,0 +1,10 @@
+{
+  "title": "Laravel",
+  "pages": [
+    "installation",
+    "configuration",
+    "usage",
+    "events",
+    "migration-from-larasap"
+  ]
+}
