@@ -1,0 +1,15 @@
+{
+  "title": "Developers",
+  "description": "SDK & API integration",
+  "root": true,
+  "icon": "Code",
+  "pages": [
+    "introduction",
+    "getting-started",
+    "core-concepts",
+    "platforms",
+    "formatting",
+    "authentication",
+    "events"
+  ]
+}

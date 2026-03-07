@@ -3,22 +3,9 @@
   "description": "OwlStack Documentation",
   "pages": [
     "index",
-    "---Using OwlStack---",
-    "using-owlstack",
-    "---For Developers---",
-    "introduction",
-    "getting-started",
-    "core-concepts",
-    "platforms",
-    "formatting",
-    "authentication",
-    "events",
-    "---Frameworks & SDKs---",
-    "frameworks",
-    "---Plans & Features---",
-    "plans",
-    "pro",
-    "ai",
+    "guide",
+    "developers",
+    "sdks",
     "api"
   ]
 }
