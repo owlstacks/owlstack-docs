@@ -1,0 +1,14 @@
+{
+  "title": "Guide",
+  "description": "For creators and teams",
+  "root": true,
+  "icon": "LayoutDashboard",
+  "pages": [
+    "index",
+    "using-owlstack",
+    "---Plans & Features---",
+    "plans",
+    "pro",
+    "ai"
+  ]
+}

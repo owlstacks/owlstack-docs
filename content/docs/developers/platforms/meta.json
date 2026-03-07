@@ -1,0 +1,18 @@
+{
+  "title": "Platforms",
+  "icon": "Network",
+  "pages": [
+    "overview",
+    "telegram",
+    "twitter",
+    "facebook",
+    "linkedin",
+    "discord",
+    "instagram",
+    "pinterest",
+    "reddit",
+    "slack",
+    "tumblr",
+    "whatsapp"
+  ]
+}

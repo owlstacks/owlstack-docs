@@ -1,0 +1,61 @@
+---
+title: Webhooks API
+description: API endpoints for managing webhook subscriptions.
+---
+
+# Webhooks API
+
+## List webhook endpoints
+
+```http
+GET /v1/webhooks
+```
+
+## Create a webhook endpoint
+
+```http
+POST /v1/webhooks
+```
+
+**Request body:**
+
+```json
+{
+  "url": "https://example.com/webhooks/owlstack",
+  "events": ["post.published", "post.failed", "batch.completed"]
+}
+```
+
+**Response:**
+
+```json
+{
+  "data": {
+    "id": "wh_abc123",
+    "url": "https://example.com/webhooks/owlstack",
+    "events": ["post.published", "post.failed", "batch.completed"],
+    "signing_secret": "whsec_a1b2c3d4...",
+    "active": true
+  }
+}
+```
+
+## Update a webhook
+
+```http
+PATCH /v1/webhooks/{id}
+```
+
+## Delete a webhook
+
+```http
+DELETE /v1/webhooks/{id}
+```
+
+## Test a webhook
+
+```http
+POST /v1/webhooks/{id}/test
+```
+
+Sends a test payload to verify your endpoint is receiving and processing webhooks correctly.

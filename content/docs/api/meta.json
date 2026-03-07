@@ -1,0 +1,16 @@
+{
+  "title": "API Reference",
+  "description": "REST API documentation",
+  "root": true,
+  "icon": "Cpu",
+  "pages": [
+    "overview",
+    "authentication",
+    "publishing",
+    "scheduling",
+    "ai",
+    "analytics",
+    "webhooks",
+    "rate-limits"
+  ]
+}

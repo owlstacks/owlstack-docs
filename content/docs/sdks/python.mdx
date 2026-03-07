@@ -1,0 +1,54 @@
+---
+title: Python SDK
+description: OwlStack Python SDK for Python applications.
+---
+
+# Python SDK
+
+<Callout type="warn" title="Coming Soon">
+The OwlStack Python SDK is currently in development. Sign up for updates at [owlstack.dev](https://owlstack.dev) to be notified when it's available.
+</Callout>
+
+## What to Expect
+
+The Python SDK will provide a native Python client for the OwlStack API, designed for:
+
+- **Django**, **Flask**, **FastAPI** applications
+- **Async/await** support with `asyncio`
+- **Type hints** throughout
+- **PyPI** distribution (`pip install owlstack`)
+
+## Preview
+
+```python
+from owlstack import OwlStack, Platform
+
+client = OwlStack(api_key=os.environ["OWLSTACK_API_KEY"])
+
+result = client.publish(
+    content="Hello from Python!",
+    platforms=[Platform.TWITTER, Platform.LINKEDIN],
+    media=[{"type": "image", "path": "./photo.jpg"}],
+    hashtags=["python", "automation"],
+)
+
+for r in result:
+    print(f"{r.platform}: {r.url}")
+```
+
+## In the Meantime
+
+You can use the [OwlStack REST API](/api/overview) directly from any Python application using `requests` or `httpx`.
+
+```python
+import requests
+
+response = requests.post(
+    "https://api.owlstack.dev/v1/publish",
+    headers={"Authorization": f"Bearer {os.environ['OWLSTACK_API_KEY']}"},
+    json={
+        "content": "Hello from Python!",
+        "platforms": ["twitter", "linkedin"],
+    },
+)
+```

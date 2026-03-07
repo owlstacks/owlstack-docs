@@ -1,0 +1,47 @@
+---
+title: Frameworks & SDKs Overview
+description: OwlStack SDKs and integrations for every language and framework.
+---
+
+# Frameworks & SDKs
+
+OwlStack provides official SDKs and framework integrations so developers can integrate social media publishing into any application.
+
+## Available SDKs
+
+These SDKs are ready to use today:
+
+| Package | Language | Type | Status |
+|:--------|:---------|:-----|:-------|
+| [OwlStack Core (PHP)](/sdks/laravel/installation) | PHP | Core SDK | v1.0 — Available |
+| [OwlStack Laravel](/sdks/laravel/installation) | PHP / Laravel | Native Integration | v2.0 — Available |
+| [OwlStack WordPress](/sdks/wordpress/installation) | PHP / WordPress | Native Plugin | v1.0 — Available |
+
+## Coming Soon
+
+We're actively developing SDKs for more languages and frameworks:
+
+| Package | Language | Type | Status |
+|:--------|:---------|:-----|:-------|
+| [OwlStack Node.js](/sdks/nodejs) | JavaScript / TypeScript | Cloud SDK | Coming Soon |
+| [OwlStack Python](/sdks/python) | Python | Cloud SDK | Coming Soon |
+| [OwlStack Go](/sdks/golang) | Go | Cloud SDK | Coming Soon |
+| [OwlStack Ruby](/sdks/ruby) | Ruby | Cloud SDK | Coming Soon |
+| [OwlStack Rust](/sdks/rust) | Rust | Cloud SDK | Coming Soon |
+
+## How SDKs Work
+
+All OwlStack SDKs are thin API clients that communicate with the OwlStack cloud service. The heavy lifting — platform API calls, content formatting, rate limiting, retries, and AI — happens on OwlStack's servers.
+
+```
+Your App → OwlStack SDK → api.owlstack.dev → Social Platforms
+```
+
+This means:
+- **Lightweight** — SDKs are small and have minimal dependencies
+- **Consistent** — the same features work across all languages
+- **Always up to date** — new platforms and features are added server-side
+
+## Want an SDK for Your Language?
+
+If you need an SDK for a language not listed here, [let us know](https://owlstack.dev/contact) and we'll prioritize it based on community demand. You can also use the [REST API](/api/overview) directly from any language.

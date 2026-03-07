@@ -1,0 +1,10 @@
+{
+  "title": "WordPress",
+  "pages": [
+    "installation",
+    "admin-panel",
+    "meta-boxes",
+    "rest-api",
+    "hooks"
+  ]
+}

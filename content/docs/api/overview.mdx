@@ -1,0 +1,74 @@
+---
+title: API Overview
+description: Overview of the OwlStack REST API.
+---
+
+# API Overview
+
+The OwlStack API is a REST API at `https://api.owlstack.dev/v1`. All requests require authentication and return JSON.
+
+## Base URL
+
+```
+https://api.owlstack.dev/v1
+```
+
+## Authentication
+
+Include your API key in the `Authorization` header:
+
+```http
+Authorization: Bearer your-api-key-here
+```
+
+## Response format
+
+All responses follow this structure:
+
+```json
+{
+  "data": { ... },
+  "meta": {
+    "request_id": "req_abc123",
+    "timestamp": "2026-02-14T10:00:00Z"
+  }
+}
+```
+
+Error responses:
+
+```json
+{
+  "error": {
+    "code": "validation_error",
+    "message": "The platforms field is required.",
+    "details": { ... }
+  },
+  "meta": {
+    "request_id": "req_abc123"
+  }
+}
+```
+
+## HTTP status codes
+
+| Code | Description |
+|:-----|:------------|
+| 200 | Success |
+| 201 | Created |
+| 400 | Bad request (validation error) |
+| 401 | Unauthorized (invalid API key) |
+| 403 | Forbidden (insufficient plan) |
+| 404 | Not found |
+| 422 | Unprocessable entity |
+| 429 | Rate limited |
+| 500 | Server error |
+
+## SDKs
+
+While you can call the API directly, we recommend using an SDK:
+
+- **PHP SDK** — `owlstack/core`
+- **Laravel** — `owlstack/laravel`
+- **WordPress** — `owlstack/wordpress`
+- **Node.js** — `@owlstack/node` (coming soon)

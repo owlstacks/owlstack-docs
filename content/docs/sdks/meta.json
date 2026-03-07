@@ -1,0 +1,19 @@
+{
+  "title": "SDKs",
+  "description": "Frameworks & languages",
+  "root": true,
+  "icon": "Package",
+  "pages": [
+    "index",
+    "overview",
+    "---Available---",
+    "laravel",
+    "wordpress",
+    "---Coming Soon---",
+    "nodejs",
+    "python",
+    "golang",
+    "ruby",
+    "rust"
+  ]
+}

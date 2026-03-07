@@ -1,0 +1,68 @@
+---
+title: Publishing API
+description: API endpoints for publishing posts.
+---
+
+# Publishing API
+
+## Publish a post
+
+```http
+POST /v1/publish
+```
+
+**Request body:**
+
+```json
+{
+  "body": "Hello from OwlStack!",
+  "platforms": ["twitter", "linkedin"],
+  "url": "https://example.com",
+  "hashtags": ["hello", "owlstack"],
+  "media": [
+    {
+      "type": "url",
+      "url": "https://example.com/image.jpg"
+    }
+  ]
+}
+```
+
+**Response:**
+
+```json
+{
+  "data": {
+    "id": "ps_abc123",
+    "results": [
+      {
+        "platform": "twitter",
+        "status": "published",
+        "external_id": "1234567890",
+        "external_url": "https://twitter.com/user/status/1234567890"
+      },
+      {
+        "platform": "linkedin",
+        "status": "published",
+        "external_id": "urn:li:share:6789",
+        "external_url": "https://www.linkedin.com/feed/update/urn:li:share:6789"
+      }
+    ]
+  }
+}
+```
+
+## Request fields
+
+| Field | Type | Required | Description |
+|:------|:-----|:---------|:------------|
+| `body` | string | Yes | Post content |
+| `platforms` | string[] | Yes | Target platforms |
+| `url` | string | No | URL to include |
+| `hashtags` | string[] | No | Hashtags to append |
+| `media` | object[] | No | Media attachments |
+| `media[].type` | string | Yes | `url` or `base64` |
+| `media[].url` | string | — | URL of the media |
+| `media[].data` | string | — | Base64-encoded media |
+| `media[].mime_type` | string | — | MIME type (for base64) |
+| `credentials` | object | No | Pass-per-request credentials |

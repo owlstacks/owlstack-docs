@@ -1,0 +1,72 @@
+---
+title: Scheduling API
+description: API endpoints for scheduling posts.
+---
+
+# Scheduling API
+
+**Pro**
+
+## Schedule a post
+
+```http
+POST /v1/schedules
+```
+
+**Request body:**
+
+```json
+{
+  "body": "This will be published tomorrow!",
+  "platforms": ["twitter", "linkedin"],
+  "publish_at": "2026-02-15T09:00:00Z",
+  "url": "https://example.com"
+}
+```
+
+**Response:**
+
+```json
+{
+  "data": {
+    "id": "sch_abc123",
+    "status": "scheduled",
+    "publish_at": "2026-02-15T09:00:00Z",
+    "platforms": ["twitter", "linkedin"]
+  }
+}
+```
+
+## List schedules
+
+```http
+GET /v1/schedules
+```
+
+Query parameters: `status` (scheduled, fired, cancelled), `from`, `to`, `page`, `per_page`.
+
+## Get a schedule
+
+```http
+GET /v1/schedules/{id}
+```
+
+## Cancel a schedule
+
+```http
+DELETE /v1/schedules/{id}
+```
+
+## Update a schedule
+
+```http
+PATCH /v1/schedules/{id}
+```
+
+**Request body:**
+
+```json
+{
+  "publish_at": "2026-02-16T10:00:00Z"
+}
+```
