@@ -1,0 +1,14 @@
+{
+  "title": "Using OwlStack",
+  "icon": "LayoutDashboard",
+  "pages": [
+    "getting-started",
+    "dashboard",
+    "connecting-accounts",
+    "creating-posts",
+    "scheduling",
+    "analytics",
+    "ai-studio",
+    "team-collaboration"
+  ]
+}
