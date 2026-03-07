@@ -7,11 +7,18 @@ const config = {
   reactStrictMode: true,
   output: 'standalone',
   async rewrites() {
+    return {
+      beforeFiles: [
+        { source: '/', destination: '/introduction' },
+        { source: '/what-is-owlstack', destination: '/introduction/what-is-owlstack' },
+        { source: '/comparisons', destination: '/introduction/comparisons' },
+      ],
+    };
+  },
+  async redirects() {
     return [
-      {
-        source: '/',
-        destination: '/guide',
-      },
+      { source: '/introduction', destination: '/', permanent: true },
+      { source: '/introduction/:path+', destination: '/:path+', permanent: true },
     ];
   },
 };
