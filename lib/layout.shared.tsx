@@ -1,4 +1,3 @@
-import { Globe, LayoutDashboard } from 'lucide-react';
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 
 /**
@@ -24,24 +23,6 @@ export function baseOptions(): BaseLayoutProps {
         </>
       ),
     },
-    links: [
-      {
-        type: 'icon',
-        icon: <Globe />,
-        text: 'owlstack.dev',
-        label: 'Visit owlstack.dev',
-        url: 'https://owlstack.dev',
-        external: true,
-      },
-      {
-        type: 'button',
-        icon: <LayoutDashboard />,
-        text: 'Dashboard',
-        url: 'https://app.owlstack.dev',
-        external: true,
-        secondary: true,
-      },
-    ],
     themeSwitch: {
       enabled: true,
       mode: 'light-dark',
