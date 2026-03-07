@@ -1,8 +1,14 @@
 {
-  "title": "Frameworks",
+  "title": "Frameworks & SDKs",
   "icon": "Code",
   "pages": [
+    "overview",
     "laravel",
-    "wordpress"
+    "wordpress",
+    "nodejs",
+    "python",
+    "golang",
+    "ruby",
+    "rust"
   ]
 }
