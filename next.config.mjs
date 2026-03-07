@@ -6,12 +6,11 @@ const withMDX = createMDX();
 const config = {
   reactStrictMode: true,
   output: 'standalone',
-  async redirects() {
+  async rewrites() {
     return [
       {
         source: '/',
         destination: '/guide',
-        permanent: false,
       },
     ];
   },
