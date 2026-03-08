@@ -1,0 +1,22 @@
+{
+  "title": "Comparisons",
+  "icon": "ArrowRightLeft",
+  "pages": [
+    "index",
+    "buffer",
+    "hootsuite",
+    "sprout-social",
+    "agorapulse",
+    "contentstudio",
+    "planable",
+    "sendible",
+    "socialpilot",
+    "heyorca",
+    "publer",
+    "metricool",
+    "hypefury",
+    "tweethunter",
+    "ordinal",
+    "later"
+  ]
+}

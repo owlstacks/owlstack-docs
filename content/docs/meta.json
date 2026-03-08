@@ -2,6 +2,7 @@
   "title": "Documentation",
   "description": "OwlStack Documentation",
   "pages": [
+    "introduction",
     "guide",
     "developers",
     "sdks",

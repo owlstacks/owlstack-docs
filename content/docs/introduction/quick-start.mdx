@@ -1,0 +1,94 @@
+---
+title: Quick Start
+description: Get up and running with OwlStack in minutes.
+icon: Rocket
+---
+
+# Quick Start
+
+Get started with OwlStack in just a few minutes — whether you're using the dashboard or integrating via the API.
+
+---
+
+## For Creators & Teams
+
+No coding required. Sign up, connect your accounts, and start publishing.
+
+### 1. Create an Account
+
+Sign up at [app.owlstack.dev](https://app.owlstack.dev) — it's free to get started.
+
+### 2. Connect Your Social Accounts
+
+Go to **Settings → Accounts** and connect the platforms you want to publish to:
+
+- Instagram, Twitter/X, Facebook, LinkedIn
+- Telegram, Discord, Pinterest, Reddit
+- Slack, Tumblr, WhatsApp
+
+### 3. Create Your First Post
+
+Click **New Post**, write your content, select your platforms, and hit **Publish** — or schedule it for later.
+
+<Cards>
+  <Card title="Dashboard Overview" href="/guide/using-owlstack/dashboard" />
+  <Card title="Connect Accounts" href="/guide/using-owlstack/connecting-accounts" />
+  <Card title="AI Studio" href="/guide/using-owlstack/ai-studio" />
+</Cards>
+
+---
+
+## For Developers (PHP)
+
+Install the SDK and publish your first post in under 5 minutes.
+
+### 1. Install the SDK
+
+```bash
+composer require owlstack/owlstack-core
+```
+
+### 2. Get Your API Key
+
+Go to [app.owlstack.dev](https://app.owlstack.dev) → **Settings → API Keys** and generate a new key.
+
+### 3. Publish a Post
+
+```php
+use OwlStack\OwlStack;
+
+$owlstack = new OwlStack('your-api-key');
+
+$owlstack->publish([
+    'content' => 'Hello from OwlStack! 🦉',
+    'platforms' => ['twitter', 'linkedin', 'telegram'],
+]);
+```
+
+<Cards>
+  <Card title="PHP Installation" href="/developers/getting-started/installation" />
+  <Card title="PHP Quick Start" href="/developers/getting-started/quick-start" />
+  <Card title="Laravel Quick Start" href="/developers/getting-started/quick-start-laravel" />
+</Cards>
+
+---
+
+## For Developers (REST API)
+
+Use the API directly from any language.
+
+```bash
+curl -X POST https://api.owlstack.dev/v1/posts \
+  -H "Authorization: Bearer your-api-key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "content": "Hello from OwlStack! 🦉",
+    "platforms": ["twitter", "linkedin", "telegram"]
+  }'
+```
+
+<Cards>
+  <Card title="API Reference" href="/api/overview" />
+  <Card title="Authentication" href="/api/authentication" />
+  <Card title="All SDKs" href="/sdks/overview" />
+</Cards>

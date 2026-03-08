@@ -1,0 +1,14 @@
+{
+  "title": "Introduction",
+  "description": "Overview & getting started",
+  "root": true,
+  "icon": "Home",
+  "pages": [
+    "index",
+    "what-is-owlstack",
+    "why-owlstack",
+    "how-it-works",
+    "quick-start",
+    "comparisons"
+  ]
+}

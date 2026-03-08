@@ -1,0 +1,111 @@
+---
+title: How It Works
+description: Understand how OwlStack works under the hood.
+icon: Zap
+---
+
+# How It Works
+
+OwlStack simplifies social media publishing by acting as a unified layer between you and 11+ social platforms.
+
+---
+
+## The Architecture
+
+```
+You → OwlStack → 11+ Social Platforms
+```
+
+Whether you use the **dashboard**, the **REST API**, or an **SDK**, the flow is the same:
+
+1. **You create content** — text, images, videos, or rich media
+2. **You choose platforms** — select which social networks to publish to
+3. **OwlStack processes it** — formats content for each platform, handles media uploads, and respects platform-specific limits
+4. **OwlStack delivers it** — publishes to all selected platforms simultaneously (or on schedule)
+5. **You get notified** — via dashboard, webhooks, or API polling
+
+---
+
+## Key Concepts
+
+### Platforms
+
+A platform is a social network that OwlStack can publish to. Each platform has unique rules — character limits, media formats, thread support, etc. OwlStack handles all of this automatically.
+
+### Accounts
+
+An account is your connected social profile on a platform (e.g., your Twitter account or LinkedIn company page). You can connect multiple accounts per platform.
+
+### Posts
+
+A post is a piece of content you want to publish. A single post can target multiple platforms — OwlStack formats it appropriately for each one.
+
+### Scheduling
+
+Posts can be published immediately or scheduled for a specific date and time. OwlStack's scheduler handles timezone conversion and queue management.
+
+### Webhooks
+
+Webhooks notify your application in real-time when events happen — post published, post failed, account disconnected, etc.
+
+---
+
+## Publishing Flow
+
+### From the Dashboard
+
+1. Click **New Post**
+2. Write your content (or use AI to generate it)
+3. Attach media if needed
+4. Select target platforms and accounts
+5. Choose **Publish Now** or **Schedule**
+6. OwlStack delivers to all platforms
+
+### From the API / SDK
+
+1. Authenticate with your API key
+2. Send a publish request with content and platforms
+3. OwlStack queues and processes the request
+4. Receive a response with the post ID and status
+5. Get webhook notifications on delivery or failure
+
+---
+
+## Content Formatting
+
+OwlStack automatically adapts your content for each platform:
+
+| Platform | Formatting |
+|:---------|:-----------|
+| Twitter/X | Splits long content into threads, respects 280-char limit |
+| Instagram | Formats for feed posts, carousels, reels, or stories |
+| LinkedIn | Adapts for personal or company page formatting |
+| Telegram | Supports Markdown, media groups, and channel posts |
+| Discord | Converts to rich embeds with attachments |
+| Reddit | Formats as self posts or link posts with flair |
+| Pinterest | Targets specific boards and sections |
+| Slack | Converts to Block Kit messages |
+| Facebook | Formats for page publishing |
+| Tumblr | Uses NPF content blocks |
+| WhatsApp | Formats as template messages |
+
+---
+
+## What Happens Behind the Scenes
+
+1. **Validation** — Content is validated against each platform's requirements
+2. **Media processing** — Images and videos are optimized for each platform's specs
+3. **Rate limiting** — OwlStack respects platform API rate limits and queues accordingly
+4. **Retry logic** — Failed deliveries are automatically retried with exponential backoff
+5. **Event dispatching** — Success/failure events are dispatched via webhooks
+
+---
+
+## Next Steps
+
+<Cards>
+  <Card title="Quick Start" href="/quick-start" />
+  <Card title="Dashboard Guide" href="/guide/using-owlstack/dashboard" />
+  <Card title="API Reference" href="/api/overview" />
+  <Card title="View SDKs" href="/sdks/overview" />
+</Cards>
