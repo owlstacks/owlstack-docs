@@ -1,6 +1,7 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { Globe, LayoutDashboard } from 'lucide-react';
 import Image from 'next/image';
+import logo from '@/public/logo.png';
 
 /**
  * Shared layout configurations
@@ -14,7 +15,7 @@ export function baseOptions(): BaseLayoutProps {
       title: (
         <>
           <Image
-            src="/logo.png"
+            src={logo}
             alt="OwlStack Logo"
             width={28}
             height={28}
