@@ -6,6 +6,8 @@
   "pages": [
     "index",
     "what-is-owlstack",
+    "why-owlstack",
+    "how-it-works",
     "quick-start",
     "comparisons"
   ]
