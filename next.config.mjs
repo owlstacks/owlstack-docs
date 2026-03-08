@@ -6,6 +6,7 @@ const withMDX = createMDX();
 const config = {
   reactStrictMode: true,
   output: 'standalone',
+  basePath: '/docs',
   async rewrites() {
     return {
       beforeFiles: [

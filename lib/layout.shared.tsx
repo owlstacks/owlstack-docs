@@ -1,5 +1,6 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { Globe, LayoutDashboard } from 'lucide-react';
+import Image from 'next/image';
 
 /**
  * Shared layout configurations
@@ -12,7 +13,7 @@ export function baseOptions(): BaseLayoutProps {
     nav: {
       title: (
         <>
-          <img
+          <Image
             src="/logo.png"
             alt="OwlStack Logo"
             width={28}
