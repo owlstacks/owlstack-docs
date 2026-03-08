@@ -12,6 +12,7 @@ const config = {
         { source: '/', destination: '/introduction' },
         { source: '/what-is-owlstack', destination: '/introduction/what-is-owlstack' },
         { source: '/comparisons', destination: '/introduction/comparisons' },
+        { source: '/comparisons/:path+', destination: '/introduction/comparisons/:path+' },
       ],
     };
   },
