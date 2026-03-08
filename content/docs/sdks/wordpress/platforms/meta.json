@@ -1,0 +1,17 @@
+{
+  "title": "Platform Configuration",
+  "pages": [
+    "index",
+    "telegram",
+    "twitter",
+    "facebook",
+    "instagram",
+    "linkedin",
+    "discord",
+    "pinterest",
+    "reddit",
+    "slack",
+    "tumblr",
+    "whatsapp"
+  ]
+}
