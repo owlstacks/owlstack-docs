@@ -6,36 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Log in to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ secrets.GHCR_USER }}
-          password: ${{ secrets.GHCR_TOKEN }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build and push docs
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: Dockerfile
-          push: true
-          tags: ghcr.io/owlstacks/owlstack-docs:latest
-          cache-from: type=gha,scope=docs
-          cache-to: type=gha,mode=max,scope=docs
-
   deploy:
-    needs: build-and-push
     runs-on: ubuntu-latest
     steps:
       - name: Setup SSH
@@ -46,33 +17,45 @@ jobs:
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
 
       - name: Deploy to server
-        timeout-minutes: 10
+        timeout-minutes: 30
         run: |
-          ssh -i ~/.ssh/deploy_key "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" <<'DEPLOY_SCRIPT'
+          DEPLOY_PATH="${{ secrets.DEPLOY_PATH }}"
+          DOCS_PATH="$(dirname "${{ secrets.DEPLOY_PATH }}")/owlstack-docs"
+
+          ssh -i ~/.ssh/deploy_key "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" bash << EOF
             set -e
-            export PATH=$PATH:/usr/local/bin:/usr/bin
+            export PATH=\$PATH:/usr/local/bin:/usr/bin
 
             echo "=========================================="
-            echo "OwlStack Docs Deploy — $(date)"
+            echo "OwlStack Docs Deploy — \$(date)"
             echo "=========================================="
 
-            cd "${{ secrets.DEPLOY_PATH }}"
+            # Pull latest docs source
+            echo ">>> Pulling docs source..."
+            cd "$DOCS_PATH"
+            git fetch origin main
+            git reset --hard origin/main
 
-            echo ">>> Logging in to GHCR..."
-            echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_USER }}" --password-stdin
+            # Pull latest deploy config
+            echo ">>> Pulling deploy config..."
+            cd "$DEPLOY_PATH"
+            git fetch origin main
+            git reset --hard origin/main
 
-            echo ">>> Pulling latest docs image..."
-            docker compose -f docker-compose.yml pull docs
+            # Build docs (CPU-throttled)
+            echo ">>> Building docs..."
+            nice -n 19 docker compose build docs
 
-            echo ">>> Restarting docs service..."
-            docker compose -f docker-compose.yml up -d docs
+            # Restart docs service
+            echo ">>> Restarting docs..."
+            docker compose up -d docs
 
             docker image prune -f
 
             echo "=========================================="
             echo "Docs deploy complete!"
             echo "=========================================="
-          DEPLOY_SCRIPT
+          EOF
 
       - name: Cleanup SSH key
         if: always()
